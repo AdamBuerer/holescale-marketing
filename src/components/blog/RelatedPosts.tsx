@@ -10,14 +10,11 @@ export function RelatedPosts({ posts, title = 'Related Articles' }: RelatedPosts
   if (posts.length === 0) return null;
 
   return (
-    <section className="py-12">
-      <h2 className="text-2xl font-bold mb-8">{title}</h2>
-      <div className="grid md:grid-cols-3 gap-6">
-        {posts.slice(0, 3).map((post, index) => (
-          <PostCard key={post.id} post={post} index={index} />
-        ))}
-      </div>
-    </section>
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {posts.slice(0, 3).map((post, index) => (
+        <PostCard key={post.id} post={post} index={index} />
+      ))}
+    </div>
   );
 }
 

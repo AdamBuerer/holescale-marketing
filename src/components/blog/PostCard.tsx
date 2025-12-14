@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, ArrowUpRight } from 'lucide-react';
 import type { BlogPostCard } from '@/types/blog';
 import { formatDate } from '@/lib/blog-utils';
 import { FadeIn } from '@/components/ui/FadeIn';
@@ -7,65 +7,120 @@ import { FadeIn } from '@/components/ui/FadeIn';
 interface PostCardProps {
   post: BlogPostCard;
   index?: number;
-  variant?: 'default' | 'featured' | 'compact';
+  variant?: 'default' | 'featured' | 'compact' | 'horizontal';
 }
 
 export function PostCard({ post, index = 0, variant = 'default' }: PostCardProps) {
   if (variant === 'featured') {
     return (
       <FadeIn delay={100}>
-        <article className="bg-card rounded-2xl shadow-lg border border-border/50 overflow-hidden">
-          <Link to={`/blog/${post.slug}`} className="group block">
-            <div className="grid md:grid-cols-2 gap-0">
-              <div className="aspect-video md:aspect-auto overflow-hidden">
+        <article className="group relative bg-card rounded-3xl overflow-hidden border border-border/50 hover:border-primary/20 transition-all duration-500">
+          <Link to={`/blog/${post.slug}`} className="block">
+            <div className="grid lg:grid-cols-2 gap-0">
+              {/* Image */}
+              <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
                 <img
                   src={post.featuredImage.src}
                   alt={post.featuredImage.alt}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-              <div className="p-6 md:p-8 flex flex-col justify-center">
-                <div className="flex items-center gap-3 mb-4">
+
+              {/* Content */}
+              <div className="p-8 lg:p-10 flex flex-col justify-center">
+                <div className="flex items-center gap-3 mb-5">
                   <span
-                    className="px-3 py-1 rounded-full text-sm font-medium"
+                    className="px-4 py-1.5 rounded-full text-sm font-semibold"
                     style={{
-                      backgroundColor: `${post.category.color}20`,
-                      color: post.category.color,
+                      backgroundColor: post.category.color,
+                      color: 'white',
                     }}
                   >
                     {post.category.name}
                   </span>
                   {post.isFeatured && (
-                    <span className="px-3 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-700">
+                    <span className="px-3 py-1.5 rounded-full text-sm font-medium bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
                       Featured
                     </span>
                   )}
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-primary transition-colors">
+
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors duration-300">
                   {post.title}
                 </h2>
-                <p className="text-muted-foreground mb-4 line-clamp-3">
+
+                <p className="text-muted-foreground text-lg mb-6 line-clamp-3 leading-relaxed">
                   {post.excerpt}
                 </p>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
+
+                <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6">
+                  <div className="flex items-center gap-3">
                     <img
                       src={post.author.avatar}
                       alt={post.author.name}
-                      className="w-8 h-8 rounded-full"
+                      className="w-10 h-10 rounded-full ring-2 ring-background"
                     />
-                    <span>{post.author.name}</span>
+                    <div>
+                      <span className="font-medium text-foreground block">{post.author.name}</span>
+                      <span className="text-xs">{post.author.role}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>{formatDate(post.publishedAt)}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{post.readingProgress.estimatedReadTime} min read</span>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4" />
+                      <span>{formatDate(post.publishedAt)}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Clock className="w-4 h-4" />
+                      <span>{post.readingProgress.estimatedReadTime} min</span>
+                    </div>
                   </div>
                 </div>
+
+                <div className="inline-flex items-center gap-2 text-primary font-semibold group-hover:gap-3 transition-all">
+                  Read Article
+                  <ArrowRight className="w-5 h-5" />
+                </div>
+              </div>
+            </div>
+          </Link>
+        </article>
+      </FadeIn>
+    );
+  }
+
+  if (variant === 'horizontal') {
+    return (
+      <FadeIn delay={100 * (index % 3)}>
+        <article className="group">
+          <Link to={`/blog/${post.slug}`} className="flex gap-6 items-start">
+            <div className="w-32 h-24 flex-shrink-0 rounded-xl overflow-hidden">
+              <img
+                src={post.featuredImage.src}
+                alt={post.featuredImage.alt}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <span
+                className="inline-block px-2.5 py-1 rounded-full text-xs font-medium mb-2"
+                style={{
+                  backgroundColor: `${post.category.color}15`,
+                  color: post.category.color,
+                }}
+              >
+                {post.category.name}
+              </span>
+              <h3 className="font-bold text-lg group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                {post.title}
+              </h3>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <span>{formatDate(post.publishedAt)}</span>
+                <span>•</span>
+                <span>{post.readingProgress.estimatedReadTime} min read</span>
               </div>
             </div>
           </Link>
@@ -79,7 +134,7 @@ export function PostCard({ post, index = 0, variant = 'default' }: PostCardProps
       <FadeIn delay={100 * (index % 3)}>
         <article className="group">
           <Link to={`/blog/${post.slug}`} className="flex gap-4">
-            <div className="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+            <div className="w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden">
               <img
                 src={post.featuredImage.src}
                 alt={post.featuredImage.alt}
@@ -87,13 +142,13 @@ export function PostCard({ post, index = 0, variant = 'default' }: PostCardProps
                 loading="lazy"
               />
             </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-sm group-hover:text-primary transition-colors line-clamp-2">
+            <div className="flex-1 min-w-0 py-1">
+              <h3 className="font-semibold group-hover:text-primary transition-colors line-clamp-2 mb-2">
                 {post.title}
               </h3>
-              <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span>{formatDate(post.publishedAt)}</span>
-                <span>-</span>
+                <span>•</span>
                 <span>{post.readingProgress.estimatedReadTime} min</span>
               </div>
             </div>
@@ -103,61 +158,80 @@ export function PostCard({ post, index = 0, variant = 'default' }: PostCardProps
     );
   }
 
+  // Default card
   return (
     <FadeIn delay={100 * (index % 3)}>
-      <article className="bg-card rounded-2xl shadow-lg border border-border/50 hover:shadow-xl hover:border-primary/20 transition-all duration-300 overflow-hidden h-full flex flex-col">
-        <Link to={`/blog/${post.slug}`} className="group">
-          <div className="aspect-video overflow-hidden">
-            <img
-              src={post.featuredImage.src}
-              alt={post.featuredImage.alt}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
+      <article className="group h-full">
+        <Link to={`/blog/${post.slug}`} className="block h-full">
+          <div className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-500 h-full flex flex-col">
+            {/* Image Container */}
+            <div className="relative aspect-[4/3] overflow-hidden">
+              <img
+                src={post.featuredImage.src}
+                alt={post.featuredImage.alt}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              {/* Category badge */}
+              <div className="absolute top-4 left-4">
+                <span
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-sm"
+                  style={{
+                    backgroundColor: `${post.category.color}ee`,
+                    color: 'white',
+                  }}
+                >
+                  {post.category.name}
+                </span>
+              </div>
+
+              {/* Read time badge */}
+              <div className="absolute top-4 right-4">
+                <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-foreground flex items-center gap-1.5">
+                  <Clock className="w-3 h-3" />
+                  {post.readingProgress.estimatedReadTime} min
+                </span>
+              </div>
+
+              {/* Hover arrow */}
+              <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                <ArrowUpRight className="w-5 h-5 text-primary" />
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 flex-1 flex flex-col">
+              {/* Date */}
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                <Calendar className="w-4 h-4" />
+                <span>{formatDate(post.publishedAt)}</span>
+              </div>
+
+              {/* Title */}
+              <h3 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-primary transition-colors duration-300 leading-snug">
+                {post.title}
+              </h3>
+
+              {/* Excerpt */}
+              <p className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-2 leading-relaxed">
+                {post.excerpt}
+              </p>
+
+              {/* Author */}
+              <div className="flex items-center gap-3 pt-4 border-t border-border/50">
+                <img
+                  src={post.author.avatar}
+                  alt={post.author.name}
+                  className="w-8 h-8 rounded-full"
+                />
+                <span className="text-sm font-medium">{post.author.name}</span>
+              </div>
+            </div>
           </div>
         </Link>
-        <div className="p-6 flex-1 flex flex-col">
-          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-            <Link
-              to={`/blog/category/${post.category.slug}`}
-              className="px-3 py-1 rounded-full font-medium hover:opacity-80 transition-opacity"
-              style={{
-                backgroundColor: `${post.category.color}20`,
-                color: post.category.color,
-              }}
-            >
-              {post.category.name}
-            </Link>
-            <div className="flex items-center gap-1">
-              <Calendar className="w-4 h-4" />
-              {formatDate(post.publishedAt)}
-            </div>
-          </div>
-
-          <Link to={`/blog/${post.slug}`}>
-            <h3 className="text-xl font-bold mb-2 hover:text-primary transition-colors">
-              {post.title}
-            </h3>
-          </Link>
-
-          <p className="text-muted-foreground mb-4 flex-1 line-clamp-3">
-            {post.excerpt}
-          </p>
-
-          <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
-            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <Clock className="w-4 h-4" />
-              {post.readingProgress.estimatedReadTime} min read
-            </div>
-            <Link
-              to={`/blog/${post.slug}`}
-              className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
-            >
-              Read More
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
       </article>
     </FadeIn>
   );
