@@ -13,6 +13,7 @@ import { AuthorCard } from '@/components/blog/AuthorCard';
 import { RelatedPosts } from '@/components/blog/RelatedPosts';
 import { ShareButtons } from '@/components/blog/ShareButtons';
 import { BlogCTA } from '@/components/blog/BlogCTA';
+import { AISummary } from '@/components/blog/AISummary';
 
 function BlogPostSkeleton() {
   return (
@@ -276,6 +277,15 @@ export default function BlogPost() {
       {/* Article Content */}
       <article ref={articleRef} className="py-12 md:py-16" style={{ overflow: 'visible' }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8" style={{ overflow: 'visible' }}>
+          {/* AI Summary Button */}
+          <FadeIn delay={250}>
+            <AISummary
+              content={post.content}
+              title={post.title}
+              readingTime={post.readingProgress.estimatedReadTime}
+            />
+          </FadeIn>
+
           <FadeIn delay={300}>
             {/* Article Body */}
             <div
