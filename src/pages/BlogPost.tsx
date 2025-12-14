@@ -32,20 +32,45 @@ function BlogPostSkeleton() {
   );
 }
 
-function ReadingProgress() {
+interface ReadingProgressProps {
+  targetRef: React.RefObject<HTMLDivElement | null>;
+}
+
+function ReadingProgress({ targetRef }: ReadingProgressProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const updateProgress = () => {
+      if (!targetRef.current) {
+        // Fallback to document-based calculation
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const readProgress = (scrollTop / docHeight) * 100;
+        setProgress(Math.min(100, Math.max(0, readProgress)));
+        return;
+      }
+
       const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const readProgress = (scrollTop / docHeight) * 100;
+      const targetTop = targetRef.current.offsetTop;
+      // Complete at 100% when the target element is in view (accounting for viewport height)
+      const targetEnd = targetTop - window.innerHeight * 0.3;
+      const startOffset = 200; // Start measuring after scrolling past header
+
+      if (scrollTop < startOffset) {
+        setProgress(0);
+        return;
+      }
+
+      const adjustedScroll = scrollTop - startOffset;
+      const totalDistance = targetEnd - startOffset;
+      const readProgress = (adjustedScroll / totalDistance) * 100;
       setProgress(Math.min(100, Math.max(0, readProgress)));
     };
 
     window.addEventListener('scroll', updateProgress);
+    updateProgress(); // Initial calculation
     return () => window.removeEventListener('scroll', updateProgress);
-  }, []);
+  }, [targetRef]);
 
   return (
     <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
@@ -90,6 +115,7 @@ export default function BlogPost() {
     3
   );
   const articleRef = useRef<HTMLDivElement>(null);
+  const authorSectionRef = useRef<HTMLDivElement>(null);
 
   if (isLoading) {
     return (
@@ -147,7 +173,7 @@ export default function BlogPost() {
         schema={schemas}
       />
 
-      <ReadingProgress />
+      <ReadingProgress targetRef={authorSectionRef} />
       <ScrollToTop />
       <Navigation />
 
@@ -522,7 +548,7 @@ export default function BlogPost() {
 
           {/* Author Card */}
           <FadeIn delay={600}>
-            <div className="bg-muted/50 rounded-2xl p-6 md:p-8">
+            <div ref={authorSectionRef} className="bg-muted/50 rounded-2xl p-6 md:p-8">
               <p className="text-sm font-medium text-muted-foreground mb-4">Written by</p>
               <div className="flex items-start gap-4">
                 <img

@@ -51,7 +51,7 @@ export function PostCard({ post, index = 0, variant = 'default' }: PostCardProps
                   {post.title}
                 </h2>
 
-                <p className="text-muted-foreground text-lg mb-6 line-clamp-3 leading-relaxed">
+                <p className="text-muted-foreground text-lg mb-6 line-clamp-3 leading-relaxed text-left">
                   {post.excerpt}
                 </p>
 
@@ -216,7 +216,7 @@ export function PostCard({ post, index = 0, variant = 'default' }: PostCardProps
               </h3>
 
               {/* Excerpt */}
-              <p className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-2 leading-relaxed">
+              <p className="text-muted-foreground text-sm mb-4 flex-1 line-clamp-2 leading-relaxed text-left">
                 {post.excerpt}
               </p>
 
