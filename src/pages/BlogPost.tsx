@@ -283,6 +283,7 @@ export default function BlogPost() {
               content={post.content}
               title={post.title}
               readingTime={post.readingProgress.estimatedReadTime}
+              postId={post.id}
             />
           </FadeIn>
 

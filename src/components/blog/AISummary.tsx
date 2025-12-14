@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, ChevronDown, ChevronUp, Lightbulb, Target, Clock, CheckCircle2, Loader2 } from 'lucide-react';
+import { Sparkles, ChevronDown, ChevronUp, Lightbulb, Target, Clock, CheckCircle2, Loader2, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -21,13 +21,18 @@ interface AISummaryProps {
   content: string;
   title: string;
   readingTime: number;
+  postId: string;
 }
 
-export function AISummary({ content, title, readingTime }: AISummaryProps) {
+// Minimum display time for loading animation (makes cached results feel like AI processing)
+const MIN_LOADING_TIME_MS = 800;
+
+export function AISummary({ content, title, readingTime, postId }: AISummaryProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(true);
+  const [wasCached, setWasCached] = useState(false);
 
   const handleSummarize = async () => {
     if (summary) {
@@ -37,6 +42,7 @@ export function AISummary({ content, title, readingTime }: AISummaryProps) {
 
     setIsLoading(true);
     setError(null);
+    const startTime = Date.now();
 
     try {
       const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -53,6 +59,7 @@ export function AISummary({ content, title, readingTime }: AISummaryProps) {
             content,
             title,
             readingTime,
+            postId,
           }),
         }
       );
@@ -63,7 +70,14 @@ export function AISummary({ content, title, readingTime }: AISummaryProps) {
         throw new Error(data.error || 'Failed to generate summary');
       }
 
+      // Ensure minimum loading time for smoother UX
+      const elapsedTime = Date.now() - startTime;
+      if (elapsedTime < MIN_LOADING_TIME_MS) {
+        await new Promise(resolve => setTimeout(resolve, MIN_LOADING_TIME_MS - elapsedTime));
+      }
+
       setSummary(data.summary);
+      setWasCached(data.cached || false);
       setIsExpanded(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
@@ -117,6 +131,12 @@ export function AISummary({ content, title, readingTime }: AISummaryProps) {
         </div>
         {summary && (
           <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400">
+            {wasCached && (
+              <span className="flex items-center gap-1 text-xs bg-violet-100 dark:bg-violet-900/50 px-2 py-1 rounded-full">
+                <Zap className="w-3 h-3" />
+                Instant
+              </span>
+            )}
             <span className="text-sm font-medium">
               {isExpanded ? 'Collapse' : 'Expand'}
             </span>
@@ -155,7 +175,7 @@ export function AISummary({ content, title, readingTime }: AISummaryProps) {
           <div className="p-5 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-2xl text-white">
             <div className="flex items-center gap-2 mb-3">
               <Lightbulb className="w-5 h-5" />
-              <span className="font-semibold uppercase tracking-wide text-sm">TL;DR</span>
+              <span className="font-semibold uppercase tracking-wide text-sm">Quick Summary</span>
             </div>
             <p className="text-lg leading-relaxed text-white/95">{summary.tldr}</p>
           </div>
