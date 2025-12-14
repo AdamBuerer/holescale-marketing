@@ -214,7 +214,7 @@ export default function BlogPost() {
               )}
 
               {/* Meta Info */}
-              <div className="flex flex-wrap items-center gap-6 text-sm">
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm">
                 {/* Author */}
                 <Link
                   to={`/blog/author/${post.author.slug}`}
@@ -223,15 +223,15 @@ export default function BlogPost() {
                   <img
                     src={post.author.avatar}
                     alt={post.author.name}
-                    className="w-12 h-12 rounded-full ring-2 ring-background"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full ring-2 ring-background"
                   />
-                  <div>
+                  <div className="leading-tight">
                     <p className="font-semibold text-foreground">{post.author.name}</p>
-                    <p className="text-muted-foreground">{post.author.role}</p>
+                    <p className="text-muted-foreground text-xs sm:text-sm">{post.author.role}</p>
                   </div>
                 </Link>
 
-                <div className="h-8 w-px bg-border hidden sm:block" />
+                <div className="h-6 sm:h-8 w-px bg-border hidden sm:block" />
 
                 {/* Date */}
                 <div className="flex items-center gap-2 text-muted-foreground">
