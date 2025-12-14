@@ -47,7 +47,7 @@ export function PostCard({ post, index = 0, variant = 'default' }: PostCardProps
                   )}
                 </div>
 
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors duration-300">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 leading-tight group-hover:text-primary transition-colors duration-300 text-left">
                   {post.title}
                 </h2>
 
