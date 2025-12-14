@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Evaluation Scorecard Template | HoleScale</title>
+    <style>
+        @media print {
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #1f2937; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 40px 20px;
+            background: #fff;
+        }
+        .header { text-align: center; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 3px solid #2563eb; }
+        .logo { font-size: 28px; font-weight: 700; color: #2563eb; margin-bottom: 10px; }
+        h1 { font-size: 32px; margin-bottom: 10px; color: #111827; }
+        .subtitle { font-size: 18px; color: #6b7280; }
+        h2 { font-size: 24px; margin: 40px 0 20px; color: #111827; border-left: 4px solid #2563eb; padding-left: 15px; }
+        h3 { font-size: 18px; margin: 25px 0 15px; color: #374151; }
+        p { margin-bottom: 15px; color: #4b5563; }
+        .info-section { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 25px; margin: 25px 0; }
+        .info-row { display: flex; margin-bottom: 15px; }
+        .info-label { min-width: 180px; font-weight: 600; }
+        .info-value { flex: 1; border-bottom: 1px solid #d1d5db; padding-bottom: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; }
+        th { background: #f3f4f6; font-weight: 600; }
+        .score-table th { text-align: center; }
+        .score-table td { text-align: center; }
+        .score-table td:first-child { text-align: left; }
+        .weight-col { width: 80px; background: #f0f9ff; }
+        .score-col { width: 60px; }
+        .weighted-col { width: 80px; background: #f0fdf4; }
+        .total-row { background: #1f2937; color: white; font-weight: 600; }
+        .rating-guide { display: flex; gap: 15px; flex-wrap: wrap; margin: 15px 0; }
+        .rating-item { padding: 8px 15px; background: #f3f4f6; border-radius: 4px; font-size: 14px; }
+        .highlight-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 20px; margin: 25px 0; }
+        .tip-box { background: #f0fdf4; border-left: 4px solid #22c55e; padding: 15px 20px; margin: 20px 0; }
+        .footer { margin-top: 50px; padding-top: 30px; border-top: 1px solid #e5e7eb; text-align: center; color: #6b7280; font-size: 14px; }
+        .cta { background: #2563eb; color: white; padding: 15px 30px; display: inline-block; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+        .cta:hover { background: #1d4ed8; }
+        .print-btn { position: fixed; top: 20px; right: 20px; background: #2563eb; color: white; border: none; padding: 12px 24px; cursor: pointer; border-radius: 6px; font-size: 14px; font-weight: 600; }
+        .print-btn:hover { background: #1d4ed8; }
+        .notes-section { border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 20px 0; min-height: 150px; }
+        .notes-section h4 { margin-bottom: 10px; color: #374151; }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+    
+    <div class="header">
+        <div class="logo">HoleScale</div>
+        <h1>Supplier Evaluation Scorecard</h1>
+        <p class="subtitle">Systematic framework for comparing and evaluating suppliers</p>
+    </div>
+
+    <h2>Supplier Information</h2>
+    
+    <div class="info-section">
+        <div class="info-row">
+            <span class="info-label">Supplier Name:</span>
+            <span class="info-value"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Contact Person:</span>
+            <span class="info-value"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Phone:</span>
+            <span class="info-value"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Evaluation Date:</span>
+            <span class="info-value"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Evaluator Name:</span>
+            <span class="info-value"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Product/Service:</span>
+            <span class="info-value"></span>
+        </div>
+    </div>
+
+    <h2>Rating Scale</h2>
+    <div class="rating-guide">
+        <span class="rating-item"><strong>5</strong> = Excellent</span>
+        <span class="rating-item"><strong>4</strong> = Good</span>
+        <span class="rating-item"><strong>3</strong> = Satisfactory</span>
+        <span class="rating-item"><strong>2</strong> = Needs Improvement</span>
+        <span class="rating-item"><strong>1</strong> = Unacceptable</span>
+    </div>
+
+    <h2>Evaluation Scorecard</h2>
+
+    <table class="score-table">
+        <tr>
+            <th>Evaluation Criteria</th>
+            <th class="weight-col">Weight</th>
+            <th class="score-col">Score (1-5)</th>
+            <th class="weighted-col">Weighted Score</th>
+        </tr>
+        <tr>
+            <td colspan="4" style="background: #e5e7eb; font-weight: 600;">PRICING & VALUE</td>
+        </tr>
+        <tr>
+            <td>Competitive unit pricing</td>
+            <td class="weight-col">10%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Volume discount structure</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Transparent pricing (no hidden fees)</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Payment terms flexibility</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background: #e5e7eb; font-weight: 600;">QUALITY</td>
+        </tr>
+        <tr>
+            <td>Product quality consistency</td>
+            <td class="weight-col">15%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Quality certifications (ISO, etc.)</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Sample quality vs. bulk quality</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background: #e5e7eb; font-weight: 600;">DELIVERY & RELIABILITY</td>
+        </tr>
+        <tr>
+            <td>On-time delivery rate</td>
+            <td class="weight-col">10%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Lead time competitiveness</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Rush order capability</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Order accuracy</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background: #e5e7eb; font-weight: 600;">SERVICE & COMMUNICATION</td>
+        </tr>
+        <tr>
+            <td>Response time to inquiries</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Problem resolution effectiveness</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Account management quality</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr>
+            <td>Technical support/expertise</td>
+            <td class="weight-col">5%</td>
+            <td class="score-col"></td>
+            <td class="weighted-col"></td>
+        </tr>
+        <tr class="total-row">
+            <td>TOTAL SCORE</td>
+            <td>100%</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <div class="tip-box">
+        <strong>💡 Scoring Guide:</strong> Multiply each score (1-5) by its weight percentage to get the weighted score. Sum all weighted scores for the total. A score of 4.0+ indicates an excellent supplier, 3.0-3.9 is good, 2.0-2.9 needs monitoring, below 2.0 requires action.
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Detailed Assessment</h2>
+
+    <div class="notes-section">
+        <h4>Strengths</h4>
+        <p style="color: #9ca3af; font-style: italic;">List key strengths observed during evaluation...</p>
+    </div>
+
+    <div class="notes-section">
+        <h4>Areas for Improvement</h4>
+        <p style="color: #9ca3af; font-style: italic;">List areas where supplier could improve...</p>
+    </div>
+
+    <div class="notes-section">
+        <h4>Risk Factors</h4>
+        <p style="color: #9ca3af; font-style: italic;">Note any potential risks or concerns...</p>
+    </div>
+
+    <h2>Comparison Summary</h2>
+    
+    <table>
+        <tr>
+            <th>Supplier</th>
+            <th>Total Score</th>
+            <th>Pricing Rank</th>
+            <th>Quality Rank</th>
+            <th>Delivery Rank</th>
+            <th>Recommendation</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <h2>Final Recommendation</h2>
+    
+    <div class="info-section">
+        <div class="info-row">
+            <span class="info-label">Recommended Supplier:</span>
+            <span class="info-value"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Decision Date:</span>
+            <span class="info-value"></span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Approved By:</span>
+            <span class="info-value"></span>
+        </div>
+    </div>
+
+    <div class="notes-section">
+        <h4>Justification / Notes</h4>
+        <p style="color: #9ca3af; font-style: italic;">Document the reasoning for supplier selection...</p>
+    </div>
+
+    <div class="highlight-box">
+        <h3>Streamline Your Supplier Evaluation</h3>
+        <p>HoleScale provides verified supplier profiles with ratings, certifications, and performance data to help you make informed decisions faster.</p>
+        <a href="https://www.holescale.com/auth?mode=register" class="cta no-print">Explore Verified Suppliers →</a>
+    </div>
+
+    <div class="footer">
+        <p><strong>HoleScale</strong> - B2B Packaging & Promotional Products Marketplace</p>
+        <p>© 2024 HoleScale. All rights reserved.</p>
+        <p class="no-print"><a href="https://www.holescale.com">www.holescale.com</a></p>
+    </div>
+</body>
+</html>

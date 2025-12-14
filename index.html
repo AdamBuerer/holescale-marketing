@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Holescale - B2B Marketplace</title>
+    <meta name="description" content="B2B Marketplace connecting buyers with verified suppliers" />
+    <meta name="author" content="Holescale" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1e3a8a" />
+
+    <!-- Content Security Policy - simplified for compatibility -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' data: https://fonts.gstatic.com https://r2cdn.perplexity.ai; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms; worker-src 'self' blob:; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
+
+    <meta property="og:title" content="Holescale - B2B Marketplace" />
+    <meta property="og:description" content="B2B Marketplace connecting buyers with verified suppliers" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@holescale" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.clarity.ms" />
+
+    <!-- Preconnect for critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Fonts with display=swap for FOUT optimization -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Critical CSS - inline for instant rendering -->
+    <style>
+      /* Base loading/error states */
+      .hs-loading, .hs-error {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f5f3ff 0%, #eff6ff 100%);
+        padding: 20px;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      }
+      .hs-loading-box, .hs-error-box {
+        max-width: 400px;
+        background: transparent;
+        border-radius: 16px;
+        padding: 32px;
+        text-align: center;
+      }
+
+      /* Optimized spinner animation */
+      .hs-spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid #e5e7eb;
+        border-top: 4px solid #2563eb;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 16px;
+        will-change: transform;
+      }
+
+      /* GPU-accelerated animations */
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+
+      .hs-loading-text {
+        color: #6b7280;
+        font-size: 16px;
+        margin: 0;
+        animation: pulse 2s infinite ease-in-out;
+      }
+      .hs-error-icon {
+        width: 64px;
+        height: 64px;
+        background: #fef3c7;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+      }
+      .hs-btn {
+        background: #7c3aed;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background-color 0.15s ease;
+      }
+      .hs-btn:hover { background: #6d28d9; }
+      .hs-hidden { display: none !important; }
+
+      /* Smooth transition when app loads */
+      .hs-fade-out {
+        animation: fadeOut 0.2s ease-out forwards;
+        pointer-events: none;
+      }
+      #root {
+        animation: fadeIn 0.25s ease-out;
+      }
+
+      /* Prevent FOUC (Flash of Unstyled Content) */
+      #root:not(.hs-hidden) {
+        min-height: 100vh;
+      }
+    </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XSYCKL5VZW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      // Disable automatic page_view - we track manually to prevent duplicate users
+      gtag('config', 'G-XSYCKL5VZW', {
+        send_page_view: false
+      });
+    </script>
+
+    <!-- Microsoft Clarity -->
+    <script>
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window,document,"clarity","script","uh3i6gs4dy");
+    </script>
+  </head>
+
+  <body>
+    <!-- Loading state shown immediately -->
+    <div id="hs-loading" class="hs-loading">
+      <div class="hs-loading-box">
+        <div class="hs-spinner"></div>
+        <p class="hs-loading-text">Loading Holescale...</p>
+      </div>
+    </div>
+
+    <!-- Error state (hidden by default) -->
+    <div id="hs-error" class="hs-error hs-hidden">
+      <div class="hs-error-box">
+        <div class="hs-error-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+            <path d="M12 9v4"/><path d="M12 17h.01"/>
+          </svg>
+        </div>
+        <h1 style="font-size: 24px; font-weight: bold; color: #1f2937; margin: 0 0 16px;">Unable to Load</h1>
+        <p id="hs-error-msg" style="color: #6b7280; margin: 0 0 24px;">Something went wrong. Please try again.</p>
+        <button class="hs-btn" onclick="location.reload()">Reload Page</button>
+      </div>
+    </div>
+
+    <!-- React root (hidden until app loads) -->
+    <div id="root" class="hs-hidden"></div>
+
+    <!-- No JavaScript fallback -->
+    <noscript>
+      <div class="hs-error">
+        <div class="hs-error-box">
+          <h1 style="font-size: 24px; font-weight: bold; color: #1f2937; margin: 0 0 16px;">JavaScript Required</h1>
+          <p style="color: #6b7280; margin: 0;">Please enable JavaScript to use Holescale.</p>
+        </div>
+      </div>
+    </noscript>
+
+    <!-- Global error handler - runs BEFORE any modules load -->
+    <script>
+      window.onerror = function(msg, url, line, col, error) {
+        console.error('[Holescale] Global error:', msg, url, line);
+        document.getElementById('hs-loading').classList.add('hs-hidden');
+        document.getElementById('hs-error').classList.remove('hs-hidden');
+        document.getElementById('hs-error-msg').textContent = 'Error: ' + (msg || 'Unknown error');
+        return true;
+      };
+      window.onunhandledrejection = function(event) {
+        console.error('[Holescale] Unhandled rejection:', event.reason);
+        document.getElementById('hs-loading').classList.add('hs-hidden');
+        document.getElementById('hs-error').classList.remove('hs-hidden');
+        document.getElementById('hs-error-msg').textContent = 'Error: ' + (event.reason?.message || event.reason || 'Unknown error');
+      };
+      // Mark app as ready when React mounts - with smooth transition
+      window.hsAppReady = function() {
+        var loading = document.getElementById('hs-loading');
+        var root = document.getElementById('root');
+
+        // Fade out loading screen
+        loading.classList.add('hs-fade-out');
+
+        // After fade animation, hide loading and show app
+        setTimeout(function() {
+          loading.classList.add('hs-hidden');
+          root.classList.remove('hs-hidden');
+        }, 200);
+      };
+    </script>
+
+    <!-- Main app module -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

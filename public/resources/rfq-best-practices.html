@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RFQ Best Practices Guide | HoleScale</title>
+    <style>
+        @media print {
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #1f2937; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 40px 20px;
+            background: #fff;
+        }
+        .header { text-align: center; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 3px solid #2563eb; }
+        .logo { font-size: 28px; font-weight: 700; color: #2563eb; margin-bottom: 10px; }
+        h1 { font-size: 32px; margin-bottom: 10px; color: #111827; }
+        .subtitle { font-size: 18px; color: #6b7280; }
+        h2 { font-size: 24px; margin: 40px 0 20px; color: #111827; border-left: 4px solid #2563eb; padding-left: 15px; }
+        h3 { font-size: 18px; margin: 25px 0 15px; color: #374151; }
+        p { margin-bottom: 15px; color: #4b5563; }
+        ul, ol { margin: 15px 0 15px 25px; color: #4b5563; }
+        li { margin-bottom: 8px; }
+        .highlight-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 20px; margin: 25px 0; }
+        .tip-box { background: #f0fdf4; border-left: 4px solid #22c55e; padding: 15px 20px; margin: 20px 0; }
+        .warning-box { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 15px 20px; margin: 20px 0; }
+        .example-box { background: #faf5ff; border: 1px solid #d8b4fe; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .example-box h4 { color: #7c3aed; margin-bottom: 10px; }
+        .bad-example { background: #fef2f2; border-color: #fca5a5; }
+        .bad-example h4 { color: #dc2626; }
+        .good-example { background: #f0fdf4; border-color: #86efac; }
+        .good-example h4 { color: #16a34a; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #e5e7eb; padding: 12px; text-align: left; }
+        th { background: #f3f4f6; font-weight: 600; }
+        .footer { margin-top: 50px; padding-top: 30px; border-top: 1px solid #e5e7eb; text-align: center; color: #6b7280; font-size: 14px; }
+        .cta { background: #2563eb; color: white; padding: 15px 30px; display: inline-block; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+        .cta:hover { background: #1d4ed8; }
+        .print-btn { position: fixed; top: 20px; right: 20px; background: #2563eb; color: white; border: none; padding: 12px 24px; cursor: pointer; border-radius: 6px; font-size: 14px; font-weight: 600; }
+        .print-btn:hover { background: #1d4ed8; }
+        .numbered-list { counter-reset: item; list-style: none; margin-left: 0; }
+        .numbered-list li { counter-increment: item; padding-left: 40px; position: relative; margin-bottom: 15px; }
+        .numbered-list li::before { content: counter(item); position: absolute; left: 0; top: 0; width: 28px; height: 28px; background: #2563eb; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+    
+    <div class="header">
+        <div class="logo">HoleScale</div>
+        <h1>RFQ Best Practices Guide</h1>
+        <p class="subtitle">Write effective RFQs that get you better quotes and faster responses</p>
+    </div>
+
+    <h2>Why RFQ Quality Matters</h2>
+    <p>A well-crafted Request for Quote (RFQ) is the foundation of successful procurement. Clear, detailed RFQs help suppliers understand your needs precisely, resulting in:</p>
+    <ul>
+        <li>More accurate pricing (fewer surprises later)</li>
+        <li>Faster response times from suppliers</li>
+        <li>Better ability to compare quotes apples-to-apples</li>
+        <li>Reduced back-and-forth communication</li>
+        <li>Stronger supplier relationships from the start</li>
+    </ul>
+
+    <h2>Essential RFQ Components</h2>
+
+    <ol class="numbered-list">
+        <li>
+            <strong>Clear Product Specifications</strong>
+            <p>Be specific about dimensions, materials, colors, and any technical requirements. Vague descriptions lead to inaccurate quotes.</p>
+        </li>
+        <li>
+            <strong>Quantity Requirements</strong>
+            <p>Include exact quantities needed, and consider requesting tiered pricing for different volumes.</p>
+        </li>
+        <li>
+            <strong>Timeline & Delivery Details</strong>
+            <p>Specify your required delivery date, shipping destination(s), and any flexibility in timing.</p>
+        </li>
+        <li>
+            <strong>Quality Standards</strong>
+            <p>Define acceptable quality levels, required certifications, and any testing requirements.</p>
+        </li>
+        <li>
+            <strong>Budget Indication</strong>
+            <p>While optional, providing a budget range helps suppliers tailor their proposals appropriately.</p>
+        </li>
+    </ol>
+
+    <h2>Good vs. Bad RFQ Examples</h2>
+
+    <div class="example-box bad-example">
+        <h4>❌ Poor RFQ Example</h4>
+        <p><em>"Need custom boxes for shipping. Please quote."</em></p>
+        <p style="margin-top: 10px; font-size: 14px;"><strong>Problems:</strong> No dimensions, no material specs, no quantity, no timeline, no shipping info. Suppliers cannot provide accurate quotes.</p>
+    </div>
+
+    <div class="example-box good-example">
+        <h4>✅ Strong RFQ Example</h4>
+        <p><em>"Request for Quote: Custom Shipping Boxes</em></p>
+        <p><em><strong>Specifications:</strong></em></p>
+        <ul style="font-size: 14px; margin: 10px 0;">
+            <li>Dimensions: 12" x 10" x 6" (internal)</li>
+            <li>Material: 200# ECT-32 corrugated cardboard</li>
+            <li>Print: 2-color (PMS 287 Blue, Black) on exterior</li>
+            <li>Style: Regular Slotted Container (RSC)</li>
+        </ul>
+        <p><em><strong>Quantity:</strong> 5,000 units initially, estimated 20,000/year</em></p>
+        <p><em><strong>Delivery:</strong> Ship to Chicago, IL 60601 by February 15, 2025</em></p>
+        <p><em><strong>Requirements:</strong> FSC certification preferred, samples required before bulk order"</em></p>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>Specification Details by Product Type</h2>
+
+    <h3>Packaging Materials</h3>
+    <table>
+        <tr>
+            <th>Always Include</th>
+            <th>Details Needed</th>
+        </tr>
+        <tr>
+            <td>Dimensions</td>
+            <td>Length × Width × Height (specify internal or external)</td>
+        </tr>
+        <tr>
+            <td>Material</td>
+            <td>Board grade, flute type, coating requirements</td>
+        </tr>
+        <tr>
+            <td>Print Specs</td>
+            <td>Number of colors, PMS codes, print location, finish</td>
+        </tr>
+        <tr>
+            <td>Box Style</td>
+            <td>RSC, mailer, tuck-end, rigid, etc.</td>
+        </tr>
+        <tr>
+            <td>Weight Capacity</td>
+            <td>Maximum product weight the box must support</td>
+        </tr>
+    </table>
+
+    <h3>Promotional Products</h3>
+    <table>
+        <tr>
+            <th>Always Include</th>
+            <th>Details Needed</th>
+        </tr>
+        <tr>
+            <td>Product Type</td>
+            <td>Specific item (e.g., "16oz stainless steel tumbler")</td>
+        </tr>
+        <tr>
+            <td>Imprint Details</td>
+            <td>Logo size, colors, location, decoration method</td>
+        </tr>
+        <tr>
+            <td>Product Colors</td>
+            <td>Specific colors needed, quantities per color</td>
+        </tr>
+        <tr>
+            <td>Packaging</td>
+            <td>Bulk, individual poly bag, gift box, etc.</td>
+        </tr>
+        <tr>
+            <td>Compliance</td>
+            <td>Safety certifications, material restrictions</td>
+        </tr>
+    </table>
+
+    <h2>Quantity Strategies</h2>
+
+    <div class="tip-box">
+        <strong>💡 Pro Tip:</strong> Always request tiered pricing. Ask for quotes at multiple quantity levels (e.g., 1,000 / 2,500 / 5,000 units) to understand volume discounts and help with future planning.
+    </div>
+
+    <h3>Sample Tiered Pricing Request</h3>
+    <p>Include in your RFQ:</p>
+    <ul>
+        <li><strong>Initial Order:</strong> 2,500 units</li>
+        <li><strong>Please also quote:</strong> 1,000, 5,000, and 10,000 units</li>
+        <li><strong>Estimated Annual Volume:</strong> 15,000-20,000 units</li>
+    </ul>
+
+    <h2>Timeline Best Practices</h2>
+
+    <div class="warning-box">
+        <strong>⚠️ Common Mistake:</strong> Setting unrealistic deadlines frustrates suppliers and limits your options. Standard production times are typically 2-4 weeks plus shipping.
+    </div>
+
+    <h3>Realistic Timeline Planning</h3>
+    <ul>
+        <li><strong>Quote Response:</strong> Allow 2-5 business days</li>
+        <li><strong>Sample Production:</strong> 3-7 business days</li>
+        <li><strong>Sample Shipping:</strong> 2-5 business days</li>
+        <li><strong>Bulk Production:</strong> 10-20 business days (varies by product)</li>
+        <li><strong>Bulk Shipping:</strong> 3-10 business days (domestic)</li>
+    </ul>
+
+    <h2>What to Ask For in Quotes</h2>
+
+    <p>Request that suppliers include the following in their quotes:</p>
+    <ul>
+        <li>Unit price at each quantity level</li>
+        <li>Setup/origination fees</li>
+        <li>Any additional charges (PMS matching, proofs, etc.)</li>
+        <li>Production timeline</li>
+        <li>Shipping cost estimate to your location</li>
+        <li>Payment terms</li>
+        <li>Sample availability and cost</li>
+        <li>Certifications held</li>
+    </ul>
+
+    <h2>RFQ Template Checklist</h2>
+
+    <div class="highlight-box">
+        <p>Use this checklist before submitting your RFQ:</p>
+        <ul style="list-style: none; margin-left: 0;">
+            <li>☐ Product specifications are complete and specific</li>
+            <li>☐ Quantities are clearly stated</li>
+            <li>☐ Delivery date and location included</li>
+            <li>☐ Quality requirements defined</li>
+            <li>☐ Artwork/logo files ready to share</li>
+            <li>☐ Response deadline set (reasonable)</li>
+            <li>☐ Contact information provided</li>
+            <li>☐ Requested quote format specified</li>
+            <li>☐ Any special requirements noted</li>
+            <li>☐ Photos or reference materials attached</li>
+        </ul>
+    </div>
+
+    <h2>Common Mistakes to Avoid</h2>
+
+    <ol>
+        <li><strong>Being too vague</strong> - Suppliers need details to quote accurately</li>
+        <li><strong>Unrealistic timelines</strong> - Rush fees add up quickly</li>
+        <li><strong>Forgetting shipping costs</strong> - Can significantly impact total cost</li>
+        <li><strong>Not requesting samples</strong> - Always verify quality before bulk orders</li>
+        <li><strong>Ignoring MOQs</strong> - Minimum order quantities affect pricing</li>
+        <li><strong>Poor artwork quality</strong> - Low-res files delay the process</li>
+        <li><strong>Not specifying units</strong> - Inches vs. centimeters matters!</li>
+    </ol>
+
+    <div class="highlight-box">
+        <h3>Ready to Create Better RFQs?</h3>
+        <p>HoleScale's RFQ builder guides you through creating comprehensive requests that get you accurate quotes from verified suppliers.</p>
+        <a href="https://www.holescale.com/post-rfq" class="cta no-print">Create Your RFQ →</a>
+    </div>
+
+    <div class="footer">
+        <p><strong>HoleScale</strong> - B2B Packaging & Promotional Products Marketplace</p>
+        <p>© 2024 HoleScale. All rights reserved.</p>
+        <p class="no-print"><a href="https://www.holescale.com">www.holescale.com</a></p>
+    </div>
+</body>
+</html>

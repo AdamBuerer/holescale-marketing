@@ -1,0 +1,196 @@
+/* Mobile scroll fixes */
+html, body {
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body {
+  position: relative;
+}
+
+/* iOS smooth scrolling */
+.ios-smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+/* Touch scrolling */
+.touch-pan-y {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent zoom on input focus (iOS) */
+@media screen and (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Prevent horizontal scroll and drift on mobile */
+#root {
+  max-width: 100vw;
+  overflow-x: clip;
+}
+
+/* Page containers need to scroll vertically - don't restrict overflow */
+.min-h-screen,
+.h-screen {
+  max-width: 100vw;
+}
+
+/* Prevent accidental horizontal scrolling */
+* {
+  overscroll-behavior-x: none;
+}
+
+/* Mobile layout and spacing fixes */
+@media (max-width: 768px) {
+  /* Ensure smooth scrolling on mobile */
+  html {
+    scroll-behavior: auto;
+  }
+  
+  /* Ensure admin layout takes full width */
+  .admin-layout {
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  /* Hide sidebar by default on mobile (controlled by drawer) */
+  .admin-sidebar {
+    display: none;
+  }
+
+  /* Ensure main content takes full width */
+  .admin-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  /* Make window tray stack vertically */
+  .window-tray {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  /* Ensure modals/sheets work properly on mobile */
+  .modal-overlay {
+    z-index: 9998 !important;
+  }
+
+  /* Fix safe area for iOS */
+  .pb-safe {
+    padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+  }
+
+  .pt-safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Ensure proper bottom padding for pages with bottom nav */
+  main.pb-20 {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom)) !important;
+  }
+
+  /* Page container responsive padding */
+  .page-container {
+    padding: 1rem !important;
+  }
+
+  /* Prevent charts and cards from causing horizontal scroll */
+  .recharts-wrapper,
+  .recharts-surface {
+    max-width: 100% !important;
+  }
+
+  /* Ensure all content respects viewport width */
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl {
+    max-width: 100vw !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Admin pages need extra top padding for header */
+  .admin-page {
+    padding-top: 5rem !important;
+  }
+  
+  /* Ensure cards have proper mobile spacing */
+  .mobile-card-spacing {
+    margin-bottom: 1rem;
+  }
+  
+  /* Make tables scroll horizontally */
+  .mobile-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Adjust text sizes */
+  .mobile-heading {
+    font-size: 1.5rem !important;
+  }
+  
+  /* Button groups stack vertically */
+  .mobile-button-stack {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* Extra bottom padding to prevent FAB overlap */
+  .has-fab {
+    padding-bottom: 6rem !important;
+  }
+
+  /* Adjust FAB positioning on mobile */
+  .fixed.bottom-6.right-6 {
+    bottom: 1.5rem !important;
+    right: 1rem !important;
+  }
+
+  /* Drawer content spacing */
+  [role="dialog"] nav {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Better mobile card layout */
+  .grid.grid-cols-2 {
+    gap: 0.75rem;
+  }
+
+  /* Consistent page padding for all buyer pages */
+  main > div:first-child {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Breadcrumb mobile spacing */
+  nav[aria-label="Breadcrumb"] {
+    padding-top: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Mobile header logo improvements */
+  header .flex.flex-col.items-center {
+    padding: 0.25rem 0.5rem;
+  }
+  
+  /* Tighter logo sizing on mobile */
+  img[alt*="HoleScale"],
+  img[alt*="Logo"] {
+    max-width: 120px !important;
+    height: auto;
+  }
+}
