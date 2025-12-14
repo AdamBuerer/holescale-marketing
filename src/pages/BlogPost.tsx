@@ -274,8 +274,8 @@ export default function BlogPost() {
       </FadeIn>
 
       {/* Article Content */}
-      <article ref={articleRef} className="py-12 md:py-16">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <article ref={articleRef} className="py-12 md:py-16" style={{ overflow: 'visible' }}>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8" style={{ overflow: 'visible' }}>
           <FadeIn delay={300}>
             {/* Article Body */}
             <div
@@ -290,6 +290,15 @@ export default function BlogPost() {
               font-size: 1.125rem;
               line-height: 1.8;
               color: hsl(var(--muted-foreground));
+              overflow: visible !important;
+            }
+
+            .article-content * {
+              overflow: visible !important;
+            }
+
+            .article-content pre {
+              overflow-x: auto !important;
             }
 
             .article-content h2 {
