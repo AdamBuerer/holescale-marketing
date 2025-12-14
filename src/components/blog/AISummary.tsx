@@ -87,11 +87,12 @@ export function AISummary({ content, title, readingTime, postId }: AISummaryProp
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-8" style={{ overflow: 'visible' }}>
       {/* Summary Button */}
       <button
         onClick={handleSummarize}
         disabled={isLoading}
+        style={{ overflow: 'visible' }}
         className={cn(
           'group w-full flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl border-2 transition-all duration-300',
           summary
@@ -99,7 +100,7 @@ export function AISummary({ content, title, readingTime, postId }: AISummaryProp
             : 'bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 border-slate-200 dark:border-slate-700 hover:border-violet-300 dark:hover:border-violet-700 hover:from-violet-50 hover:to-indigo-50 dark:hover:from-violet-950/30 dark:hover:to-indigo-950/30'
         )}
       >
-        <div className="flex items-center gap-3 min-w-0 flex-1">
+        <div className="flex items-center gap-3 min-w-0 flex-1" style={{ overflow: 'visible' }}>
           <div className={cn(
             'w-10 h-10 min-w-[2.5rem] rounded-xl flex items-center justify-center transition-all duration-300 flex-shrink-0',
             summary
