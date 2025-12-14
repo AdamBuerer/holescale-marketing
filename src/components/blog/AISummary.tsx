@@ -39,13 +39,15 @@ export function AISummary({ content, title, readingTime }: AISummaryProps) {
     setError(null);
 
     try {
+      const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
       const response = await fetch(
         `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/summarize-blog`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            'apikey': anonKey,
+            'Authorization': `Bearer ${anonKey}`,
           },
           body: JSON.stringify({
             content,
