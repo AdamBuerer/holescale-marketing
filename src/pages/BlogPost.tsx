@@ -541,31 +541,26 @@ export default function BlogPost() {
             </FadeIn>
           )}
 
-          {/* CTA */}
-          <FadeIn delay={500}>
-            <BlogCTA variant={ctaVariant} postSlug={post.slug} className="my-12" />
-          </FadeIn>
-
           {/* Author Card */}
-          <FadeIn delay={600}>
+          <FadeIn delay={500}>
             <div ref={authorSectionRef} className="bg-muted/50 rounded-2xl p-6 md:p-8">
-              <p className="text-sm font-medium text-muted-foreground mb-4">Written by</p>
+              <p className="text-sm font-medium text-muted-foreground mb-4 text-left">Written by</p>
               <div className="flex items-start gap-4">
                 <img
                   src={post.author.avatar}
                   alt={post.author.name}
                   className="w-16 h-16 rounded-full"
                 />
-                <div className="flex-1">
+                <div className="flex-1 text-left">
                   <Link
                     to={`/blog/author/${post.author.slug}`}
-                    className="text-xl font-bold hover:text-primary transition-colors"
+                    className="text-xl font-bold hover:text-primary transition-colors block text-left"
                   >
                     {post.author.name}
                   </Link>
-                  <p className="text-muted-foreground mb-3">{post.author.role}</p>
+                  <p className="text-muted-foreground mb-3 text-left">{post.author.role}</p>
                   {post.author.bio && (
-                    <p className="text-sm text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-muted-foreground leading-relaxed text-left">
                       {post.author.bio}
                     </p>
                   )}
@@ -575,10 +570,10 @@ export default function BlogPost() {
           </FadeIn>
 
           {/* Share Section */}
-          <FadeIn delay={700}>
+          <FadeIn delay={600}>
             <div className="mt-10 pt-8 border-t border-border/50">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div>
+                <div className="text-left">
                   <p className="font-semibold text-foreground mb-1">Enjoyed this article?</p>
                   <p className="text-sm text-muted-foreground">Share it with your network</p>
                 </div>
@@ -590,6 +585,11 @@ export default function BlogPost() {
                 />
               </div>
             </div>
+          </FadeIn>
+
+          {/* CTA */}
+          <FadeIn delay={700}>
+            <BlogCTA variant={ctaVariant} postSlug={post.slug} className="my-12" />
           </FadeIn>
         </div>
       </article>
