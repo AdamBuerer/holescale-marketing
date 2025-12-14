@@ -8,6 +8,7 @@ interface ShareButtonsProps {
   title: string;
   description?: string;
   variant?: 'default' | 'compact';
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export function ShareButtons({
@@ -15,6 +16,7 @@ export function ShareButtons({
   title,
   description,
   variant = 'default',
+  size = 'md',
 }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
   const shareUrls = generateShareUrls(url, title, description);
@@ -29,12 +31,27 @@ export function ShareButtons({
     }
   };
 
+  const sizeClasses = {
+    sm: 'p-1.5 h-auto min-w-[32px]',
+    md: 'p-2 h-auto min-w-[40px]',
+    lg: 'p-3 h-auto min-w-[48px]',
+  };
+
+  const iconSizes = {
+    sm: 'w-3.5 h-3.5',
+    md: 'w-4 h-4',
+    lg: 'w-5 h-5',
+  };
+
   const buttonClass = variant === 'compact'
     ? 'p-2 h-auto'
-    : 'p-2 h-auto min-w-[40px]';
+    : sizeClasses[size];
+
+  const iconClass = iconSizes[size];
+  const gapClass = size === 'lg' ? 'gap-3' : 'gap-2';
 
   return (
-    <div className="flex items-center gap-2">
+    <div className={`flex items-center ${gapClass}`}>
       {variant === 'default' && (
         <span className="text-sm text-muted-foreground mr-2">Share:</span>
       )}
@@ -50,7 +67,7 @@ export function ShareButtons({
           rel="noopener noreferrer"
           aria-label="Share on Twitter"
         >
-          <Twitter className="w-4 h-4" />
+          <Twitter className={iconClass} />
         </a>
       </Button>
       <Button
@@ -65,7 +82,7 @@ export function ShareButtons({
           rel="noopener noreferrer"
           aria-label="Share on LinkedIn"
         >
-          <Linkedin className="w-4 h-4" />
+          <Linkedin className={iconClass} />
         </a>
       </Button>
       <Button
@@ -80,7 +97,7 @@ export function ShareButtons({
           rel="noopener noreferrer"
           aria-label="Share on Facebook"
         >
-          <Facebook className="w-4 h-4" />
+          <Facebook className={iconClass} />
         </a>
       </Button>
       <Button
@@ -91,9 +108,9 @@ export function ShareButtons({
         aria-label="Copy link"
       >
         {copied ? (
-          <Check className="w-4 h-4 text-green-600" />
+          <Check className={`${iconClass} text-green-600`} />
         ) : (
-          <Link2 className="w-4 h-4" />
+          <Link2 className={iconClass} />
         )}
       </Button>
     </div>

@@ -16,13 +16,46 @@ import { cn } from '@/lib/utils';
 
 type MenuType = 'solutions' | 'product' | 'resources' | null;
 
+interface DropdownPosition {
+  top: number;
+  left: number;
+  width: number;
+}
+
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MenuType>(null);
   const [mobileActiveMenu, setMobileActiveMenu] = useState<MenuType>(null);
+  const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>({ top: 0, left: 0, width: 800 });
   const navRef = useRef<HTMLElement>(null);
+  const solutionsBtnRef = useRef<HTMLButtonElement>(null);
+  const productBtnRef = useRef<HTMLButtonElement>(null);
+  const resourcesBtnRef = useRef<HTMLButtonElement>(null);
   const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { user, hasRole } = useAuth();
+
+  // Calculate dropdown position based on trigger button
+  const calculateDropdownPosition = useCallback((btnRef: React.RefObject<HTMLButtonElement | null>, menuWidth: number) => {
+    if (!btnRef.current) return;
+    const rect = btnRef.current.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+
+    // Center the dropdown on the button, but keep it within viewport bounds
+    let left = rect.left + rect.width / 2 - menuWidth / 2;
+
+    // Ensure dropdown doesn't go off the left edge
+    if (left < 16) left = 16;
+    // Ensure dropdown doesn't go off the right edge
+    if (left + menuWidth > viewportWidth - 16) {
+      left = viewportWidth - menuWidth - 16;
+    }
+
+    setDropdownPosition({
+      top: rect.bottom + 4,
+      left,
+      width: menuWidth,
+    });
+  }, []);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -52,8 +85,16 @@ const Navigation = () => {
       clearTimeout(closeTimeoutRef.current);
       closeTimeoutRef.current = null;
     }
+    // Calculate position based on which menu
+    if (menu === 'solutions') {
+      calculateDropdownPosition(solutionsBtnRef, 800);
+    } else if (menu === 'product') {
+      calculateDropdownPosition(productBtnRef, 700);
+    } else if (menu === 'resources') {
+      calculateDropdownPosition(resourcesBtnRef, 500);
+    }
     setActiveMenu(menu);
-  }, []);
+  }, [calculateDropdownPosition]);
 
   const scheduleClose = useCallback(() => {
     closeTimeoutRef.current = setTimeout(() => {
@@ -105,8 +146,9 @@ const Navigation = () => {
               role="none"
             >
               <button
+                ref={solutionsBtnRef}
                 type="button"
-                onClick={() => setActiveMenu(activeMenu === 'solutions' ? null : 'solutions')}
+                onClick={() => activeMenu === 'solutions' ? setActiveMenu(null) : openMenu('solutions')}
                 onFocus={() => openMenu('solutions')}
                 className={cn(
                   "flex items-center gap-1 px-3 xl:px-4 py-2 rounded-lg text-sm xl:text-base font-medium transition-all",
@@ -126,11 +168,16 @@ const Navigation = () => {
               <div
                 id="solutions-menu"
                 className={cn(
-                  "absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[800px] bg-card rounded-2xl shadow-2xl border border-border/50 overflow-hidden transition-all duration-200 z-[100]",
+                  "fixed bg-card rounded-2xl shadow-2xl border border-border/50 overflow-hidden transition-all duration-200",
                   activeMenu === 'solutions'
-                    ? "opacity-100 visible translate-y-0"
-                    : "opacity-0 invisible -translate-y-2"
+                    ? "opacity-100 visible translate-y-0 z-[9999]"
+                    : "opacity-0 invisible -translate-y-2 pointer-events-none z-[-1]"
                 )}
+                style={{
+                  top: `${dropdownPosition.top}px`,
+                  left: `${dropdownPosition.left}px`,
+                  width: '800px',
+                }}
                 onMouseEnter={cancelClose}
                 onMouseLeave={scheduleClose}
                 role="menu"
@@ -250,8 +297,9 @@ const Navigation = () => {
               role="none"
             >
               <button
+                ref={productBtnRef}
                 type="button"
-                onClick={() => setActiveMenu(activeMenu === 'product' ? null : 'product')}
+                onClick={() => activeMenu === 'product' ? setActiveMenu(null) : openMenu('product')}
                 onFocus={() => openMenu('product')}
                 className={cn(
                   "flex items-center gap-1 px-3 xl:px-4 py-2 rounded-lg text-sm xl:text-base font-medium transition-all",
@@ -271,11 +319,16 @@ const Navigation = () => {
               <div
                 id="product-menu"
                 className={cn(
-                  "absolute top-full left-1/2 -translate-x-1/2 mt-1 w-[700px] bg-card rounded-2xl shadow-2xl border border-border/50 overflow-hidden transition-all duration-200 z-[100]",
+                  "fixed bg-card rounded-2xl shadow-2xl border border-border/50 overflow-hidden transition-all duration-200",
                   activeMenu === 'product'
-                    ? "opacity-100 visible translate-y-0"
-                    : "opacity-0 invisible -translate-y-2"
+                    ? "opacity-100 visible translate-y-0 z-[9999]"
+                    : "opacity-0 invisible -translate-y-2 pointer-events-none z-[-1]"
                 )}
+                style={{
+                  top: `${dropdownPosition.top}px`,
+                  left: `${dropdownPosition.left}px`,
+                  width: '700px',
+                }}
                 onMouseEnter={cancelClose}
                 onMouseLeave={scheduleClose}
                 role="menu"
@@ -378,8 +431,9 @@ const Navigation = () => {
               role="none"
             >
               <button
+                ref={resourcesBtnRef}
                 type="button"
-                onClick={() => setActiveMenu(activeMenu === 'resources' ? null : 'resources')}
+                onClick={() => activeMenu === 'resources' ? setActiveMenu(null) : openMenu('resources')}
                 onFocus={() => openMenu('resources')}
                 className={cn(
                   "flex items-center gap-1 px-3 xl:px-4 py-2 rounded-lg text-sm xl:text-base font-medium transition-all",
@@ -399,11 +453,16 @@ const Navigation = () => {
               <div
                 id="resources-menu"
                 className={cn(
-                  "absolute top-full right-0 mt-1 w-[500px] bg-card rounded-2xl shadow-2xl border border-border/50 overflow-hidden transition-all duration-200 z-[100]",
+                  "fixed bg-card rounded-2xl shadow-2xl border border-border/50 overflow-hidden transition-all duration-200",
                   activeMenu === 'resources'
-                    ? "opacity-100 visible translate-y-0"
-                    : "opacity-0 invisible -translate-y-2"
+                    ? "opacity-100 visible translate-y-0 z-[9999]"
+                    : "opacity-0 invisible -translate-y-2 pointer-events-none z-[-1]"
                 )}
+                style={{
+                  top: `${dropdownPosition.top}px`,
+                  left: `${dropdownPosition.left}px`,
+                  width: '500px',
+                }}
                 onMouseEnter={cancelClose}
                 onMouseLeave={scheduleClose}
                 role="menu"

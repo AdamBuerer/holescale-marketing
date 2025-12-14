@@ -73,7 +73,7 @@ function ReadingProgress({ targetRef }: ReadingProgressProps) {
   }, [targetRef]);
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-50">
+    <div className="fixed top-0 left-0 right-0 h-1 bg-muted z-[60]">
       <div
         className="h-full bg-gradient-to-r from-primary to-primary/80 transition-all duration-150"
         style={{ width: `${progress}%` }}
@@ -570,6 +570,24 @@ export default function BlogPost() {
                     </p>
                   )}
                 </div>
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Share Section */}
+          <FadeIn delay={700}>
+            <div className="mt-10 pt-8 border-t border-border/50">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-foreground mb-1">Enjoyed this article?</p>
+                  <p className="text-sm text-muted-foreground">Share it with your network</p>
+                </div>
+                <ShareButtons
+                  url={postUrl}
+                  title={post.title}
+                  description={post.excerpt}
+                  size="lg"
+                />
               </div>
             </div>
           </FadeIn>
