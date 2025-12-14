@@ -279,27 +279,194 @@ export default function BlogPost() {
           <FadeIn delay={300}>
             {/* Article Body */}
             <div
-              className="prose prose-lg max-w-none
-                prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground
-                prose-h2:text-2xl prose-h2:md:text-3xl prose-h2:mt-12 prose-h2:mb-6 prose-h2:scroll-mt-20
-                prose-h3:text-xl prose-h3:md:text-2xl prose-h3:mt-10 prose-h3:mb-4 prose-h3:scroll-mt-20
-                prose-h4:text-lg prose-h4:mt-8 prose-h4:mb-3
-                prose-p:text-muted-foreground prose-p:leading-[1.8] prose-p:mb-6
-                prose-a:text-primary prose-a:font-medium prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-foreground prose-strong:font-semibold
-                prose-ul:my-6 prose-ol:my-6 prose-ul:pl-6 prose-ol:pl-6
-                prose-li:text-muted-foreground prose-li:leading-[1.8] prose-li:mb-2
-                prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-muted/50 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:text-foreground prose-blockquote:font-medium
-                prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
-                prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-pre:rounded-xl prose-pre:shadow-lg
-                prose-img:rounded-xl prose-img:shadow-lg
-                prose-table:border prose-table:rounded-xl prose-table:overflow-hidden
-                prose-th:bg-muted prose-th:p-4 prose-th:text-left prose-th:font-semibold
-                prose-td:p-4 prose-td:border-t
-                prose-hr:my-12 prose-hr:border-border"
+              className="article-content"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </FadeIn>
+
+          {/* Article Styles */}
+          <style>{`
+            .article-content {
+              font-size: 1.125rem;
+              line-height: 1.8;
+              color: hsl(var(--muted-foreground));
+            }
+
+            .article-content h2 {
+              font-size: 1.875rem;
+              font-weight: 700;
+              color: hsl(var(--foreground));
+              margin-top: 3rem;
+              margin-bottom: 1.5rem;
+              line-height: 1.3;
+              letter-spacing: -0.02em;
+              scroll-margin-top: 5rem;
+              padding-bottom: 0.75rem;
+              border-bottom: 2px solid hsl(var(--border));
+            }
+
+            .article-content h3 {
+              font-size: 1.5rem;
+              font-weight: 600;
+              color: hsl(var(--foreground));
+              margin-top: 2.5rem;
+              margin-bottom: 1rem;
+              line-height: 1.4;
+              scroll-margin-top: 5rem;
+            }
+
+            .article-content h4 {
+              font-size: 1.25rem;
+              font-weight: 600;
+              color: hsl(var(--foreground));
+              margin-top: 2rem;
+              margin-bottom: 0.75rem;
+            }
+
+            .article-content p {
+              margin-bottom: 1.5rem;
+              line-height: 1.8;
+            }
+
+            .article-content p:first-of-type {
+              font-size: 1.25rem;
+              color: hsl(var(--foreground));
+              line-height: 1.7;
+            }
+
+            .article-content a {
+              color: hsl(var(--primary));
+              font-weight: 500;
+              text-decoration: none;
+              border-bottom: 1px solid transparent;
+              transition: border-color 0.2s;
+            }
+
+            .article-content a:hover {
+              border-bottom-color: hsl(var(--primary));
+            }
+
+            .article-content strong {
+              color: hsl(var(--foreground));
+              font-weight: 600;
+            }
+
+            .article-content ul,
+            .article-content ol {
+              margin: 1.5rem 0;
+              padding-left: 1.5rem;
+            }
+
+            .article-content ul {
+              list-style-type: disc;
+            }
+
+            .article-content ol {
+              list-style-type: decimal;
+            }
+
+            .article-content li {
+              margin-bottom: 0.75rem;
+              line-height: 1.7;
+              padding-left: 0.5rem;
+            }
+
+            .article-content li::marker {
+              color: hsl(var(--primary));
+            }
+
+            .article-content blockquote {
+              margin: 2rem 0;
+              padding: 1.5rem 2rem;
+              border-left: 4px solid hsl(var(--primary));
+              background: hsl(var(--muted) / 0.5);
+              border-radius: 0 1rem 1rem 0;
+              font-style: normal;
+              color: hsl(var(--foreground));
+              font-weight: 500;
+            }
+
+            .article-content blockquote p {
+              margin-bottom: 0;
+              font-size: 1.125rem;
+            }
+
+            .article-content code {
+              background: hsl(var(--muted));
+              padding: 0.2rem 0.5rem;
+              border-radius: 0.375rem;
+              font-size: 0.875rem;
+              font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            }
+
+            .article-content pre {
+              background: #1e293b;
+              color: #e2e8f0;
+              padding: 1.5rem;
+              border-radius: 1rem;
+              overflow-x: auto;
+              margin: 2rem 0;
+              box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            }
+
+            .article-content pre code {
+              background: transparent;
+              padding: 0;
+              font-size: 0.875rem;
+            }
+
+            .article-content img {
+              border-radius: 1rem;
+              box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+              margin: 2rem 0;
+            }
+
+            .article-content table {
+              width: 100%;
+              border-collapse: collapse;
+              margin: 2rem 0;
+              border-radius: 1rem;
+              overflow: hidden;
+              border: 1px solid hsl(var(--border));
+            }
+
+            .article-content th {
+              background: hsl(var(--muted));
+              padding: 1rem;
+              text-align: left;
+              font-weight: 600;
+              color: hsl(var(--foreground));
+            }
+
+            .article-content td {
+              padding: 1rem;
+              border-top: 1px solid hsl(var(--border));
+            }
+
+            .article-content hr {
+              margin: 3rem 0;
+              border: none;
+              border-top: 1px solid hsl(var(--border));
+            }
+
+            @media (min-width: 768px) {
+              .article-content {
+                font-size: 1.1875rem;
+              }
+
+              .article-content h2 {
+                font-size: 2.25rem;
+              }
+
+              .article-content h3 {
+                font-size: 1.75rem;
+              }
+
+              .article-content p:first-of-type {
+                font-size: 1.375rem;
+              }
+            }
+          `}</style>
 
           {/* Mobile Share */}
           <div className="sm:hidden my-8 flex justify-center">
