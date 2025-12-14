@@ -211,7 +211,7 @@ export function PostCard({ post, index = 0, variant = 'default' }: PostCardProps
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-primary transition-colors duration-300 leading-snug">
+              <h3 className="text-xl font-bold mb-3 line-clamp-2 group-hover:text-primary transition-colors duration-300 leading-snug text-left">
                 {post.title}
               </h3>
 
