@@ -117,6 +117,11 @@ export default function BlogPost() {
   const articleRef = useRef<HTMLDivElement>(null);
   const authorSectionRef = useRef<HTMLDivElement>(null);
 
+  // Scroll to top when navigating to a new blog post
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
   if (isLoading) {
     return (
       <>
@@ -251,9 +256,9 @@ export default function BlogPost() {
                     alt={post.author.name}
                     className="w-10 h-10 sm:w-12 sm:h-12 rounded-full ring-2 ring-background"
                   />
-                  <div className="leading-tight">
-                    <p className="font-semibold text-foreground">{post.author.name}</p>
-                    <p className="text-muted-foreground text-xs sm:text-sm">{post.author.role}</p>
+                  <div className="leading-tight text-left">
+                    <p className="font-semibold text-foreground text-left">{post.author.name}</p>
+                    <p className="text-muted-foreground text-xs sm:text-sm text-left">{post.author.role}</p>
                   </div>
                 </Link>
 
