@@ -1,23 +1,19 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, LogIn, UserPlus, LayoutDashboard } from 'lucide-react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, X, LayoutDashboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { Logo } from '@/components/ui/logo';
-
-// Feature flag: Set to false to disable signups and show waitlist instead
-const SIGNUPS_ENABLED = import.meta.env.VITE_SIGNUPS_ENABLED !== 'false';
+import { appLinks } from '@/lib/urls';
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, hasRole } = useAuth();
-  const navigate = useNavigate();
 
   const getDashboardLink = () => {
-    if (hasRole('admin')) return '/admin/dashboard';
-    if (hasRole('supplier')) return '/supplier/dashboard';
-    // Default to buyer dashboard if signed in but no specific role, or if buyer role exists
-    return '/buyer/dashboard';
+    if (hasRole('admin')) return `${appLinks.dashboard.replace('/dashboard', '/admin/dashboard')}`;
+    if (hasRole('supplier')) return `${appLinks.dashboard.replace('/dashboard', '/supplier/dashboard')}`;
+    return `${appLinks.dashboard.replace('/dashboard', '/buyer/dashboard')}`;
   };
 
   return (
@@ -72,20 +68,20 @@ const Navigation = () => {
           {/* CTA Buttons - Responsive */}
           <div className="hidden lg:flex items-center gap-2 xl:gap-3">
             {user ? (
-              <Link to={getDashboardLink()}>
+              <a href={getDashboardLink()}>
                 <Button size="sm" className="gap-2 text-sm whitespace-nowrap" aria-label="Navigate to your dashboard">
                   <LayoutDashboard className="w-4 h-4 hidden xl:block" aria-hidden="true" />
                   <span className="hidden xl:inline">Go to Dashboard</span>
                   <span className="xl:hidden">Dashboard</span>
                 </Button>
-              </Link>
+              </a>
             ) : (
               <>
-                <Link to="/auth">
+                <a href={appLinks.login}>
                   <Button variant="ghost" size="sm" className="gap-2 text-sm whitespace-nowrap" aria-label="Log in to your account">
                     Log in
                   </Button>
-                </Link>
+                </a>
                 <Link to="/waitlist">
                   <Button size="sm" className="gap-2 text-sm whitespace-nowrap" aria-label="Join the waitlist">
                     Join Waitlist
@@ -154,19 +150,19 @@ const Navigation = () => {
             </Link>
             <div className="pt-3 space-y-2 border-t">
               {user ? (
-                <Link to={getDashboardLink()} className="block w-full" onClick={() => setMobileMenuOpen(false)}>
+                <a href={getDashboardLink()} className="block w-full" onClick={() => setMobileMenuOpen(false)}>
                   <Button className="w-full gap-2" size="sm" aria-label="Navigate to your dashboard">
                     <LayoutDashboard className="w-4 h-4" aria-hidden="true" />
                     Go to Dashboard
                   </Button>
-                </Link>
+                </a>
               ) : (
                 <>
-                  <Link to="/auth" className="block w-full" onClick={() => setMobileMenuOpen(false)}>
+                  <a href={appLinks.login} className="block w-full" onClick={() => setMobileMenuOpen(false)}>
                     <Button variant="ghost" className="w-full" size="sm" aria-label="Log in to your account">
                       Log in
                     </Button>
-                  </Link>
+                  </a>
                   <Link to="/waitlist" className="block w-full" onClick={() => setMobileMenuOpen(false)}>
                     <Button className="w-full" size="sm" aria-label="Join the waitlist">
                       Join Waitlist

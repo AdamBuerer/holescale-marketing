@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { getBlogCTALink, appLinks } from '@/lib/urls';
 
 interface BlogCTAProps {
   variant?: 'buyer' | 'supplier' | 'general';
@@ -8,14 +9,9 @@ interface BlogCTAProps {
   className?: string;
 }
 
-const APP_URL = 'https://app.holescale.com';
-
 export function BlogCTA({ variant = 'general', postSlug, className = '' }: BlogCTAProps) {
-  const utmParams = new URLSearchParams({
-    utm_source: 'blog',
-    utm_medium: 'cta',
-    utm_content: postSlug || 'general',
-  }).toString();
+  const supplierCTALink = getBlogCTALink(postSlug || 'general', 'supplier');
+  const buyerCTALink = getBlogCTALink(postSlug || 'general', 'buyer');
 
   if (variant === 'supplier') {
     return (
@@ -32,7 +28,7 @@ export function BlogCTA({ variant = 'general', postSlug, className = '' }: BlogC
             asChild
             className="bg-emerald-600 hover:bg-emerald-700 text-white"
           >
-            <a href={`${APP_URL}/auth?type=supplier&${utmParams}`}>
+            <a href={supplierCTALink}>
               Create Supplier Account
               <ArrowRight className="ml-2 w-4 h-4" />
             </a>
@@ -66,7 +62,7 @@ export function BlogCTA({ variant = 'general', postSlug, className = '' }: BlogC
             asChild
             className="bg-blue-600 hover:bg-blue-700 text-white"
           >
-            <a href={`${APP_URL}/auth?${utmParams}`}>
+            <a href={buyerCTALink}>
               Get Started Free
               <ArrowRight className="ml-2 w-4 h-4" />
             </a>
@@ -97,7 +93,7 @@ export function BlogCTA({ variant = 'general', postSlug, className = '' }: BlogC
       </p>
       <div className="flex flex-col sm:flex-row gap-4">
         <Button asChild>
-          <a href={`${APP_URL}/auth?${utmParams}`}>
+          <a href={buyerCTALink}>
             Join HoleScale
             <ArrowRight className="ml-2 w-4 h-4" />
           </a>

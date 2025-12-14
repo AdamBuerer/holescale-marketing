@@ -1,4 +1,21 @@
 {
+  "redirects": [
+    { "source": "/login", "destination": "https://app.holescale.com/auth", "permanent": true },
+    { "source": "/signup", "destination": "https://app.holescale.com/auth?mode=signup", "permanent": true },
+    { "source": "/register", "destination": "https://app.holescale.com/auth?mode=signup", "permanent": true },
+    { "source": "/dashboard/:path*", "destination": "https://app.holescale.com/dashboard/:path*", "permanent": true },
+    { "source": "/settings/:path*", "destination": "https://app.holescale.com/settings/:path*", "permanent": true },
+    { "source": "/rfq/:path*", "destination": "https://app.holescale.com/rfq/:path*", "permanent": true },
+    { "source": "/supplier/:path*", "destination": "https://app.holescale.com/supplier/:path*", "permanent": true },
+    { "source": "/buyer/:path*", "destination": "https://app.holescale.com/buyer/:path*", "permanent": true },
+    { "source": "/admin/:path*", "destination": "https://app.holescale.com/admin/:path*", "permanent": true },
+    { "source": "/onboarding/:path*", "destination": "https://app.holescale.com/onboarding/:path*", "permanent": true },
+    { "source": "/profile/:path*", "destination": "https://app.holescale.com/profile/:path*", "permanent": true },
+    { "source": "/quotes/:path*", "destination": "https://app.holescale.com/quotes/:path*", "permanent": true },
+    { "source": "/orders/:path*", "destination": "https://app.holescale.com/orders/:path*", "permanent": true },
+    { "source": "/messages/:path*", "destination": "https://app.holescale.com/messages/:path*", "permanent": true },
+    { "source": "/design-studio/:path*", "destination": "https://app.holescale.com/design-studio/:path*", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ]

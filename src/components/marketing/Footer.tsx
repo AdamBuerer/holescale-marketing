@@ -42,10 +42,9 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4 text-sm md:text-base">Resources</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/resources" className="opacity-90 hover:opacity-100 transition-opacity">Blog</Link></li>
+              <li><Link to="/blog" className="opacity-90 hover:opacity-100 transition-opacity">Blog</Link></li>
               <li><Link to="/faq" className="opacity-90 hover:opacity-100 transition-opacity">FAQ</Link></li>
               <li><Link to="/glossary" className="opacity-90 hover:opacity-100 transition-opacity">Glossary</Link></li>
-              <li><Link to="/faq" className="opacity-90 hover:opacity-100 transition-opacity">Help Center</Link></li>
               <li><Link to="/resources" className="opacity-90 hover:opacity-100 transition-opacity">Guides</Link></li>
             </ul>
           </div>
