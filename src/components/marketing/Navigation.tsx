@@ -103,7 +103,7 @@ const Navigation = () => {
   const scheduleClose = useCallback(() => {
     closeTimeoutRef.current = setTimeout(() => {
       setActiveMenu(null);
-    }, 400);
+    }, 475);
   }, []);
 
   const cancelClose = useCallback(() => {
