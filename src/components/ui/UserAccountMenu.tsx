@@ -29,7 +29,7 @@ interface UserAccountMenuProps {
 export function UserAccountMenu({ className }: UserAccountMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const { user, hasRole, signOut } = useAuth();
+  const { user, hasRole } = useAuth();
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -62,9 +62,9 @@ export function UserAccountMenu({ className }: UserAccountMenuProps) {
     return `${appLinks.dashboard.replace('/dashboard', '/buyer/dashboard')}`;
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-    setIsOpen(false);
+  const handleSignOut = () => {
+    // Redirect to app for sign out
+    window.location.href = `${appLinks.dashboard.replace('/dashboard', '/auth/signout')}`;
   };
 
   if (!user) return null;
