@@ -607,7 +607,7 @@ export default function TaxCalculator() {
             </div>
 
             {showEducation && (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <div className="bg-white p-6 rounded-xl border border-gray-200">
                   <h3 className="text-lg font-semibold mb-3">The $25 Business Gift Rule</h3>
                   <p className="text-sm text-gray-600 leading-relaxed mb-3">

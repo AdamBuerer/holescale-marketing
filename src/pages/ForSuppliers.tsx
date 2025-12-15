@@ -48,19 +48,19 @@ const ForSuppliers = () => {
                 <span className="text-xs sm:text-sm font-semibold text-accent-foreground">For Suppliers</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4 sm:mb-6 md:mb-8 tracking-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6 md:mb-8 tracking-tight">
                 Get Qualified Leads. <span className="text-accent bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent">Ready to Order.</span>
               </h1>
 
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 sm:mb-8 md:mb-10 leading-relaxed max-w-3xl mx-auto">
-                Join the marketplace where buyers come to you — with purchase intent. Connect with businesses seeking <strong>corrugated boxes</strong>, <strong>mailers</strong>, <strong>food packaging</strong>, <strong>labels</strong>, and <strong>custom packaging</strong> solutions.
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground mb-6 sm:mb-8 md:mb-10 leading-relaxed max-w-3xl mx-auto break-words">
+                Join the marketplace where buyers come to you — with purchase intent. Connect with businesses seeking <strong>corrugated boxes</strong>, <strong>mailers</strong>, <strong className="whitespace-nowrap">food packaging</strong>, <strong>labels</strong>, and <strong>custom packaging</strong> solutions.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
                 <Button
                   size="lg"
                   onClick={openWaitlistDialog}
-                  className="gap-2 w-full sm:w-auto text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-accent text-accent-foreground hover:bg-accent/90 min-h-[44px]"
+                  className="gap-2 w-full sm:w-auto text-sm sm:text-base h-12 sm:h-14 px-6 sm:px-8 shadow-lg hover:shadow-xl transition-all duration-300 md:hover:scale-105 active:scale-95 bg-accent text-accent-foreground hover:bg-accent/90 min-h-[44px]"
                 >
                   Join as a Supplier
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -69,15 +69,15 @@ const ForSuppliers = () => {
 
               <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8 max-w-2xl mx-auto">
                 <div className="bg-card/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-border/50">
-                  <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-accent mb-1">Free</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent mb-1">Free</div>
                   <div className="text-xs sm:text-sm text-muted-foreground font-medium leading-tight">To Start</div>
                 </div>
                 <div className="bg-card/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-border/50">
-                  <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-accent mb-1">Quality</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent mb-1">Quality</div>
                   <div className="text-xs sm:text-sm text-muted-foreground font-medium leading-tight">Wins Here</div>
                 </div>
                 <div className="bg-card/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-border/50">
-                  <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-accent mb-1">Q1 2025</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent mb-1">Q1 2025</div>
                   <div className="text-xs sm:text-sm text-muted-foreground font-medium leading-tight">Launch Date</div>
                 </div>
               </div>
@@ -91,7 +91,7 @@ const ForSuppliers = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 tracking-tight">
                 Lead Generation Shouldn't Cost a Fortune
               </h2>
             </div>
@@ -125,7 +125,7 @@ const ForSuppliers = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 tracking-tight">
                 HoleScale Brings Buyers to You
               </h2>
             </div>
@@ -178,7 +178,7 @@ const ForSuppliers = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 tracking-tight">
                 Works With Tools You Already Use
               </h2>
             </div>
@@ -206,7 +206,7 @@ const ForSuppliers = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 md:mb-6 tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 tracking-tight">
                 Win on Quality, Not Just Price
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -215,7 +215,7 @@ const ForSuppliers = () => {
             </div>
           </FadeIn>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-5xl mx-auto">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 max-w-5xl mx-auto">
             {[
               "Your ratings and reviews",
               "Your response time",
@@ -525,7 +525,7 @@ const ForSuppliers = () => {
               size="lg"
               variant="secondary"
               onClick={openWaitlistDialog}
-              className="gap-2 text-lg px-10 h-14 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              className="gap-2 text-lg px-10 h-14 shadow-xl hover:shadow-2xl md:hover:scale-105 active:scale-95 transition-all duration-300"
             >
               Join as a Supplier
               <ArrowRight className="w-5 h-5" />

@@ -43,7 +43,7 @@ export function ContextualFAB({
         onClick={action.onClick}
         size="lg"
         className={cn(
-          'fixed bottom-20 right-4 h-12 w-12 rounded-full shadow-lg z-[45] md:bottom-6 md:right-6 md:z-50 hover:scale-105 transition-transform',
+          'fixed bottom-20 right-4 h-12 w-12 rounded-full shadow-lg z-[45] md:bottom-6 md:right-6 md:z-50 md:hover:scale-105 active:scale-95 transition-transform',
           'bg-primary text-primary-foreground hover:bg-primary/90',
           className
         )}
@@ -62,7 +62,7 @@ export function ContextualFAB({
         onClick={primaryAction.onClick}
         size="lg"
         className={cn(
-          'fixed bottom-20 right-4 h-12 gap-2 rounded-full shadow-lg z-[45] md:bottom-6 md:right-6 md:z-50 hover:scale-105 transition-transform',
+          'fixed bottom-20 right-4 h-12 gap-2 rounded-full shadow-lg z-[45] md:bottom-6 md:right-6 md:z-50 md:hover:scale-105 active:scale-95 transition-transform',
           'bg-primary text-primary-foreground hover:bg-primary/90',
           className
         )}

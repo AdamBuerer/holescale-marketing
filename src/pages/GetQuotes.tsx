@@ -230,7 +230,7 @@ export default function GetQuotes() {
               </div>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-5 leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5 leading-tight tracking-tight">
               {content.headline}
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-white/75 max-w-2xl mx-auto mb-10">
@@ -255,7 +255,7 @@ export default function GetQuotes() {
             <div className="flex justify-center gap-4 flex-wrap">
               <a
                 href="#quote-form"
-                className="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-lg shadow-lg shadow-purple-500/40 transition-all hover:scale-105"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-lg shadow-lg shadow-purple-500/40 transition-all md:hover:scale-105 active:scale-95"
               >
                 {content.cta}
               </a>
@@ -274,10 +274,10 @@ export default function GetQuotes() {
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
               Why Buyers Choose HoleScale
             </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               {content.benefits.map((benefit, i) => (
                 <div
                   key={i}
@@ -297,7 +297,7 @@ export default function GetQuotes() {
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
               What Are You Sourcing?
             </h2>
             <p className="text-lg text-gray-600 text-center mb-12">
@@ -328,10 +328,10 @@ export default function GetQuotes() {
       <section id="how-it-works" className="py-20 md:py-28 bg-gradient-to-b from-white to-purple-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
               How It Works
             </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               {[
                 { num: "01", title: "Tell Us What You Need", desc: "Product type, quantity, timeline, and any design requirements" },
                 { num: "02", title: "Get Matched With Suppliers", desc: "We connect you with vetted suppliers who fit your specs" },
@@ -355,7 +355,7 @@ export default function GetQuotes() {
       <section className="py-20 md:py-28 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
               What Buyers Say
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
@@ -385,7 +385,7 @@ export default function GetQuotes() {
             {/* Left Column */}
             <div className="lg:sticky lg:top-24">
               <FadeIn>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
                   Get Your Free Quote
                 </h2>
                 <p className="text-lg text-gray-600 mb-8">
@@ -596,7 +596,7 @@ export default function GetQuotes() {
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
               Frequently Asked Questions
             </h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
@@ -615,7 +615,7 @@ export default function GetQuotes() {
       <section className="py-20 md:py-28 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Ready to Simplify Your Sourcing?
             </h2>
             <p className="text-lg md:text-xl text-white/90 mb-8">
@@ -623,7 +623,7 @@ export default function GetQuotes() {
             </p>
             <a
               href="#quote-form"
-              className="inline-block px-10 py-5 bg-white text-purple-600 hover:bg-gray-100 font-semibold rounded-lg shadow-xl transition-all hover:scale-105"
+              className="inline-block px-10 py-5 bg-white text-purple-600 hover:bg-gray-100 font-semibold rounded-lg shadow-xl transition-all md:hover:scale-105 active:scale-95"
             >
               Get Your Free Quote
             </a>

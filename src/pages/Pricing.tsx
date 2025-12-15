@@ -242,7 +242,7 @@ const Pricing = () => {
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
               </div>
             ) : buyerTiers.length > 0 ? (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8 overflow-visible">
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8 overflow-visible">
                 {buyerTiers.map((tier, index) => (
                   <SubscriptionPricingCard
                     key={tier.id}
@@ -280,7 +280,7 @@ const Pricing = () => {
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                 </div>
               ) : supplierTiers.length > 0 ? (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-visible">
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 overflow-visible">
                   {supplierTiers.map((tier, index) => (
                     <SubscriptionPricingCard
                       key={tier.id}
@@ -434,7 +434,8 @@ const Pricing = () => {
 
           <div className="bg-card rounded-xl border overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full" role="table" aria-label="HoleScale pricing comparison with alternatives">
+              <div className="min-w-[640px]">
+                <table className="w-full" role="table" aria-label="HoleScale pricing comparison with alternatives">
                 <thead className="bg-muted">
                   <tr>
                     <th scope="col" className="px-6 py-4 text-left font-semibold"></th>
@@ -476,6 +477,11 @@ const Pricing = () => {
                   </tr>
                 </tbody>
               </table>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground px-4 py-2 sm:hidden">
+                <ArrowRight className="w-3 h-3" />
+                <span>Scroll to see all columns</span>
+              </div>
             </div>
           </div>
 

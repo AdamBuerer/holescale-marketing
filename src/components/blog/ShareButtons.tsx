@@ -32,9 +32,9 @@ export function ShareButtons({
   };
 
   const sizeClasses = {
-    sm: 'p-1.5 h-auto min-w-[32px]',
-    md: 'p-2 h-auto min-w-[40px]',
-    lg: 'p-3 h-auto min-w-[48px]',
+    sm: 'p-2 min-h-[44px] min-w-[44px]',
+    md: 'p-2.5 min-h-[44px] min-w-[44px]',
+    lg: 'p-3 min-h-[48px] min-w-[48px]',
   };
 
   const iconSizes = {
@@ -44,7 +44,7 @@ export function ShareButtons({
   };
 
   const buttonClass = variant === 'compact'
-    ? 'p-2 h-auto'
+    ? 'p-2 min-h-[44px] min-w-[44px]'
     : sizeClasses[size];
 
   const iconClass = iconSizes[size];

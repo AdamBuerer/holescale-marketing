@@ -129,8 +129,8 @@ const Home = () => {
       {/* Introduction */}
       <section className="py-8 sm:py-10 md:py-12 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
-            HoleScale is a <strong className="text-foreground">B2B packaging materials marketplace</strong> connecting buyers with verified packaging suppliers. Whether you're sourcing <strong className="text-foreground">corrugated boxes</strong>, <strong className="text-foreground">poly mailers</strong>, <strong className="text-foreground">food-grade containers</strong>, <strong className="text-foreground">shipping supplies</strong>, or <strong className="text-foreground">sustainable packaging</strong>, our platform streamlines procurement with competitive quotes, transparent pricing, and verified supplier networks.
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed break-words">
+            HoleScale is a <strong className="text-foreground whitespace-nowrap">B2B packaging</strong> materials marketplace connecting buyers with verified packaging suppliers. Whether you're sourcing <strong className="text-foreground">corrugated boxes</strong>, <strong className="text-foreground whitespace-nowrap">poly mailers</strong>, <strong className="text-foreground whitespace-nowrap">food-grade containers</strong>, <strong className="text-foreground">shipping supplies</strong>, or <strong className="text-foreground">sustainable packaging</strong>, our platform streamlines procurement with competitive quotes, transparent pricing, and verified supplier networks.
           </p>
           <TrustBadges variant="compact" className="mt-6" />
         </div>

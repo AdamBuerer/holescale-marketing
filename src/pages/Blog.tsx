@@ -76,7 +76,7 @@ export default function Blog() {
                 <BookOpen className="w-4 h-4" />
                 Insights & Resources
               </span>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
                 Packaging & Procurement{' '}
                 <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
                   Insights
@@ -235,7 +235,7 @@ export default function Blog() {
 
               {/* Pagination */}
               {pagination && pagination.totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-16">
+                <div className="flex items-center justify-center gap-2 mt-16 flex-wrap">
                   <Button
                     variant="outline"
                     size="lg"
@@ -245,20 +245,63 @@ export default function Blog() {
                   >
                     Previous
                   </Button>
-                  <div className="flex items-center gap-1 px-4">
-                    {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map((pageNum) => (
-                      <button
-                        key={pageNum}
-                        onClick={() => setPage(pageNum)}
-                        className={`w-10 h-10 rounded-full text-sm font-medium transition-all ${
-                          pageNum === pagination.page
-                            ? 'bg-primary text-primary-foreground'
-                            : 'hover:bg-muted text-muted-foreground'
-                        }`}
-                      >
-                        {pageNum}
-                      </button>
-                    ))}
+                  <div className="flex items-center gap-1 px-2 sm:px-4">
+                    {(() => {
+                      const currentPage = pagination.page;
+                      const totalPages = pagination.totalPages;
+                      const pageNumbers: (number | string)[] = [];
+
+                      if (totalPages <= 7) {
+                        // Show all pages if 7 or fewer
+                        for (let i = 1; i <= totalPages; i++) {
+                          pageNumbers.push(i);
+                        }
+                      } else {
+                        // Always show first page
+                        pageNumbers.push(1);
+
+                        // Show ellipsis and pages around current page
+                        if (currentPage > 3) {
+                          pageNumbers.push('...');
+                        }
+
+                        // Show current page and neighbors
+                        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                          pageNumbers.push(i);
+                        }
+
+                        // Show ellipsis before last page
+                        if (currentPage < totalPages - 2) {
+                          pageNumbers.push('...');
+                        }
+
+                        // Always show last page
+                        pageNumbers.push(totalPages);
+                      }
+
+                      return pageNumbers.map((pageNum, idx) => {
+                        if (pageNum === '...') {
+                          return (
+                            <span key={`ellipsis-${idx}`} className="w-10 h-10 flex items-center justify-center text-muted-foreground">
+                              ...
+                            </span>
+                          );
+                        }
+                        return (
+                          <button
+                            key={pageNum}
+                            onClick={() => setPage(pageNum as number)}
+                            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full text-xs sm:text-sm font-medium transition-all ${
+                              pageNum === currentPage
+                                ? 'bg-primary text-primary-foreground'
+                                : 'hover:bg-muted text-muted-foreground'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      });
+                    })()}
                   </div>
                   <Button
                     variant="outline"
@@ -327,7 +370,7 @@ export default function Blog() {
                 Explore our content organized by what matters most to you
               </p>
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {categories.map((category) => {
                 const Icon = categoryIcons[category.slug] || BookOpen;
                 return (

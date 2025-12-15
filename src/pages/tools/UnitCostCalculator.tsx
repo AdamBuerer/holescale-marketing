@@ -501,53 +501,59 @@ export default function UnitCostCalculator() {
 
             {/* Table */}
             <div className="overflow-x-auto mb-12">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-slate-900 text-white">
-                    <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Quantity</th>
-                    <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Volume Discount</th>
-                    <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Unit Cost</th>
-                    <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Setup Fee</th>
-                    <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Total Cost</th>
-                    <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Effective $/Unit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {calculations.map((calc: Calculation, i: number) => (
-                    <tr
-                      key={calc.quantity}
-                      className={`border-b ${
-                        calc.quantity === quantity
-                          ? 'bg-green-50'
-                          : i % 2 === 0
-                          ? 'bg-gray-50'
-                          : 'bg-white'
-                      }`}
-                    >
-                      <td className="px-4 py-4">
-                        <strong>{calc.quantity.toLocaleString()}</strong>
-                      </td>
-                      <td className="px-4 py-4">
-                        {parseInt(calc.discount) > 0 ? (
-                          <span className="inline-block px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
-                            -{calc.discount}%
-                          </span>
-                        ) : (
-                          <span className="text-gray-400">—</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-4">${calc.unitCost}</td>
-                      <td className="px-4 py-4">${calc.setupFee}</td>
-                      <td className="px-4 py-4">
-                        <strong>${parseFloat(calc.total).toLocaleString()}</strong>
-                      </td>
-                      <td className="px-4 py-4 text-green-600 font-semibold">
-                        ${calc.effectiveUnitCost}
-                      </td>
+              <div className="min-w-[640px]">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-slate-900 text-white">
+                      <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Quantity</th>
+                      <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Volume Discount</th>
+                      <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Unit Cost</th>
+                      <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Setup Fee</th>
+                      <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Total Cost</th>
+                      <th className="px-4 py-4 text-left text-xs uppercase font-semibold tracking-wider">Effective $/Unit</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {calculations.map((calc: Calculation, i: number) => (
+                      <tr
+                        key={calc.quantity}
+                        className={`border-b ${
+                          calc.quantity === quantity
+                            ? 'bg-green-50'
+                            : i % 2 === 0
+                            ? 'bg-gray-50'
+                            : 'bg-white'
+                        }`}
+                      >
+                        <td className="px-4 py-4">
+                          <strong>{calc.quantity.toLocaleString()}</strong>
+                        </td>
+                        <td className="px-4 py-4">
+                          {parseInt(calc.discount) > 0 ? (
+                            <span className="inline-block px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                              -{calc.discount}%
+                            </span>
+                          ) : (
+                            <span className="text-gray-400">—</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-4">${calc.unitCost}</td>
+                        <td className="px-4 py-4">${calc.setupFee}</td>
+                        <td className="px-4 py-4">
+                          <strong>${parseFloat(calc.total).toLocaleString()}</strong>
+                        </td>
+                        <td className="px-4 py-4 text-green-600 font-semibold">
+                          ${calc.effectiveUnitCost}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground px-4 py-2 sm:hidden">
+                <ArrowRight className="w-3 h-3" />
+                <span>Scroll to see all columns</span>
+              </div>
             </div>
 
             {/* Chart */}
@@ -555,34 +561,40 @@ export default function UnitCostCalculator() {
               <h3 className="text-xl font-semibold text-center mb-8">
                 Effective Unit Cost by Quantity
               </h3>
-              <div className="flex justify-around items-end h-48 px-4">
-                {calculations.map((calc) => {
-                  const effectiveUnitCost = parseFloat(calc.effectiveUnitCost);
-                  const height = (effectiveUnitCost / maxEffective) * 100;
+              <div className="overflow-x-auto -mx-6 md:-mx-8 px-6 md:px-8">
+                <div className="flex justify-around items-end h-48 min-w-[400px] sm:min-w-[500px] md:min-w-0">
+                  {calculations.map((calc) => {
+                    const effectiveUnitCost = parseFloat(calc.effectiveUnitCost);
+                    const height = (effectiveUnitCost / maxEffective) * 100;
 
-                  return (
-                    <div key={calc.quantity} className="flex flex-col items-center gap-2 flex-1 max-w-[80px]">
-                      <div className="text-xs font-semibold text-gray-700">
-                        ${calc.effectiveUnitCost}
+                    return (
+                      <div key={calc.quantity} className="flex flex-col items-center gap-2 flex-1 max-w-[80px]">
+                        <div className="text-xs font-semibold text-gray-700">
+                          ${calc.effectiveUnitCost}
+                        </div>
+                        <div
+                          className={`w-full max-w-[40px] rounded-t transition-all ${
+                            calc.quantity === quantity
+                              ? 'bg-gradient-to-t from-green-600 to-green-500'
+                              : 'bg-gradient-to-t from-purple-600 to-purple-500'
+                          }`}
+                          style={{ height: `${height}%` }}
+                        />
+                        <div className="text-xs text-gray-600">
+                          {calc.quantity >= 1000 ? `${calc.quantity / 1000}K` : calc.quantity}
+                        </div>
                       </div>
-                      <div
-                        className={`w-full max-w-[40px] rounded-t transition-all ${
-                          calc.quantity === quantity
-                            ? 'bg-gradient-to-t from-green-600 to-green-500'
-                            : 'bg-gradient-to-t from-purple-600 to-purple-500'
-                        }`}
-                        style={{ height: `${height}%` }}
-                      />
-                      <div className="text-xs text-gray-600">
-                        {calc.quantity >= 1000 ? `${calc.quantity / 1000}K` : calc.quantity}
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
               <p className="text-center text-sm text-gray-500 mt-6">
                 Lower bars = better value per unit
               </p>
+              <div className="flex items-center justify-center gap-2 text-xs text-gray-400 mt-2 sm:hidden">
+                <ArrowRight className="w-3 h-3" />
+                <span>Scroll to see all values</span>
+              </div>
             </div>
           </FadeIn>
         </div>
@@ -595,7 +607,7 @@ export default function UnitCostCalculator() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               Understanding Custom Packaging Costs
             </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               <div className="bg-white p-6 rounded-xl border border-gray-200">
                 <h3 className="text-lg font-semibold mb-3">What's Included in Setup Fees?</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">

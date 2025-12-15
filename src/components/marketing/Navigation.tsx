@@ -41,20 +41,23 @@ const Navigation = () => {
     const rect = btnRef.current.getBoundingClientRect();
     const viewportWidth = window.innerWidth;
 
+    // Make menu width responsive - use smaller of desired width or available viewport width
+    const responsiveWidth = Math.min(menuWidth, viewportWidth - 32);
+
     // Center the dropdown on the button, but keep it within viewport bounds
-    let left = rect.left + rect.width / 2 - menuWidth / 2;
+    let left = rect.left + rect.width / 2 - responsiveWidth / 2;
 
     // Ensure dropdown doesn't go off the left edge
     if (left < 16) left = 16;
     // Ensure dropdown doesn't go off the right edge
-    if (left + menuWidth > viewportWidth - 16) {
-      left = viewportWidth - menuWidth - 16;
+    if (left + responsiveWidth > viewportWidth - 16) {
+      left = viewportWidth - responsiveWidth - 16;
     }
 
     setDropdownPosition({
-      top: rect.bottom + 4,
+      top: rect.bottom + 2,
       left,
-      width: menuWidth,
+      width: responsiveWidth,
     });
   }, []);
 
@@ -100,7 +103,7 @@ const Navigation = () => {
   const scheduleClose = useCallback(() => {
     closeTimeoutRef.current = setTimeout(() => {
       setActiveMenu(null);
-    }, 200);
+    }, 400);
   }, []);
 
   const cancelClose = useCallback(() => {
@@ -141,7 +144,7 @@ const Navigation = () => {
 
             {/* Solutions Dropdown */}
             <div
-              className="relative"
+              className="relative pt-8"
               onMouseEnter={() => openMenu('solutions')}
               onMouseLeave={scheduleClose}
               role="none"
@@ -152,7 +155,7 @@ const Navigation = () => {
                 onClick={() => activeMenu === 'solutions' ? setActiveMenu(null) : openMenu('solutions')}
                 onFocus={() => openMenu('solutions')}
                 className={cn(
-                  "flex items-center gap-1 px-3 xl:px-4 py-2 rounded-lg text-sm xl:text-base font-medium transition-all",
+                  "flex items-center gap-1 px-3 xl:px-4 py-2 rounded-lg text-sm xl:text-base font-medium transition-all -mt-8",
                   activeMenu === 'solutions'
                     ? "text-primary bg-primary/5"
                     : "text-foreground/80 hover:text-primary hover:bg-primary/5"
@@ -177,13 +180,16 @@ const Navigation = () => {
                 style={{
                   top: `${dropdownPosition.top}px`,
                   left: `${dropdownPosition.left}px`,
-                  width: '800px',
+                  width: `${dropdownPosition.width}px`,
+                  maxWidth: '100%',
                 }}
                 onMouseEnter={cancelClose}
                 onMouseLeave={scheduleClose}
                 role="menu"
                 aria-label="Solutions menu"
               >
+                {/* Invisible bridge zone for better hover UX */}
+                <div className="h-2" aria-hidden="true" />
                 <div className="grid grid-cols-2 divide-x divide-border/50">
                   {/* For Buyers */}
                   <div className="p-6">
@@ -292,7 +298,7 @@ const Navigation = () => {
 
             {/* Product Dropdown */}
             <div
-              className="relative"
+              className="relative pt-8"
               onMouseEnter={() => openMenu('product')}
               onMouseLeave={scheduleClose}
               role="none"
@@ -303,7 +309,7 @@ const Navigation = () => {
                 onClick={() => activeMenu === 'product' ? setActiveMenu(null) : openMenu('product')}
                 onFocus={() => openMenu('product')}
                 className={cn(
-                  "flex items-center gap-1 px-3 xl:px-4 py-2 rounded-lg text-sm xl:text-base font-medium transition-all",
+                  "flex items-center gap-1 px-3 xl:px-4 py-2 rounded-lg text-sm xl:text-base font-medium transition-all -mt-8",
                   activeMenu === 'product'
                     ? "text-primary bg-primary/5"
                     : "text-foreground/80 hover:text-primary hover:bg-primary/5"
@@ -328,13 +334,16 @@ const Navigation = () => {
                 style={{
                   top: `${dropdownPosition.top}px`,
                   left: `${dropdownPosition.left}px`,
-                  width: '700px',
+                  width: `${dropdownPosition.width}px`,
+                  maxWidth: '100%',
                 }}
                 onMouseEnter={cancelClose}
                 onMouseLeave={scheduleClose}
                 role="menu"
                 aria-label="Product menu"
               >
+                {/* Invisible bridge zone for better hover UX */}
+                <div className="h-2" aria-hidden="true" />
                 {/* How it Works - Visual Section */}
                 <Link
                   to="/how-it-works"
@@ -426,7 +435,7 @@ const Navigation = () => {
 
             {/* Resources Dropdown */}
             <div
-              className="relative"
+              className="relative pt-8"
               onMouseEnter={() => openMenu('resources')}
               onMouseLeave={scheduleClose}
               role="none"
@@ -437,7 +446,7 @@ const Navigation = () => {
                 onClick={() => activeMenu === 'resources' ? setActiveMenu(null) : openMenu('resources')}
                 onFocus={() => openMenu('resources')}
                 className={cn(
-                  "flex items-center gap-1 px-3 xl:px-4 py-2 rounded-lg text-sm xl:text-base font-medium transition-all",
+                  "flex items-center gap-1 px-3 xl:px-4 py-2 rounded-lg text-sm xl:text-base font-medium transition-all -mt-8",
                   activeMenu === 'resources'
                     ? "text-primary bg-primary/5"
                     : "text-foreground/80 hover:text-primary hover:bg-primary/5"
@@ -462,13 +471,16 @@ const Navigation = () => {
                 style={{
                   top: `${dropdownPosition.top}px`,
                   left: `${dropdownPosition.left}px`,
-                  width: '500px',
+                  width: `${dropdownPosition.width}px`,
+                  maxWidth: '100%',
                 }}
                 onMouseEnter={cancelClose}
                 onMouseLeave={scheduleClose}
                 role="menu"
                 aria-label="Resources menu"
               >
+                {/* Invisible bridge zone for better hover UX */}
+                <div className="h-2" aria-hidden="true" />
                 {/* Featured - Blog */}
                 <Link
                   to="/blog"
@@ -477,7 +489,7 @@ const Navigation = () => {
                   role="menuitem"
                 >
                   <article className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center md:group-hover:scale-105 group-active:scale-95 transition-transform">
                       <BookOpen className="w-7 h-7 text-primary" aria-hidden="true" />
                     </div>
                     <div className="flex-1">

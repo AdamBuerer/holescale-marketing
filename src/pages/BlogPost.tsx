@@ -21,7 +21,7 @@ function BlogPostSkeleton() {
     <div className="animate-pulse">
       <div className="h-10 bg-muted rounded w-3/4 mb-4" />
       <div className="h-5 bg-muted rounded w-1/2 mb-8" />
-      <div className="aspect-[21/9] bg-muted rounded-2xl mb-12" />
+      <div className="aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] bg-muted rounded-2xl mb-12" />
       <div className="space-y-4 max-w-3xl mx-auto">
         <div className="h-4 bg-muted rounded w-full" />
         <div className="h-4 bg-muted rounded w-full" />
@@ -296,7 +296,7 @@ export default function BlogPost() {
       {/* Featured Image */}
       <FadeIn delay={200}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4">
-          <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl">
+          <div className="aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl">
             <img
               src={post.featuredImage.src}
               alt={post.featuredImage.alt}
@@ -429,13 +429,19 @@ export default function BlogPost() {
 
             .article-content blockquote {
               margin: 2rem 0;
-              padding: 1.5rem 2rem;
+              padding: 1rem 1.25rem;
               border-left: 4px solid hsl(var(--primary));
               background: hsl(var(--muted) / 0.5);
               border-radius: 0 1rem 1rem 0;
               font-style: normal;
               color: hsl(var(--foreground));
               font-weight: 500;
+            }
+
+            @media (min-width: 768px) {
+              .article-content blockquote {
+                padding: 1.5rem 2rem;
+              }
             }
 
             .article-content blockquote p {
