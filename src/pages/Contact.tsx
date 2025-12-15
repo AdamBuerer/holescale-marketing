@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Hero } from '@/components/marketing/sections/Hero';
-import { generateContactPageSchema, generateOrganizationSchema, generateBreadcrumbSchema } from '@/lib/schema';
+import { generateContactPageSchema, generateOrganizationSchema, generateBreadcrumbSchema, generateLocalBusinessSchema } from '@/lib/schema';
 import { useToast } from '@/hooks/use-toast';
 
 const contactFormSchema = z.object({
@@ -111,18 +111,24 @@ const Contact = () => {
 
   const contactPageSchema = generateContactPageSchema();
   const organizationSchema = generateOrganizationSchema();
+  const localBusinessSchema = generateLocalBusinessSchema({
+    email: 'info@holescale.com',
+    addressLocality: 'Colorado',
+    addressRegion: 'CO',
+  });
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.holescale.com/" },
-    { name: "Contact", url: "https://www.holescale.com/contact" },
+    { name: "Home", url: "https://holescale.com/" },
+    { name: "Contact", url: "https://holescale.com/contact" },
   ]);
 
   return (
     <>
-      <SEO 
+      <SEO
         title="Contact HoleScale | Get in Touch With Our Team"
         description="Have questions about HoleScale? Contact our team for support, partnership inquiries, or to schedule a demo. We're here to help."
-        canonical="https://www.holescale.com/contact"
-        schema={[contactPageSchema, organizationSchema, breadcrumbSchema]}
+        canonical="https://holescale.com/contact"
+        keywords="contact HoleScale, packaging marketplace support, B2B inquiries, schedule demo"
+        schema={[contactPageSchema, organizationSchema, localBusinessSchema, breadcrumbSchema]}
       />
 
       <Navigation />

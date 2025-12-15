@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { WaitlistDialog } from '@/components/waitlist/WaitlistDialog';
 import { useMarketingPageShell } from "@/hooks/useMarketingPageShell";
+import { TLDRBlock } from '@/components/ui/TLDRBlock';
+import { generateBreadcrumbSchema } from '@/lib/schema';
 
 const ForBuyers = () => {
   useMarketingPageShell();
@@ -17,12 +19,19 @@ const ForBuyers = () => {
     setWaitlistDialogOpen(true);
   };
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: 'https://holescale.com' },
+    { name: 'For Buyers' },
+  ]);
+
   return (
     <>
       <SEO
         title="For Buyers | HoleScale — Source Packaging Materials"
         description="Get competitive quotes from verified packaging suppliers in 24-48 hours. Compare pricing, MOQs, and lead times for corrugated boxes, mailers, and custom packaging. Free to use."
         keywords="source packaging materials, get quotes for custom packaging, find verified packaging suppliers, corrugated boxes sourcing, B2B packaging procurement platform"
+        canonical="https://holescale.com/for-buyers"
+        schema={breadcrumbSchema}
       />
 
       <Navigation />

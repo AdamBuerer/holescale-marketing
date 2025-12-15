@@ -314,10 +314,9 @@ All colors MUST be HSL.
     hyphens: auto;
   }
   
-  /* Containers must prevent horizontal overflow */
+  /* Containers sizing for flex/grid */
   div, section, article, aside, main, header, footer, nav {
     min-width: 0; /* Critical: Allows flex/grid children to shrink below content size */
-    overflow-x: hidden; /* Prevent horizontal scroll */
     max-width: 100%; /* Ensure containers don't exceed parent */
   }
   

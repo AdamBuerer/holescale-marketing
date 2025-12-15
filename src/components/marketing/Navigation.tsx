@@ -6,7 +6,7 @@ import {
   Users, TrendingUp, BarChart3, Globe, Target,
   FileText, Send, MessageSquare, CheckCircle,
   BookOpen, HelpCircle, FileQuestion,
-  ArrowRight, Sparkles, CreditCard
+  ArrowRight, Sparkles, CreditCard, Calculator
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
@@ -519,6 +519,34 @@ const Navigation = () => {
                     <div className="flex-1">
                       <span className="font-medium group-hover:text-primary transition-colors">Glossary</span>
                       <p className="text-xs text-muted-foreground">Packaging terminology explained</p>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/tools/unit-cost-calculator"
+                    onClick={closeAllMenus}
+                    className="group flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                    role="menuitem"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                      <Calculator className="w-5 h-5 text-green-500" aria-hidden="true" />
+                    </div>
+                    <div className="flex-1">
+                      <span className="font-medium group-hover:text-primary transition-colors">Unit Cost Calculator</span>
+                      <p className="text-xs text-muted-foreground">Calculate volume pricing & MOQs</p>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/tools/tax-calculator"
+                    onClick={closeAllMenus}
+                    className="group flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                    role="menuitem"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                      <DollarSign className="w-5 h-5 text-purple-500" aria-hidden="true" />
+                    </div>
+                    <div className="flex-1">
+                      <span className="font-medium group-hover:text-primary transition-colors">Tax Deduction Calculator</span>
+                      <p className="text-xs text-muted-foreground">Business gift & promo tax rules</p>
                     </div>
                   </Link>
                 </nav>

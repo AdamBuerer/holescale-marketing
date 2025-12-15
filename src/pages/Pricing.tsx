@@ -1,22 +1,132 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import SEO from '@/components/SEO';
 import Navigation from '@/components/marketing/Navigation';
 import Footer from '@/components/marketing/Footer';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Hero } from '@/components/marketing/sections/Hero';
-import { PricingCard } from '@/components/marketing/sections/PricingCard';
 import { FAQAccordion } from '@/components/marketing/sections/FAQAccordion';
 import { FooterCTA } from '@/components/marketing/sections/FooterCTA';
 import { WaitlistDialog } from '@/components/waitlist/WaitlistDialog';
-import { generateBreadcrumbSchema } from '@/lib/schema';
+import { SubscriptionPricingCard } from '@/components/subscription/SubscriptionPricingCard';
+import { TrustBadges } from '@/components/marketing/TrustBadges';
+import { supabase } from '@/integrations/supabase/client';
+import { redirectToCheckout } from '@/lib/stripe/client';
+import { useAuth } from '@/hooks/useAuth';
+import { generateBreadcrumbSchema, generateAggregateOfferSchema, generateFAQSchema } from '@/lib/schema';
+import {
+  getTierDisplayName,
+  getTierDescription,
+  formatFeaturesForDisplay,
+} from '@/lib/tier-features-config';
+
+// Local type for pricing page tiers (matches SubscriptionPricingCard's PricingTierDisplay)
+interface PricingTier {
+  id: string;
+  tier_name: string;
+  display_name: string;
+  description: string;
+  user_type: string;
+  price_monthly: number;
+  price_yearly: number;
+  transaction_fee_percent: number;
+  trial_days: number;
+  sort_order: number;
+  is_active: boolean;
+  is_free: boolean;
+  features: Array<{
+    feature_key: string;
+    feature_type: string;
+    feature_value: string;
+  }>;
+}
+
+// Fetch subscription tiers from database
+async function fetchSubscriptionTiers(): Promise<PricingTier[]> {
+  if (!supabase) throw new Error('Supabase not initialized');
+
+  const { data, error } = await supabase
+    .from('subscription_tiers')
+    .select('*')
+    .eq('is_active', true)
+    .order('monthly_price', { ascending: true });
+
+  if (error) throw error;
+
+  // Map the existing schema to what our components expect
+  return (data || []).map((tier: any) => {
+    const formattedFeatures = formatFeaturesForDisplay(tier.features || [], tier.user_type);
+
+    return {
+      id: tier.id,
+      tier_name: tier.tier_name,
+      display_name: getTierDisplayName(tier.tier_name),
+      description: getTierDescription(tier.tier_name, tier.user_type),
+      user_type: tier.user_type,
+      price_monthly: Math.round(tier.monthly_price * 100), // Convert dollars to cents
+      price_yearly: Math.round(tier.annual_price * 100),
+      transaction_fee_percent: tier.service_fee_rate || 0,
+      trial_days: tier.monthly_price > 0 ? 14 : 0, // 14 day trial for paid tiers
+      sort_order: getSortOrder(tier.tier_name),
+      is_active: tier.is_active,
+      is_free: tier.monthly_price === 0,
+      // Convert string array features to feature objects with display labels
+      features: formattedFeatures.map((featureLabel: string) => ({
+        feature_key: featureLabel,
+        feature_type: 'boolean',
+        feature_value: 'true',
+      })),
+    };
+  });
+}
+
+// Helper to determine sort order for the 4-tier structure
+function getSortOrder(tierName: string): number {
+  const order: Record<string, number> = {
+    'free': 1,
+    'starter': 2,
+    'professional': 3,
+    'enterprise': 4,
+  };
+  return order[tierName.toLowerCase()] || 99;
+}
 
 const Pricing = () => {
   const [userType, setUserType] = useState<'buyer' | 'supplier'>('buyer');
   const [waitlistDialogOpen, setWaitlistDialogOpen] = useState(false);
   const [waitlistRole, setWaitlistRole] = useState<'buyer' | 'supplier'>('buyer');
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const { user } = useAuth();
+
+  // Fetch tiers from database
+  const { data: tiers, isLoading: tiersLoading } = useQuery({
+    queryKey: ['subscription-tiers'],
+    queryFn: fetchSubscriptionTiers,
+    staleTime: 10 * 60 * 1000, // Cache for 10 minutes
+  });
+
+  const buyerTiers = tiers?.filter(t => t.user_type === 'buyer') || [];
+  const supplierTiers = tiers?.filter(t => t.user_type === 'supplier') || [];
+
+  const handleSubscribe = async (tierId: string) => {
+    if (!user) {
+      // Not logged in, show waitlist or redirect to signup
+      const tier = tiers?.find(t => t.id === tierId);
+      if (tier) {
+        openWaitlistDialog(tier.user_type as 'buyer' | 'supplier');
+      }
+      return;
+    }
+
+    // Logged in, redirect to checkout
+    await redirectToCheckout({
+      tierId,
+      billingCycle,
+    });
+  };
 
   const openWaitlistDialog = (role: 'buyer' | 'supplier') => {
     setWaitlistRole(role);
@@ -24,8 +134,22 @@ const Pricing = () => {
   };
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.holescale.com/" },
-    { name: "Pricing", url: "https://www.holescale.com/pricing" },
+    { name: "Home", url: "https://holescale.com/" },
+    { name: "Pricing", url: "https://holescale.com/pricing" },
+  ]);
+
+  // Aggregate offer schema for pricing page SEO
+  const buyerOfferSchema = generateAggregateOfferSchema([
+    { name: 'Buyer Free Plan', description: 'Free marketplace access for buyers', price: 0, unitText: 'per month' },
+    { name: 'Buyer Pro Plan', description: 'For growing teams with 3 seats', price: 99, unitText: 'per month' },
+    { name: 'Buyer Business Plan', description: 'Multi-location support with 10 seats', price: 299, unitText: 'per month' },
+  ]);
+
+  const supplierOfferSchema = generateAggregateOfferSchema([
+    { name: 'Supplier Starter Plan', description: 'Free tier for testing the platform', price: 0, unitText: 'per month' },
+    { name: 'Supplier Growth Plan', description: 'For growing suppliers with verified badge', price: 49, unitText: 'per month' },
+    { name: 'Supplier Professional Plan', description: 'Advanced features with priority support', price: 149, unitText: 'per month' },
+    { name: 'Supplier Enterprise Plan', description: 'For high-volume suppliers', price: 499, unitText: 'per month' },
   ]);
 
   const pricingFAQs = [
@@ -57,11 +181,17 @@ const Pricing = () => {
 
   return (
     <>
-      <SEO 
+      <SEO
         title="Pricing | HoleScale — Transparent B2B Marketplace Pricing"
         description="Simple, transparent pricing. Free for buyers. Supplier plans from $0-$499/month with competitive transaction fees. No hidden costs."
-        canonical="https://www.holescale.com/pricing"
-        schema={breadcrumbSchema}
+        canonical="https://holescale.com/pricing"
+        keywords="packaging marketplace pricing, B2B pricing, supplier fees, buyer pricing, packaging procurement cost"
+        schema={[
+          breadcrumbSchema,
+          buyerOfferSchema,
+          supplierOfferSchema,
+          generateFAQSchema(pricingFAQs),
+        ]}
       />
 
       <Navigation />
@@ -73,12 +203,27 @@ const Pricing = () => {
         variant="centered"
       />
 
+      {/* Trust Badges */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <TrustBadges variant="compact" />
+      </div>
+
       {/* Toggle for Buyer/Supplier */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
         <Tabs value={userType} onValueChange={(v) => setUserType(v as 'buyer' | 'supplier')} className="w-full">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2">
-            <TabsTrigger value="buyer" className="text-sm sm:text-base px-3 sm:px-4 py-2 sm:py-2.5">I'm a Buyer</TabsTrigger>
-            <TabsTrigger value="supplier" className="text-sm sm:text-base px-3 sm:px-4 py-2 sm:py-2.5">I'm a Supplier</TabsTrigger>
+          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 bg-muted/50">
+            <TabsTrigger
+              value="buyer"
+              className="text-sm sm:text-base px-3 sm:px-4 py-2 sm:py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md font-medium transition-all duration-200"
+            >
+              I'm a Buyer
+            </TabsTrigger>
+            <TabsTrigger
+              value="supplier"
+              className="text-sm sm:text-base px-3 sm:px-4 py-2 sm:py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md font-medium transition-all duration-200"
+            >
+              I'm a Supplier
+            </TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
@@ -89,74 +234,32 @@ const Pricing = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">For Buyers</h2>
-              <p className="text-base sm:text-lg text-muted-foreground">Workflow tools that scale with your business</p>
+              <p className="text-base sm:text-lg text-muted-foreground">Start free, upgrade as you grow</p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8 pt-4 sm:pt-6">
-              <PricingCard
-                name="Free"
-                price="$0/month"
-                description="Perfect for getting started"
-                features={[
-                  "1 seat",
-                  "1 location",
-                  "Marketplace access",
-                  "Manual inventory (100 items)",
-                  "Limited CSV export",
-                  "QuickBooks/Xero sync",
-                ]}
-                cta={{ text: "Join Waitlist", onClick: () => openWaitlistDialog('buyer') }}
-              />
-
-              <PricingCard
-                name="Pro"
-                price="$99/month"
-                description="For growing teams"
-                features={[
-                  "3 seats",
-                  "1 location",
-                  "Unlimited inventory",
-                  "Low-stock alerts",
-                  "Vendor scorecards",
-                ]}
-                cta={{ text: "Join Waitlist", onClick: () => openWaitlistDialog('buyer') }}
-                highlighted
-                badge="Most Popular"
-              />
-
-              <PricingCard
-                name="Business"
-                price="$299/month"
-                description="Multi-location support"
-                features={[
-                  "10 seats",
-                  "3+ locations",
-                  "+$49/additional location",
-                  "Approval workflows",
-                  "Budget controls",
-                  "SLA support",
-                ]}
-                cta={{ text: "Join Waitlist", onClick: () => openWaitlistDialog('buyer') }}
-              />
-
-              <PricingCard
-                name="Enterprise"
-                price="Custom"
-                description="For large organizations"
-                features={[
-                  "Unlimited seats",
-                  "Unlimited locations",
-                  "SSO",
-                  "ERP integrations (NetSuite, SAP)",
-                  "Custom workflows",
-                  "Dedicated CSM",
-                ]}
-                cta={{ text: "Contact Sales", href: "/contact" }}
-              />
-            </div>
+            {tiersLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+              </div>
+            ) : buyerTiers.length > 0 ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8 overflow-visible">
+                {buyerTiers.map((tier, index) => (
+                  <SubscriptionPricingCard
+                    key={tier.id}
+                    tier={tier}
+                    onSubscribe={() => handleSubscribe(tier.id)}
+                    highlighted={index === 1} // Highlight second tier (Growth)
+                    billingCycle={billingCycle}
+                    className="mt-12"
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-muted-foreground py-12">No buyer tiers available</p>
+            )}
 
             <p className="text-center text-muted-foreground mt-8">
-              We believe procurement should be accessible. Start free and upgrade when you need advanced features.
+              All paid tiers include a 14-day free trial. Cancel anytime.
             </p>
           </div>
         </section>
@@ -169,70 +272,33 @@ const Pricing = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-visible">
               <div className="text-center mb-8 sm:mb-12">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">For Suppliers</h2>
-                <p className="text-base sm:text-lg text-muted-foreground">Get qualified leads. Pay only when you win.</p>
+                <p className="text-base sm:text-lg text-muted-foreground">Get qualified leads with transparent pricing</p>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pt-4 sm:pt-6">
-                <PricingCard
-                  name="Starter"
-                  price="$0/month"
-                  description="Perfect for testing the platform"
-                  features={[
-                    "Card: 6% + $0.30",
-                    "ACH: 6%",
-                    "Max 50 SKUs",
-                    "Email support",
-                    "5-day payouts",
-                  ]}
-                  cta={{ text: "Get Started", onClick: () => openWaitlistDialog('supplier') }}
-                />
+              {tiersLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                </div>
+              ) : supplierTiers.length > 0 ? (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 overflow-visible">
+                  {supplierTiers.map((tier, index) => (
+                    <SubscriptionPricingCard
+                      key={tier.id}
+                      tier={tier}
+                      onSubscribe={() => handleSubscribe(tier.id)}
+                      highlighted={index === 1} // Highlight second tier (Starter/Growth)
+                      billingCycle={billingCycle}
+                      className="mt-12"
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center text-muted-foreground py-12">No supplier tiers available</p>
+              )}
 
-                <PricingCard
-                  name="Growth"
-                  price="$49/month"
-                  description="For growing suppliers"
-                  features={[
-                    "Card: 4.5% + $0.30",
-                    "ACH: 3%",
-                    "Unlimited SKUs",
-                    "Chat support",
-                    "3-day payouts",
-                    "Verified badge",
-                  ]}
-                  cta={{ text: "Get Started", onClick: () => openWaitlistDialog('supplier') }}
-                  highlighted
-                  badge="Most Popular"
-                />
-
-                <PricingCard
-                  name="Professional"
-                  price="$149/month"
-                  description="Advanced features"
-                  features={[
-                    "Card: 3.5% + $0.30",
-                    "ACH: 1.5% (cap $50)",
-                    "Next-day payouts",
-                    "Priority support",
-                    "SSO",
-                    "Advanced analytics",
-                  ]}
-                  cta={{ text: "Get Started", onClick: () => openWaitlistDialog('supplier') }}
-                />
-
-                <PricingCard
-                  name="Enterprise"
-                  price="$499/month"
-                  description="For high-volume suppliers"
-                  features={[
-                    "Card: Interchange + 0.5%",
-                    "ACH: 0.5% (cap $25)",
-                    "API/ERP integrations",
-                    "Dedicated CSM",
-                    "Smart-Rail architecture",
-                  ]}
-                  cta={{ text: "Contact Sales", href: "/contact" }}
-                />
-              </div>
+              <p className="text-center text-muted-foreground mt-8">
+                All paid tiers include a 14-day free trial. Cancel anytime.
+              </p>
             </div>
           </section>
 

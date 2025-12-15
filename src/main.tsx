@@ -25,4 +25,12 @@ function Root() {
   )
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<Root />)
+const rootElement = document.getElementById('root')!
+
+// Check if the root has pre-rendered content (from react-snap)
+// If it does, hydrate instead of render to preserve SEO benefits
+if (rootElement.hasChildNodes()) {
+  ReactDOM.hydrateRoot(rootElement, <Root />)
+} else {
+  ReactDOM.createRoot(rootElement).render(<Root />)
+}

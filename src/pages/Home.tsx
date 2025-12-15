@@ -26,7 +26,8 @@ import { IntegrationHighlights } from '@/components/marketing/sections/Integrati
 import { FooterCTA } from '@/components/marketing/sections/FooterCTA';
 import { WaitlistForm } from '@/components/waitlist/WaitlistForm';
 import { WaitlistDialog } from '@/components/waitlist/WaitlistDialog';
-import { generateOrganizationSchema, generateWebSiteSchema } from '@/lib/schema';
+import { TrustBadges } from '@/components/marketing/TrustBadges';
+import { generateOrganizationSchema, generateWebSiteSchema, generateSoftwareApplicationSchema } from '@/lib/schema';
 
 const Home = () => {
   const [waitlistDialogOpen, setWaitlistDialogOpen] = useState(false);
@@ -37,6 +38,18 @@ const Home = () => {
 
   const organizationSchema = generateOrganizationSchema();
   const websiteSchema = generateWebSiteSchema();
+  const softwareAppSchema = generateSoftwareApplicationSchema({
+    description: 'B2B packaging marketplace connecting buyers with verified packaging suppliers. Get competitive quotes for corrugated boxes, mailers, labels, and custom packaging in 24-48 hours. Free for buyers.',
+    features: [
+      'RFQ Management',
+      'Verified Supplier Network',
+      'Competitive Bidding',
+      'Quote Comparison',
+      'Real-time Communication',
+      'Order Tracking',
+      'Secure Payments',
+    ],
+  });
 
   return (
     <>
@@ -44,7 +57,7 @@ const Home = () => {
         title="HoleScale | B2B Packaging Materials Marketplace"
         description="Connect with verified packaging suppliers. Get competitive quotes for corrugated boxes, mailers, labels, and custom packaging in 24-48 hours. Free for buyers."
         canonical="https://www.holescale.com/"
-        schema={[organizationSchema, websiteSchema]}
+        schema={[organizationSchema, websiteSchema, softwareAppSchema]}
       />
 
       <Navigation />
@@ -119,6 +132,7 @@ const Home = () => {
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed">
             HoleScale is a <strong className="text-foreground">B2B packaging materials marketplace</strong> connecting buyers with verified packaging suppliers. Whether you're sourcing <strong className="text-foreground">corrugated boxes</strong>, <strong className="text-foreground">poly mailers</strong>, <strong className="text-foreground">food-grade containers</strong>, <strong className="text-foreground">shipping supplies</strong>, or <strong className="text-foreground">sustainable packaging</strong>, our platform streamlines procurement with competitive quotes, transparent pricing, and verified supplier networks.
           </p>
+          <TrustBadges variant="compact" className="mt-6" />
         </div>
       </section>
 

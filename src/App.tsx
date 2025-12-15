@@ -21,11 +21,25 @@ import BlogAuthor from './pages/BlogAuthor'
 import Resources from './pages/Resources'
 import Waitlist from './pages/Waitlist'
 import Glossary from './pages/Glossary'
+import GlossaryTerm from './pages/GlossaryTerm'
+import GetQuotes from './pages/GetQuotes'
+import UnitCostCalculator from './pages/tools/UnitCostCalculator'
+import TaxCalculator from './pages/tools/TaxCalculator'
 import Privacy from './pages/Privacy'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
 import Investors from './pages/Investors'
 import NotFound from './pages/NotFound'
+
+// Subscription pages
+import CheckoutSuccess from './pages/CheckoutSuccess'
+import BillingSettings from './pages/BillingSettings'
+import UsageDashboard from './pages/UsageDashboard'
+
+// Admin pages
+import AdminSubscriptions from './pages/admin/AdminSubscriptions'
+import AdminSubscriptionDetail from './pages/admin/AdminSubscriptionDetail'
+import AdminRevenue from './pages/admin/AdminRevenue'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -68,19 +82,32 @@ export default function App() {
             <Route path="/resources" element={<Resources />} />
             <Route path="/waitlist" element={<Waitlist />} />
             <Route path="/glossary" element={<Glossary />} />
+            <Route path="/glossary/:slug" element={<GlossaryTerm />} />
+            <Route path="/get-quotes" element={<GetQuotes />} />
+            <Route path="/buyers" element={<GetQuotes />} />
+            <Route path="/tools/unit-cost-calculator" element={<UnitCostCalculator />} />
+            <Route path="/tools/tax-calculator" element={<TaxCalculator />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/investors" element={<Investors />} />
 
-            {/* Redirect app routes to app.holescale.com */}
+            {/* Subscription routes */}
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
+            <Route path="/settings/billing" element={<BillingSettings />} />
+            <Route path="/settings/usage" element={<UsageDashboard />} />
+
+            {/* Admin routes */}
+            <Route path="/admin/subscriptions" element={<AdminSubscriptions />} />
+            <Route path="/admin/subscriptions/:id" element={<AdminSubscriptionDetail />} />
+            <Route path="/admin/revenue" element={<AdminRevenue />} />
+
+            {/* Redirect other app routes to app.holescale.com */}
             <Route path="/auth" element={<RedirectToApp />} />
             <Route path="/auth/*" element={<RedirectToApp />} />
             <Route path="/buyer/*" element={<RedirectToApp />} />
             <Route path="/supplier/*" element={<RedirectToApp />} />
-            <Route path="/admin/*" element={<RedirectToApp />} />
-            <Route path="/settings/*" element={<RedirectToApp />} />
             <Route path="/messages/*" element={<RedirectToApp />} />
             <Route path="/orders/*" element={<RedirectToApp />} />
             <Route path="/rfq/*" element={<RedirectToApp />} />

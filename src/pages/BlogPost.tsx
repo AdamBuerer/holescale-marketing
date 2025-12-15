@@ -14,6 +14,7 @@ import { RelatedPosts } from '@/components/blog/RelatedPosts';
 import { ShareButtons } from '@/components/blog/ShareButtons';
 import { BlogCTA } from '@/components/blog/BlogCTA';
 import { AISummary } from '@/components/blog/AISummary';
+import { WhatIsHoleScale } from '@/components/marketing/WhatIsHoleScale';
 
 function BlogPostSkeleton() {
   return (
@@ -615,6 +616,15 @@ export default function BlogPost() {
           </div>
         </section>
       )}
+
+      {/* What is HoleScale */}
+      <section className="py-12 md:py-16 bg-background">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn>
+            <WhatIsHoleScale variant="default" ctaText="Join the Waitlist" ctaLink="/waitlist" />
+          </FadeIn>
+        </div>
+      </section>
 
       {/* Newsletter CTA */}
       <section className="py-16 md:py-20 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">

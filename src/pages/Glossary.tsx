@@ -4,13 +4,14 @@
  */
 
 import { useState, useMemo } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { BookOpen, Search } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GlossarySearch } from '@/components/glossary/GlossarySearch';
 import { GlossaryCategory } from '@/components/glossary/GlossaryCategory';
 import { getTermsByCategory, searchGlossaryTerms, GLOSSARY_TERMS } from '@/data/glossary';
 import type { GlossaryTerm } from '@/data/glossary';
+import SEO from '@/components/SEO';
+import { generateBreadcrumbSchema, generateCollectionPageSchema } from '@/lib/schema';
 
 export default function Glossary() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,15 +46,32 @@ export default function Glossary() {
   }, [filteredTerms]);
 
   return (
-    <main className="flex-1 overflow-auto pb-32">
+    <main className="flex-1 pb-32">
       <div className="container max-w-7xl py-8 px-4 space-y-6">
-        <Helmet>
-          <title>Packaging Glossary - HoleScale</title>
-          <meta
-            name="description"
-            content="Searchable glossary of packaging terms including ECT, Mullen, gauge, flute types, and more."
-          />
-        </Helmet>
+        <SEO
+          title="Packaging Glossary - HoleScale"
+          description="Comprehensive glossary of packaging industry terms including ECT, Mullen, gauge, flute types, RSC boxes, MOQ, and more. Learn packaging terminology used by suppliers and manufacturers."
+          keywords="packaging glossary, ECT, Mullen test, corrugated packaging terms, packaging definitions, box terminology, shipping terms"
+          canonical="https://holescale.com/glossary"
+          schema={[
+            generateBreadcrumbSchema([
+              { name: 'Home', url: 'https://holescale.com' },
+              { name: 'Glossary' },
+            ]),
+            {
+              ...generateCollectionPageSchema(
+                'Packaging Glossary',
+                'Comprehensive glossary of packaging industry terms and definitions',
+                'https://holescale.com/glossary'
+              ),
+              mainEntity: {
+                '@type': 'DefinedTermSet',
+                name: 'HoleScale Packaging Glossary',
+                description: 'Industry-standard packaging terminology for corrugated, flexible, rigid packaging and logistics.',
+              },
+            },
+          ]}
+        />
 
         {/* Header */}
         <div>

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { WaitlistDialog } from '@/components/waitlist/WaitlistDialog';
 import { useMarketingPageShell } from "@/hooks/useMarketingPageShell";
+import { generateBreadcrumbSchema } from '@/lib/schema';
 
 const ForSuppliers = () => {
   useMarketingPageShell();
@@ -17,12 +18,19 @@ const ForSuppliers = () => {
     setWaitlistDialogOpen(true);
   };
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: 'https://holescale.com' },
+    { name: 'For Suppliers' },
+  ]);
+
   return (
     <>
       <SEO
         title="For Suppliers | HoleScale — Get Qualified B2B Packaging Leads"
         description="Get qualified leads from buyers ready to order packaging materials. Sync your Shopify catalog. Compete on quality, not just price. Join HoleScale's packaging supplier network."
         keywords="sell packaging materials online, B2B packaging leads, packaging materials marketplace for suppliers, qualified buyer leads, packaging supplier lead generation"
+        canonical="https://holescale.com/for-suppliers"
+        schema={breadcrumbSchema}
       />
 
       <Navigation />
