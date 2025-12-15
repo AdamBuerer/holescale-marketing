@@ -28,7 +28,7 @@ export function BlogCTA({ variant = 'general', postSlug, className = '' }: BlogC
             asChild
             className="bg-emerald-600 hover:bg-emerald-700 text-white"
           >
-            <a href={supplierCTALink}>
+            <a href={supplierCTALink} rel="nofollow">
               Create Supplier Account
               <ArrowRight className="ml-2 w-4 h-4" />
             </a>
@@ -62,7 +62,7 @@ export function BlogCTA({ variant = 'general', postSlug, className = '' }: BlogC
             asChild
             className="bg-blue-600 hover:bg-blue-700 text-white"
           >
-            <a href={buyerCTALink}>
+            <a href={buyerCTALink} rel="nofollow">
               Get Started Free
               <ArrowRight className="ml-2 w-4 h-4" />
             </a>
@@ -93,7 +93,7 @@ export function BlogCTA({ variant = 'general', postSlug, className = '' }: BlogC
       </p>
       <div className="flex flex-col sm:flex-row gap-4">
         <Button asChild>
-          <a href={buyerCTALink}>
+          <a href={buyerCTALink} rel="nofollow">
             Join HoleScale
             <ArrowRight className="ml-2 w-4 h-4" />
           </a>

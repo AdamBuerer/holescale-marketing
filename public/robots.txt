@@ -1,10 +1,25 @@
+# Allow all crawlers for holescale.com (marketing site)
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /dashboard
-Disallow: /api
-Disallow: /buyer
-Disallow: /supplier
-Disallow: /auth
 
-Sitemap: https://www.holescale.com/sitemap.xml
+# Block admin/app routes (these redirect to app.holescale.com)
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /buyer/
+Disallow: /supplier/
+Disallow: /auth/
+Disallow: /login
+Disallow: /signup
+Disallow: /register
+Disallow: /settings/
+Disallow: /rfq/
+Disallow: /onboarding/
+Disallow: /profile/
+Disallow: /quotes/
+Disallow: /orders/
+Disallow: /messages/
+Disallow: /design-studio/
+
+# Sitemap location
+Sitemap: https://holescale.com/sitemap.xml

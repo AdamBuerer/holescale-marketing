@@ -3,9 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Holescale - B2B Marketplace</title>
-    <meta name="description" content="B2B Marketplace connecting buyers with verified suppliers" />
-    <meta name="author" content="Holescale" />
+
+    <!-- Primary Meta Tags -->
+    <title>HoleScale | B2B Packaging Materials Marketplace</title>
+    <meta name="title" content="HoleScale | B2B Packaging Materials Marketplace" />
+    <meta name="description" content="Source packaging smarter. Compare verified suppliers for boxes, mailers, shipping supplies, custom packaging and more. One platform. Better prices. Free to start." />
+    <meta name="keywords" content="packaging suppliers, B2B packaging, packaging materials marketplace, wholesale packaging, shipping supplies, custom boxes, packaging procurement" />
+    <meta name="author" content="HoleScale" />
+
+    <!-- Robots (ALLOW indexing on holescale.com) -->
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://holescale.com/" />
 
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -13,19 +24,30 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#1e3a8a" />
+    <meta name="theme-color" content="#1a365d" />
 
     <!-- Content Security Policy - simplified for compatibility -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' data: https://fonts.gstatic.com https://r2cdn.perplexity.ai; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms; worker-src 'self' blob:; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;">
 
-    <meta property="og:title" content="Holescale - B2B Marketplace" />
-    <meta property="og:description" content="B2B Marketplace connecting buyers with verified suppliers" />
+    <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:url" content="https://holescale.com/" />
+    <meta property="og:site_name" content="HoleScale" />
+    <meta property="og:title" content="HoleScale | B2B Packaging Materials Marketplace" />
+    <meta property="og:description" content="Source packaging smarter. Compare verified suppliers for boxes, mailers, shipping supplies, custom packaging and more. One platform. Better prices." />
+    <meta property="og:image" content="https://holescale.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="HoleScale - Source Packaging Smarter - One Platform. Verified Suppliers. Better Prices." />
+    <meta property="og:locale" content="en_US" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@holescale" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:url" content="https://holescale.com/" />
+    <meta name="twitter:title" content="HoleScale | B2B Packaging Materials Marketplace" />
+    <meta name="twitter:description" content="Source packaging smarter. Compare verified suppliers for boxes, mailers, shipping supplies, custom packaging and more." />
+    <meta name="twitter:image" content="https://holescale.com/og-image.png" />
+    <meta name="twitter:image:alt" content="HoleScale - Source Packaging Smarter" />
 
     <!-- DNS Prefetch for external resources -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -155,6 +177,43 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       })(window,document,"clarity","script","uh3i6gs4dy");
     </script>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "HoleScale",
+      "url": "https://holescale.com",
+      "logo": "https://holescale.com/logo.png",
+      "description": "B2B marketplace connecting businesses with verified packaging material suppliers. Compare quotes, find better prices, streamline procurement.",
+      "foundingDate": "2024",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Colorado Springs",
+        "addressRegion": "CO",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://linkedin.com/company/holescale"
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "HoleScale",
+      "url": "https://holescale.com",
+      "description": "B2B Packaging Materials Marketplace",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://holescale.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
   </head>
 
   <body>
@@ -181,8 +240,8 @@
       </div>
     </div>
 
-    <!-- React root (hidden until app loads) -->
-    <div id="root" class="hs-hidden"></div>
+    <!-- React root -->
+    <div id="root"></div>
 
     <!-- No JavaScript fallback -->
     <noscript>
@@ -212,17 +271,25 @@
       // Mark app as ready when React mounts - with smooth transition
       window.hsAppReady = function() {
         var loading = document.getElementById('hs-loading');
-        var root = document.getElementById('root');
 
         // Fade out loading screen
         loading.classList.add('hs-fade-out');
 
-        // After fade animation, hide loading and show app
+        // After fade animation, hide loading
         setTimeout(function() {
           loading.classList.add('hs-hidden');
-          root.classList.remove('hs-hidden');
         }, 200);
       };
+
+      // Check for pre-rendered content (from react-snap)
+      // If content exists, hide loading immediately since HTML is already visible
+      (function() {
+        var root = document.getElementById('root');
+        var loading = document.getElementById('hs-loading');
+        if (root && root.hasChildNodes()) {
+          loading.classList.add('hs-hidden');
+        }
+      })();
     </script>
 
     <!-- Main app module -->

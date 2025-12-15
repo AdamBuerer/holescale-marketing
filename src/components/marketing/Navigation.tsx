@@ -6,11 +6,12 @@ import {
   Users, TrendingUp, BarChart3, Globe, Target,
   FileText, Send, MessageSquare, CheckCircle,
   BookOpen, HelpCircle, FileQuestion,
-  ArrowRight, Sparkles
+  ArrowRight, Sparkles, CreditCard
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { Logo } from '@/components/ui/logo';
+import { UserAccountMenu } from '@/components/ui/UserAccountMenu';
 import { appLinks } from '@/lib/urls';
 import { cn } from '@/lib/utils';
 
@@ -556,16 +557,10 @@ const Navigation = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-2 xl:gap-3">
             {user ? (
-              <a href={getDashboardLink()} aria-label="Go to your dashboard">
-                <Button size="sm" className="gap-2 text-sm whitespace-nowrap">
-                  <LayoutDashboard className="w-4 h-4 hidden xl:block" aria-hidden="true" />
-                  <span className="hidden xl:inline">Go to Dashboard</span>
-                  <span className="xl:hidden">Dashboard</span>
-                </Button>
-              </a>
+              <UserAccountMenu />
             ) : (
               <>
-                <a href={appLinks.login} aria-label="Log in to your account">
+                <a href={appLinks.login} rel="nofollow" aria-label="Log in to your account">
                   <Button variant="ghost" size="sm" className="gap-2 text-sm whitespace-nowrap">
                     Log in
                   </Button>
@@ -700,15 +695,29 @@ const Navigation = () => {
             {/* CTA Buttons */}
             <div className="pt-4 space-y-2 border-t mt-4">
               {user ? (
-                <a href={getDashboardLink()} onClick={closeAllMenus} className="block">
-                  <Button className="w-full gap-2" size="sm">
-                    <LayoutDashboard className="w-4 h-4" aria-hidden="true" />
-                    Go to Dashboard
-                  </Button>
-                </a>
+                <>
+                  <a href={getDashboardLink()} rel="nofollow" onClick={closeAllMenus} className="block">
+                    <Button className="w-full gap-2" size="sm">
+                      <LayoutDashboard className="w-4 h-4" aria-hidden="true" />
+                      Go to Dashboard
+                    </Button>
+                  </a>
+                  <Link to="/settings/billing" onClick={closeAllMenus} className="block">
+                    <Button variant="outline" className="w-full gap-2" size="sm">
+                      <CreditCard className="w-4 h-4" aria-hidden="true" />
+                      Billing & Subscription
+                    </Button>
+                  </Link>
+                  <Link to="/settings/usage" onClick={closeAllMenus} className="block">
+                    <Button variant="outline" className="w-full gap-2" size="sm">
+                      <BarChart3 className="w-4 h-4" aria-hidden="true" />
+                      Usage & Limits
+                    </Button>
+                  </Link>
+                </>
               ) : (
                 <>
-                  <a href={appLinks.login} onClick={closeAllMenus} className="block">
+                  <a href={appLinks.login} rel="nofollow" onClick={closeAllMenus} className="block">
                     <Button variant="ghost" className="w-full" size="sm">Log in</Button>
                   </a>
                   <Link to="/waitlist" onClick={closeAllMenus} className="block">
