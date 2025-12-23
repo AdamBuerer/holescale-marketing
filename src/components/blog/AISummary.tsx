@@ -64,6 +64,18 @@ export function AISummary({ content, title, readingTime, postId }: AISummaryProp
         }
       );
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage = 'Failed to generate summary';
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          errorMessage = `Server error: ${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
+      }
+
       const data = await response.json();
 
       if (!data.success) {
