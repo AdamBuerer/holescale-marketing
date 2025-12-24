@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -11,6 +11,8 @@ import { waitlistFormSchema, type WaitlistFormData } from '@/lib/validations/wai
 import { logger } from '@/lib/logger';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { useFormTracking } from '@/hooks/useAnalytics';
+import { trackWaitlistSignup } from '@/lib/analytics';
 
 interface WaitlistFormProps {
   onSuccess?: () => void;
@@ -33,6 +35,7 @@ export function WaitlistForm({
   const [submitted, setSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+  const { trackStart, trackSubmit } = useFormTracking('waitlist', window.location.pathname);
 
   const form = useForm<WaitlistFormData>({
     resolver: zodResolver(waitlistFormSchema),
@@ -52,6 +55,14 @@ export function WaitlistForm({
   });
 
   const selectedRole = form.watch('role');
+
+  // Track form start when user begins interacting
+  useEffect(() => {
+    const subscription = form.watch(() => {
+      trackStart();
+    });
+    return () => subscription.unsubscribe();
+  }, [form, trackStart]);
 
   const onSubmit = async (data: WaitlistFormData) => {
     if (isSubmitting) return;
@@ -110,6 +121,14 @@ export function WaitlistForm({
         setSubmitted(true);
         form.reset();
 
+        // Track successful signup
+        trackSubmit(true);
+        trackWaitlistSignup(
+          data.role as 'buyer' | 'supplier' | 'other',
+          data.referralSource || undefined,
+          data.companySize || undefined
+        );
+
         toast({
           title: "You're on the list!",
           description: "We'll be in touch soon with next steps.",
@@ -121,6 +140,7 @@ export function WaitlistForm({
       }
     } catch (error: unknown) {
       logger.error('Waitlist submission error', { error });
+      trackSubmit(false, error instanceof Error ? error.message : 'Unknown error');
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Something went wrong. Please try again.",

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Toaster } from '@/components/ui/toaster'
 import { HelmetProvider } from 'react-helmet-async'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useAnalyticsInit, usePageTracking } from '@/hooks/useAnalytics'
 
 // Critical pages - load immediately
 import Home from './pages/Home'
@@ -71,13 +72,21 @@ function RedirectToApp() {
   return <div className="flex items-center justify-center min-h-screen">Redirecting to app...</div>
 }
 
+// Analytics wrapper component
+function AnalyticsWrapper({ children }: { children: React.ReactNode }) {
+  useAnalyticsInit()
+  usePageTracking()
+  return <>{children}</>
+}
+
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
         <BrowserRouter>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
+          <AnalyticsWrapper>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
             {/* Marketing Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -132,6 +141,7 @@ export default function App() {
           </Routes>
           </Suspense>
           <Toaster />
+          </AnalyticsWrapper>
         </BrowserRouter>
       </HelmetProvider>
     </QueryClientProvider>

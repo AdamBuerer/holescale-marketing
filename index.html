@@ -59,6 +59,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
+    <!-- Preload critical font files for faster rendering -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin />
+
     <!-- Google Fonts with display=swap for FOUT optimization -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
@@ -157,25 +161,54 @@
       }
     </style>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XSYCKL5VZW"></script>
+    <!-- Analytics - Defer loading until after page is interactive -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      // Disable automatic page_view - we track manually to prevent duplicate users
-      gtag('config', 'G-XSYCKL5VZW', {
-        send_page_view: false
-      });
-    </script>
-
-    <!-- Microsoft Clarity -->
-    <script>
-      (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window,document,"clarity","script","uh3i6gs4dy");
+      // Load analytics after page is interactive to prevent blocking
+      (function() {
+        function loadAnalytics() {
+          // Google Analytics
+          if (!window.gtag) {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XSYCKL5VZW';
+            script.onerror = function() { console.warn('[HoleScale] GA script failed to load'); };
+            document.head.appendChild(script);
+            
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-XSYCKL5VZW');
+          }
+          
+          // Microsoft Clarity
+          try {
+            (function(c,l,a,r,i,t,y){
+              if (c[a]) return; // Already loaded
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);
+              t.async=1;
+              t.src="https://www.clarity.ms/tag/"+i;
+              t.onerror=function(){console.warn('[HoleScale] Clarity script failed to load');};
+              y=l.getElementsByTagName(r)[0];
+              if(y && y.parentNode) {
+                y.parentNode.insertBefore(t,y);
+              }
+            })(window,document,"clarity","script","uh3i6gs4dy");
+          } catch(e) {
+            console.warn('[HoleScale] Clarity initialization error:', e);
+          }
+        }
+        
+        // Load after page is interactive (TTI)
+        if (document.readyState === 'complete') {
+          setTimeout(loadAnalytics, 1000);
+        } else {
+          window.addEventListener('load', function() {
+            setTimeout(loadAnalytics, 2000);
+          });
+        }
+      })();
     </script>
 
     <!-- Structured Data (JSON-LD) -->

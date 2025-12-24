@@ -10,12 +10,20 @@ import { DownloadModal } from '@/components/marketing/sections/DownloadModal';
 import { generateCollectionPageSchema, generateBreadcrumbSchema } from '@/lib/schema';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { trackResourceDownload } from '@/lib/analytics';
+import { usePageTracking } from '@/hooks/useAnalytics';
 
 const Resources = () => {
   const [selectedResource, setSelectedResource] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState('all');
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterLoading, setNewsletterLoading] = useState(false);
+
+  // Track page view
+  usePageTracking({
+    content_group1: 'Marketing',
+    content_group2: 'Resources',
+  });
 
   const categories = [
     { id: 'all', label: 'All' },
@@ -155,9 +163,15 @@ const Resources = () => {
       } else {
         toast.success('Thank you! Your download is starting.');
       }
+
+      // Track resource download
+      trackResourceDownload(resource.title, resource.category || 'unknown', true);
     } catch (err) {
       console.error('Error capturing lead:', err);
       // Still allow download even if there's an error
+      if (resource) {
+        trackResourceDownload(resource.title, resource.category || 'unknown', true);
+      }
     }
   };
 

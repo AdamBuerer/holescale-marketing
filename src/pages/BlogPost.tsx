@@ -15,6 +15,8 @@ import { ShareButtons } from '@/components/blog/ShareButtons';
 import { BlogCTA } from '@/components/blog/BlogCTA';
 import { AISummary } from '@/components/blog/AISummary';
 import { WhatIsHoleScale } from '@/components/marketing/WhatIsHoleScale';
+import { trackBlogView, trackBlogEngagement } from '@/lib/analytics';
+import { useScrollTracking, useTimeOnPageTracking } from '@/hooks/useAnalytics';
 
 function BlogPostSkeleton() {
   return (
@@ -118,10 +120,27 @@ export default function BlogPost() {
   const articleRef = useRef<HTMLDivElement>(null);
   const authorSectionRef = useRef<HTMLDivElement>(null);
 
+  // Track scroll and time on page
+  useScrollTracking(true);
+  useTimeOnPageTracking(true);
+
   // Scroll to top when navigating to a new blog post
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  // Track blog view when post loads
+  useEffect(() => {
+    if (post) {
+      trackBlogView(
+        post.id,
+        post.title,
+        post.author?.name,
+        post.category?.name,
+        post.tags?.map(t => t.name)
+      );
+    }
+  }, [post]);
 
   if (isLoading) {
     return (

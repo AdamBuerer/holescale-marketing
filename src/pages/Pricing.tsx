@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
@@ -22,6 +22,8 @@ import {
   getTierDescription,
   formatFeaturesForDisplay,
 } from '@/lib/tier-features-config';
+import { trackPricingTierView, trackPricingTierClick } from '@/lib/analytics';
+import { usePageTracking } from '@/hooks/useAnalytics';
 
 // Local type for pricing page tiers (matches SubscriptionPricingCard's PricingTierDisplay)
 interface PricingTier {
@@ -86,10 +88,14 @@ async function fetchSubscriptionTiers(): Promise<PricingTier[]> {
 // Helper to determine sort order for the 4-tier structure
 function getSortOrder(tierName: string): number {
   const order: Record<string, number> = {
-    'free': 1,
-    'starter': 2,
+    // Buyer tiers
+    'starter': 1,
+    'growth': 2,
     'professional': 3,
     'enterprise': 4,
+    // Supplier tiers
+    'lite': 1,
+    'free': 1, // Legacy support
   };
   return order[tierName.toLowerCase()] || 99;
 }
@@ -101,6 +107,12 @@ const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const { user } = useAuth();
 
+  // Track page view
+  usePageTracking({
+    content_group1: 'Marketing',
+    content_group2: 'Pricing',
+  });
+
   // Fetch tiers from database
   const { data: tiers, isLoading: tiersLoading } = useQuery({
     queryKey: ['subscription-tiers'],
@@ -111,13 +123,26 @@ const Pricing = () => {
   const buyerTiers = tiers?.filter(t => t.user_type === 'buyer') || [];
   const supplierTiers = tiers?.filter(t => t.user_type === 'supplier') || [];
 
+  // Track tier views when tiers are loaded
+  useEffect(() => {
+    if (tiers && tiers.length > 0) {
+      const visibleTiers = userType === 'buyer' ? buyerTiers : supplierTiers;
+      visibleTiers.forEach(tier => {
+        trackPricingTierView(tier.tier_name, userType);
+      });
+    }
+  }, [tiers, userType, buyerTiers, supplierTiers]);
+
   const handleSubscribe = async (tierId: string) => {
+    const tier = tiers?.find(t => t.id === tierId);
+    if (!tier) return;
+
+    // Track pricing tier click
+    trackPricingTierClick(tier.tier_name, tier.user_type as 'buyer' | 'supplier');
+
     if (!user) {
       // Not logged in, show waitlist or redirect to signup
-      const tier = tiers?.find(t => t.id === tierId);
-      if (tier) {
-        openWaitlistDialog(tier.user_type as 'buyer' | 'supplier');
-      }
+      openWaitlistDialog(tier.user_type as 'buyer' | 'supplier');
       return;
     }
 
@@ -140,16 +165,17 @@ const Pricing = () => {
 
   // Aggregate offer schema for pricing page SEO
   const buyerOfferSchema = generateAggregateOfferSchema([
-    { name: 'Buyer Free Plan', description: 'Free marketplace access for buyers', price: 0, unitText: 'per month' },
-    { name: 'Buyer Pro Plan', description: 'For growing teams with 3 seats', price: 99, unitText: 'per month' },
-    { name: 'Buyer Business Plan', description: 'Multi-location support with 10 seats', price: 299, unitText: 'per month' },
+    { name: 'Buyer Starter Plan', description: 'Free marketplace access for buyers - 3 RFQs/month, 5 saved suppliers', price: 0, unitText: 'per month' },
+    { name: 'Buyer Growth Plan', description: 'Operations buyers - Unlimited RFQs, inventory tracking, 25 suppliers', price: 19, unitText: 'per month' },
+    { name: 'Buyer Professional Plan', description: 'Procurement managers - Analytics, unlimited inventory, 3 team seats', price: 49, unitText: 'per month' },
+    { name: 'Buyer Enterprise Plan', description: 'Enterprise procurement - ERP integration, unlimited seats, dedicated manager', price: 149, unitText: 'per month' },
   ]);
 
   const supplierOfferSchema = generateAggregateOfferSchema([
-    { name: 'Supplier Starter Plan', description: 'Free tier for testing the platform', price: 0, unitText: 'per month' },
-    { name: 'Supplier Growth Plan', description: 'For growing suppliers with verified badge', price: 49, unitText: 'per month' },
-    { name: 'Supplier Professional Plan', description: 'Advanced features with priority support', price: 149, unitText: 'per month' },
-    { name: 'Supplier Enterprise Plan', description: 'For high-volume suppliers', price: 499, unitText: 'per month' },
+    { name: 'Supplier Lite Plan', description: 'Free tier for testing the platform - 5 RFQ responses/month', price: 0, unitText: 'per month' },
+    { name: 'Supplier Growth Plan', description: 'Sales reps, small distributors - Unlimited RFQs, Verified badge, analytics', price: 49, unitText: 'per month' },
+    { name: 'Supplier Professional Plan', description: 'Sales managers, mid-size - Featured search, buyer insights, bulk tools', price: 99, unitText: 'per month' },
+    { name: 'Supplier Enterprise Plan', description: 'Owners, VPs, large distributors - Dedicated manager, integrations, white-label', price: 249, unitText: 'per month' },
   ]);
 
   const pricingFAQs = [
@@ -183,7 +209,7 @@ const Pricing = () => {
     <>
       <SEO
         title="Pricing | HoleScale — Transparent B2B Marketplace Pricing"
-        description="Simple, transparent pricing. Free for buyers. Supplier plans from $0-$499/month with competitive transaction fees. No hidden costs."
+        description="Simple, transparent pricing. Free for buyers. Supplier plans from $0-$249/month with competitive transaction fees. No hidden costs."
         canonical="https://holescale.com/pricing"
         keywords="packaging marketplace pricing, B2B pricing, supplier fees, buyer pricing, packaging procurement cost"
         schema={[
@@ -248,7 +274,7 @@ const Pricing = () => {
                     key={tier.id}
                     tier={tier}
                     onSubscribe={() => handleSubscribe(tier.id)}
-                    highlighted={index === 1} // Highlight second tier (Growth)
+                    highlighted={index === 1} // Highlight second tier (Growth for buyers, Growth for suppliers)
                     billingCycle={billingCycle}
                     className="mt-12"
                   />
@@ -286,7 +312,7 @@ const Pricing = () => {
                       key={tier.id}
                       tier={tier}
                       onSubscribe={() => handleSubscribe(tier.id)}
-                      highlighted={index === 1} // Highlight second tier (Starter/Growth)
+                      highlighted={index === 1} // Highlight second tier (Growth)
                       billingCycle={billingCycle}
                       className="mt-12"
                     />
@@ -322,12 +348,12 @@ const Pricing = () => {
                   <div className="text-center text-muted-foreground">↓</div>
                   <div className="flex items-center justify-between p-4 bg-primary/5 rounded-lg">
                     <span className="font-semibold">Supplier receives (Growth tier):</span>
-                    <span className="text-2xl font-bold text-primary">$9,550</span>
+                    <span className="text-2xl font-bold text-primary">$9,600</span>
                   </div>
                   <div className="text-center text-muted-foreground">↓</div>
                   <div className="flex items-center justify-between p-4 bg-destructive/5 rounded-lg">
-                    <span className="font-semibold">HoleScale fee (4.5%):</span>
-                    <span className="text-2xl font-bold text-destructive">$450</span>
+                    <span className="font-semibold">HoleScale fee (4.0%):</span>
+                    <span className="text-2xl font-bold text-destructive">$400</span>
                   </div>
                 </div>
               </div>

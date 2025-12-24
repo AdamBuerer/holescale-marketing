@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,6 +29,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Hero } from '@/components/marketing/sections/Hero';
 import { generateContactPageSchema, generateOrganizationSchema, generateBreadcrumbSchema, generateLocalBusinessSchema } from '@/lib/schema';
 import { useToast } from '@/hooks/use-toast';
+import { useFormTracking } from '@/hooks/useAnalytics';
 
 const contactFormSchema = z.object({
   firstName: z.string().min(2, 'First name must be at least 2 characters'),
@@ -46,6 +47,7 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { trackStart, trackSubmit } = useFormTracking('contact', '/contact');
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
@@ -60,6 +62,14 @@ const Contact = () => {
       joinWaitlist: false,
     },
   });
+
+  // Track form start when user begins interacting
+  useEffect(() => {
+    const subscription = form.watch(() => {
+      trackStart();
+    });
+    return () => subscription.unsubscribe();
+  }, [form, trackStart]);
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
@@ -91,6 +101,9 @@ const Contact = () => {
         throw new Error(result?.error || 'Failed to submit form');
       }
       
+      // Track successful submission
+      trackSubmit(true);
+      
       toast({
         title: "Message sent!",
         description: "We've received your message and will be in touch soon.",
@@ -99,6 +112,7 @@ const Contact = () => {
       form.reset();
     } catch (error) {
       console.error('Contact form error:', error);
+      trackSubmit(false, error instanceof Error ? error.message : 'Unknown error');
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Something went wrong. Please try again.",

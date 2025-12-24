@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import SEO from '@/components/SEO';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
+import { trackSubscription } from '@/lib/analytics';
 
 // This would come from your auth context in the real app
 const useAuth = () => {
@@ -26,6 +27,7 @@ export default function CheckoutSuccess() {
   const { loading, subscription, trialDaysRemaining, isTrialing } = useFeatureGate(user?.id);
 
   const [confetti, setConfetti] = useState(false);
+  const [hasTracked, setHasTracked] = useState(false);
 
   useEffect(() => {
     // Trigger confetti animation
@@ -33,6 +35,20 @@ export default function CheckoutSuccess() {
     const timer = setTimeout(() => setConfetti(false), 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  // Track subscription conversion
+  useEffect(() => {
+    if (subscription && !hasTracked && !loading) {
+      const price = subscription.tier.price_monthly / 100;
+      trackSubscription(
+        subscription.tier.tier_name,
+        price,
+        'USD',
+        isTrialing
+      );
+      setHasTracked(true);
+    }
+  }, [subscription, isTrialing, loading, hasTracked]);
 
   if (loading) {
     return (
