@@ -11,7 +11,7 @@ SECURITY DEFINER
 AS $$
 BEGIN
   UPDATE blog_posts
-  SET view_count = COALESCE(view_count, 0) + 1
+  SET views = COALESCE(views, 0) + 1
   WHERE id = post_id;
 END;
 $$;

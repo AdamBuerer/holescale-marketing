@@ -45,26 +45,44 @@ export function AISummary({ content, title, readingTime, postId }: AISummaryProp
     const startTime = Date.now();
 
     try {
-      const { supabase } = await import('@/integrations/supabase/client');
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
       
-      if (!supabase) {
-        throw new Error('Supabase client not configured');
+      if (!supabaseUrl || !anonKey) {
+        throw new Error('Supabase credentials not configured');
       }
 
-      const response = await supabase.functions.invoke('summarize-blog', {
-        body: {
-          content,
-          title,
-          readingTime,
-          postId,
-        },
-      });
+      const response = await fetch(
+        `${supabaseUrl}/functions/v1/summarize-blog`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': anonKey,
+            'Authorization': `Bearer ${anonKey}`,
+          },
+          body: JSON.stringify({
+            content,
+            title,
+            readingTime,
+            postId,
+          }),
+        }
+      );
 
-      if (response.error) {
-        throw new Error(response.error.message || 'Failed to generate summary');
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage = 'Failed to generate summary';
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.error || errorMessage;
+        } catch {
+          errorMessage = `Server error: ${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
       }
 
-      const data = response.data;
+      const data = await response.json();
 
       if (!data || !data.success) {
         throw new Error(data?.error || 'Failed to generate summary');
