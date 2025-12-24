@@ -241,6 +241,10 @@ export function useBookmark(postId: string) {
     try {
       const newState = blogStorage.toggleBookmark(postId);
       setIsBookmarked(newState);
+      
+      // Track bookmark action
+      const { trackBlogEngagement } = await import('@/lib/analytics');
+      trackBlogEngagement(postId, newState ? 'bookmark' : 'unbookmark');
     } finally {
       setIsLoading(false);
     }

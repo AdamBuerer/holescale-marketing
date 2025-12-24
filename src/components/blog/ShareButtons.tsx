@@ -2,6 +2,7 @@ import { Twitter, Linkedin, Facebook, Link2, Check } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { generateShareUrls } from '@/lib/blog-utils';
+import { trackBlogEngagement } from '@/lib/analytics';
 
 interface ShareButtonsProps {
   url: string;
@@ -21,10 +22,18 @@ export function ShareButtons({
   const [copied, setCopied] = useState(false);
   const shareUrls = generateShareUrls(url, title, description);
 
+  const handleShare = (platform: string) => {
+    // Extract post ID from URL if possible
+    const postId = url.split('/').pop() || 'unknown';
+    trackBlogEngagement(postId, 'share', { platform, title });
+  };
+
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
+      const postId = url.split('/').pop() || 'unknown';
+      trackBlogEngagement(postId, 'share', { platform: 'copy_link', title });
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
@@ -66,6 +75,7 @@ export function ShareButtons({
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Share on Twitter"
+          onClick={() => handleShare('twitter')}
         >
           <Twitter className={iconClass} />
         </a>
@@ -81,6 +91,7 @@ export function ShareButtons({
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Share on LinkedIn"
+          onClick={() => handleShare('linkedin')}
         >
           <Linkedin className={iconClass} />
         </a>
@@ -96,6 +107,7 @@ export function ShareButtons({
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Share on Facebook"
+          onClick={() => handleShare('facebook')}
         >
           <Facebook className={iconClass} />
         </a>

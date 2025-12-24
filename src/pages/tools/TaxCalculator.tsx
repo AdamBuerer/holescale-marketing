@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Lightbulb, AlertTriangle, X } from 'lucide-react';
 import SEO from '@/components/SEO';
@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { useMarketingPageShell } from "@/hooks/useMarketingPageShell";
+import { trackToolUsage } from '@/lib/analytics';
+import { usePageTracking } from '@/hooks/useAnalytics';
 
 type ItemType = 'promo' | 'gift' | 'entertainment';
 type Recipients = 'general' | 'clients' | 'employees';
@@ -61,6 +63,13 @@ const presets: Preset[] = [
 
 export default function TaxCalculator() {
   useMarketingPageShell({ className: "space-y-0" });
+  
+  // Track page view
+  usePageTracking({
+    content_group1: 'Marketing',
+    content_group2: 'Tools',
+    content_group3: 'Tax Calculator',
+  });
 
   const [items, setItems] = useState<Item[]>([
     { id: 1, name: 'Custom Notebook', unitCost: 12.50, quantity: 100, type: 'gift', branded: false, recipients: 'clients' },
@@ -186,6 +195,19 @@ export default function TaxCalculator() {
       estimatedSavings
     };
   }, [items]);
+
+  // Track calculator usage when items change
+  useEffect(() => {
+    if (items.length > 0 && calculations.totalSpend > 0) {
+      trackToolUsage('Tax Calculator', 'calculation', {
+        itemCount: items.length,
+        totalSpend: calculations.totalSpend,
+        totalDeductible: calculations.totalDeductible,
+        deductionRate: calculations.deductionRate,
+        estimatedSavings: calculations.estimatedSavings,
+      });
+    }
+  }, [items.length, calculations.totalSpend, calculations.totalDeductible, calculations.deductionRate, calculations.estimatedSavings]);
 
   const faqs = [
     {

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Lightbulb } from 'lucide-react';
 import SEO from '@/components/SEO';
@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { useMarketingPageShell } from "@/hooks/useMarketingPageShell";
+import { trackToolUsage } from '@/lib/analytics';
+import { usePageTracking } from '@/hooks/useAnalytics';
 
 type ProductType = 'mailer-box' | 'rigid-box' | 'poly-mailer' | 'corrugated-box' | 'folding-carton' | 'custom';
 
@@ -124,6 +126,13 @@ const productPresets: Record<ProductType, ProductPreset> = {
 
 export default function UnitCostCalculator() {
   useMarketingPageShell({ className: "space-y-0" });
+  
+  // Track page view
+  usePageTracking({
+    content_group1: 'Marketing',
+    content_group2: 'Tools',
+    content_group3: 'Unit Cost Calculator',
+  });
 
   const [productType, setProductType] = useState<ProductType>('mailer-box');
   const [baseUnitCost, setBaseUnitCost] = useState(2.50);
@@ -139,6 +148,8 @@ export default function UnitCostCalculator() {
     setProductType(type);
     setBaseUnitCost(productPresets[type].baseUnit);
     setSetupFee(productPresets[type].setup);
+    // Track product type change
+    trackToolUsage('Unit Cost Calculator', 'product_type_change', { productType: type });
   };
 
   // Calculate costs at different quantities
@@ -202,6 +213,19 @@ export default function UnitCostCalculator() {
       nextBreak
     };
   }, [productType, baseUnitCost, setupFee, quantity, includeShipping, shippingPerUnit, customFinishes, finishCost]);
+
+  // Track calculator usage when values change
+  useEffect(() => {
+    if (quantity > 0 && baseUnitCost > 0) {
+      trackToolUsage('Unit Cost Calculator', 'calculation', {
+        productType,
+        quantity,
+        baseUnitCost,
+        setupFee,
+        effectiveUnitCost: currentCalc.effectiveUnitCost.toFixed(2),
+      });
+    }
+  }, [quantity, productType, baseUnitCost, setupFee, currentCalc.effectiveUnitCost]);
 
   const maxEffective = Math.max(...calculations.map(c => parseFloat(c.effectiveUnitCost)));
 
