@@ -147,8 +147,23 @@ Generate 3-5 key points. Make sure the response is valid JSON only, no markdown 
     if (!openaiResponse.ok) {
       const errorData = await openaiResponse.text();
       console.error('OpenAI API error:', errorData);
+      
+      // Try to parse error for more details
+      let errorMessage = 'Failed to generate summary from AI';
+      try {
+        const parsedError = JSON.parse(errorData);
+        if (parsedError.error?.message) {
+          errorMessage = `OpenAI API error: ${parsedError.error.message}`;
+        } else if (parsedError.error) {
+          errorMessage = `OpenAI API error: ${JSON.stringify(parsedError.error)}`;
+        }
+      } catch {
+        // If not JSON, include first 200 chars of error
+        errorMessage = `OpenAI API error: ${errorData.substring(0, 200)}`;
+      }
+      
       return new Response(
-        JSON.stringify({ success: false, error: 'Failed to generate summary from AI' }),
+        JSON.stringify({ success: false, error: errorMessage }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
