@@ -150,4 +150,3 @@ export function useFormTracking(formName: string, formLocation?: string) {
     trackFieldInteraction,
   };
 }
-
