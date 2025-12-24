@@ -5,6 +5,9 @@ import {
   trackScrollDepth,
   trackTimeOnPage,
   initAutoTracking,
+  trackFormStart,
+  trackFormSubmit,
+  trackFormFieldInteraction,
   type PageViewParams,
 } from '@/lib/analytics';
 
@@ -56,7 +59,7 @@ export function useScrollTracking(enabled = true) {
       }
     };
 
-    let scrollTimeout: NodeJS.Timeout;
+    let scrollTimeout: ReturnType<typeof setTimeout>;
     const throttledHandler = () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(handleScroll, 100);
@@ -129,18 +132,15 @@ export function useFormTracking(formName: string, formLocation?: string) {
   const trackStart = useCallback(() => {
     if (!hasStarted.current) {
       hasStarted.current = true;
-      const { trackFormStart } = require('@/lib/analytics');
       trackFormStart(formName, formLocation);
     }
   }, [formName, formLocation]);
 
   const trackSubmit = useCallback((success: boolean, errorMessage?: string) => {
-    const { trackFormSubmit } = require('@/lib/analytics');
     trackFormSubmit(formName, success, formLocation, errorMessage);
   }, [formName, formLocation]);
 
   const trackFieldInteraction = useCallback((fieldName: string, interactionType: 'focus' | 'blur' | 'change') => {
-    const { trackFormFieldInteraction } = require('@/lib/analytics');
     trackFormFieldInteraction(formName, fieldName, interactionType);
   }, [formName]);
 

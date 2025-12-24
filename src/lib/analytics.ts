@@ -368,7 +368,7 @@ export function trackBlogView(
  */
 export function trackBlogEngagement(
   postId: string,
-  action: 'bookmark' | 'share' | 'comment' | 'read_complete',
+  action: 'bookmark' | 'unbookmark' | 'share' | 'comment' | 'read_complete',
   metadata?: Record<string, unknown>
 ): void {
   trackEvent({
@@ -613,7 +613,7 @@ export function initAutoTracking(): void {
     }
   };
   
-  let scrollTimeout: NodeJS.Timeout;
+  let scrollTimeout: ReturnType<typeof setTimeout>;
   window.addEventListener('scroll', () => {
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(scrollHandler, 100);

@@ -41,7 +41,7 @@ export default function CheckoutSuccess() {
     if (subscription && !hasTracked && !loading) {
       const price = subscription.tier.price_monthly / 100;
       trackSubscription(
-        subscription.tier.tier_name,
+        subscription.tier.tier_key || subscription.tier.name,
         price,
         'USD',
         isTrialing
