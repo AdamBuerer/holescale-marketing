@@ -178,7 +178,7 @@ The tracking code is configured with:
 
 ## Microsoft Clarity Setup
 
-- **Project ID**: `uh3i6gs4dy`
+- **Project ID**: `uqmpv5ndre`
 - **Deferred Loading**: Loads after page is interactive
 - **Error Handling**: Graceful failures
 

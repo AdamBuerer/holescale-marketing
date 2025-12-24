@@ -184,17 +184,10 @@
           // Microsoft Clarity
           try {
             (function(c,l,a,r,i,t,y){
-              if (c[a]) return; // Already loaded
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-              t=l.createElement(r);
-              t.async=1;
-              t.src="https://www.clarity.ms/tag/"+i;
-              t.onerror=function(){console.warn('[HoleScale] Clarity script failed to load');};
-              y=l.getElementsByTagName(r)[0];
-              if(y && y.parentNode) {
-                y.parentNode.insertBefore(t,y);
-              }
-            })(window,document,"clarity","script","uh3i6gs4dy");
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "uqmpv5ndre");
           } catch(e) {
             console.warn('[HoleScale] Clarity initialization error:', e);
           }
