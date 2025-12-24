@@ -64,6 +64,10 @@ export function Hero({
             alt=""
             aria-hidden="true"
             className="w-full h-full object-cover object-center"
+            width={1920}
+            height={1080}
+            loading="eager"
+            fetchPriority="high"
           />
         </div>
       )}
@@ -94,14 +98,15 @@ export function Hero({
           )}>
             {/* Mobile: Floating Image on Top (order-first on mobile) */}
             {hasFloatingImage && (
-              <div className="md:hidden w-full flex justify-center pt-2 pb-0 order-first">
+              <div className="md:hidden w-full flex justify-center pt-2 pb-0 order-first" style={{ minHeight: '40vh' }}>
                 <img
                   src={floatingImage.src}
                   alt={floatingImage.alt}
                   loading="eager"
-                  // @ts-expect-error - React warning requires lowercase, types require camelCase
-                  fetchpriority="high"
-                  className="w-[90%] max-w-340px] max-h-[40vh] h-auto object-contain animate-float-mobile"
+                  fetchPriority="high"
+                  width={600}
+                  height={400}
+                  className="w-[90%] max-w-[340px] max-h-[40vh] h-auto object-contain animate-float-mobile"
                 />
               </div>
             )}
@@ -211,13 +216,14 @@ export function Hero({
 
             {/* Desktop/Tablet: Floating Image on Right - aligned with container edge */}
             {hasFloatingImage && (
-              <div className="hidden md:flex items-center justify-end pointer-events-none">
+              <div className="hidden md:flex items-center justify-end pointer-events-none" style={{ minHeight: '600px' }}>
                 <img
                   src={floatingImage.src}
                   alt={floatingImage.alt}
                   loading="eager"
-                  // @ts-expect-error - React warning requires lowercase, types require camelCase
-                  fetchpriority="high"
+                  fetchPriority="high"
+                  width={800}
+                  height={600}
                   className="w-full max-w-none h-auto max-h-[85vh] object-contain object-right animate-float motion-reduce:animate-none"
                 />
               </div>
@@ -230,19 +236,19 @@ export function Hero({
       <style>{`
         @keyframes float {
           0%, 100% {
-            transform: translateY(0px);
+            transform: translate3d(0, 0, 0);
           }
           50% {
-            transform: translateY(-15px);
+            transform: translate3d(0, -15px, 0);
           }
         }
         
         @keyframes float-mobile {
           0%, 100% {
-            transform: translateY(0px);
+            transform: translate3d(0, 0, 0);
           }
           50% {
-            transform: translateY(-8px);
+            transform: translate3d(0, -8px, 0);
           }
         }
         

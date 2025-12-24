@@ -136,6 +136,178 @@ const Home = () => {
         </div>
       </section>
 
+      {/* How It Works - Expanded Section */}
+      <section className="py-12 sm:py-16 md:py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">How HoleScale Works for Buyers and Suppliers</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Our B2B packaging marketplace simplifies procurement for both buyers seeking competitive quotes and suppliers looking to reach qualified customers.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-12">
+            <div className="bg-card rounded-xl p-6 md:p-8 border">
+              <h3 className="text-2xl font-semibold mb-4 text-primary">For Buyers</h3>
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                Post your packaging requirements through our streamlined RFQ system. Specify quantities, materials, dimensions, and deadlines. Our platform connects you with pre-vetted <strong>packaging suppliers</strong> who compete for your business with transparent pricing and clear MOQs.
+              </p>
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                Compare quotes side-by-side, review supplier profiles and ratings, and communicate directly with manufacturers. Whether you need <strong>corrugated box manufacturers</strong>, <strong>flexible packaging suppliers</strong>, or <strong>custom packaging solutions</strong>, HoleScale brings the entire procurement process into one platform.
+              </p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>Get competitive quotes from verified suppliers in 24-48 hours</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>Compare pricing, MOQs, and lead times transparently</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>Access supplier ratings, certifications, and past performance</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>Free to use — no subscription fees for buyers</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 md:p-8 border">
+              <h3 className="text-2xl font-semibold mb-4 text-primary">For Suppliers</h3>
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                Join our network of verified packaging manufacturers and reach qualified buyers actively sourcing packaging materials. Our marketplace connects you with businesses ready to place orders, not just browsers.
+              </p>
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                Showcase your capabilities, certifications, and product categories. Respond to RFQs with competitive quotes and detailed proposals. Build your reputation through buyer reviews and ratings, and grow your customer base with qualified leads.
+              </p>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>Receive qualified RFQs from verified buyers</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>Showcase your products and capabilities to a targeted audience</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>Build your reputation through buyer reviews and ratings</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">✓</span>
+                  <span>Competitive pricing tiers based on your order volume</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Key Benefits - Expanded */}
+      <section className="py-12 sm:py-16 md:py-20 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Key Benefits of Using HoleScale</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Our B2B packaging marketplace delivers tangible value through pricing transparency, verified supplier networks, and streamlined procurement workflows.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="bg-card rounded-xl p-6 border">
+              <h3 className="text-xl font-semibold mb-3">Pricing Transparency</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Compare quotes from multiple <strong>packaging suppliers</strong> side-by-side with clear pricing, minimum order quantities (MOQs), and lead times. No hidden fees or surprise charges. Make informed decisions based on total cost, not just unit price.
+              </p>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border">
+              <h3 className="text-xl font-semibold mb-3">Vetted Supplier Network</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Every supplier on HoleScale undergoes verification for quality, reliability, and business credentials. We pre-vet <strong>corrugated box manufacturers</strong>, <strong>flexible packaging suppliers</strong>, and specialty packaging companies so you can source with confidence.
+              </p>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border">
+              <h3 className="text-xl font-semibold mb-3">Streamlined Procurement</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Replace endless email chains and spreadsheets with a centralized platform. Post RFQs, receive quotes, compare options, communicate with suppliers, and track orders — all in one place. Save time and reduce procurement complexity.
+              </p>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border">
+              <h3 className="text-xl font-semibold mb-3">Competitive Bidding</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Multiple suppliers compete for your business, driving better prices and terms. Our marketplace model creates healthy competition among <strong>packaging manufacturers</strong>, resulting in 15-20% average cost savings for buyers.
+              </p>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border">
+              <h3 className="text-xl font-semibold mb-3">Fast Quote Turnaround</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Get competitive quotes in 24-48 hours, compared to the industry standard of 2 weeks. Our platform's efficiency and supplier network enable rapid response times, helping you meet tight deadlines and launch products faster.
+              </p>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border">
+              <h3 className="text-xl font-semibold mb-3">Wide Product Range</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Source everything from <strong>corrugated boxes</strong> and <strong>poly mailers</strong> to <strong>food-grade containers</strong>, <strong>shipping supplies</strong>, <strong>sustainable packaging</strong>, labels, and custom packaging solutions. One platform for all your packaging needs.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Industries Served - New Section */}
+      <section className="py-12 sm:py-16 md:py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Industries We Serve</h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              HoleScale connects businesses across multiple industries with the packaging suppliers they need to scale.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center">
+              <Package className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">CPG Brands</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Consumer packaged goods companies sourcing <strong>corrugated boxes</strong>, flexible packaging, and custom containers for retail products.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <Package className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">E-Commerce Fulfillment</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Online retailers and fulfillment centers needing <strong>poly mailers</strong>, shipping boxes, protective packaging, and labels.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <Package className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Food & Beverage</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Food manufacturers requiring <strong>food-grade containers</strong>, compliant packaging materials, and sustainable solutions.
+              </p>
+            </div>
+
+            <div className="text-center">
+              <Package className="w-12 h-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Cosmetics & Beauty</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                Beauty brands sourcing custom packaging, <strong>sustainable packaging</strong> options, and premium containers for products.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Value Proposition Metrics Bar */}
       <section className="py-8 sm:py-10 md:py-12 bg-muted/30 border-y">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

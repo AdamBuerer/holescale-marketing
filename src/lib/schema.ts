@@ -145,6 +145,29 @@ export function generateFAQSchema(faqs: { question: string; answer: string }[]):
   }
 }
 
+export function generateArticleSchema(options: {
+  headline: string
+  description?: string
+  author?: string
+  datePublished?: string
+  dateModified?: string
+  image?: string
+}): ArticleSchema {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: options.headline,
+    description: options.description,
+    author: options.author ? {
+      '@type': 'Organization',
+      name: options.author,
+    } : undefined,
+    datePublished: options.datePublished,
+    dateModified: options.dateModified || options.datePublished,
+    image: options.image,
+  }
+}
+
 export function generateWebSiteSchema(name = 'HoleScale', description?: string, url = 'https://holescale.com') {
   return {
     '@context': 'https://schema.org',

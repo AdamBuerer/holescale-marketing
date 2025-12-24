@@ -142,10 +142,14 @@ export function formatFeaturesForDisplay(
 // ============================================================================
 
 export const TIER_DISPLAY_NAMES: Record<string, string> = {
-  'free': 'Free',
+  // Buyer tiers
   'starter': 'Starter',
+  'growth': 'Growth',
   'professional': 'Professional',
   'enterprise': 'Enterprise',
+  // Supplier tiers
+  'lite': 'Lite',
+  'free': 'Free', // Legacy support
 };
 
 /**
@@ -162,16 +166,19 @@ export function getTierDisplayName(tierName: string): string {
 
 export const TIER_DESCRIPTIONS: Record<string, Record<string, string>> = {
   buyer: {
-    free: 'Perfect for getting started',
-    starter: 'For growing teams',
-    professional: 'Advanced features for teams',
-    enterprise: 'For large organizations',
+    starter: 'Trial users, small buyers testing platform',
+    growth: 'Operations buyers, small e-commerce',
+    professional: 'Procurement managers, mid-market',
+    enterprise: 'Enterprise procurement, multi-location',
+    free: 'Trial users, small buyers testing platform', // Legacy support
   },
   supplier: {
-    free: 'Test the platform',
-    starter: 'For growing suppliers',
-    professional: 'Advanced tools',
-    enterprise: 'High-volume suppliers',
+    lite: 'Trial suppliers',
+    growth: 'Sales reps, small distributors',
+    professional: 'Sales managers, mid-size',
+    enterprise: 'Owners, VPs, large distributors',
+    free: 'Trial suppliers', // Legacy support
+    starter: 'Sales reps, small distributors', // Legacy support
   },
 };
 

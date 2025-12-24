@@ -75,7 +75,8 @@ interface DbPost {
     canonicalUrl?: string;
     ogImage?: string;
   } | null;
-  views: number;
+  view_count: number;
+  views?: number; // Alias for view_count
   likes: number;
   comments_count: number;
   shares: number;
@@ -174,7 +175,7 @@ function transformPostCard(db: DbPost): BlogPostCard {
       wordCount: db.word_count,
     },
     engagement: {
-      views: db.views,
+      views: db.views ?? db.view_count ?? 0,
       likes: db.likes,
       comments: db.comments_count,
       shares: db.shares,
@@ -190,7 +191,7 @@ function transformPost(db: DbPost): BlogPost {
     subtitle: db.subtitle || undefined,
     content: db.content || '',
     tableOfContents: db.table_of_contents || [],
-    views: db.views,
+    views: db.views ?? db.view_count ?? 0,
     likes: db.likes,
     commentsCount: db.comments_count,
     commentsEnabled: true,

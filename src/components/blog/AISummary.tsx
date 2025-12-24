@@ -45,41 +45,29 @@ export function AISummary({ content, title, readingTime, postId }: AISummaryProp
     const startTime = Date.now();
 
     try {
-      const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/summarize-blog`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': anonKey,
-            'Authorization': `Bearer ${anonKey}`,
-          },
-          body: JSON.stringify({
-            content,
-            title,
-            readingTime,
-            postId,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        let errorMessage = 'Failed to generate summary';
-        try {
-          const errorData = JSON.parse(errorText);
-          errorMessage = errorData.error || errorMessage;
-        } catch {
-          errorMessage = `Server error: ${response.status} ${response.statusText}`;
-        }
-        throw new Error(errorMessage);
+      const { supabase } = await import('@/integrations/supabase/client');
+      
+      if (!supabase) {
+        throw new Error('Supabase client not configured');
       }
 
-      const data = await response.json();
+      const response = await supabase.functions.invoke('summarize-blog', {
+        body: {
+          content,
+          title,
+          readingTime,
+          postId,
+        },
+      });
 
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to generate summary');
+      if (response.error) {
+        throw new Error(response.error.message || 'Failed to generate summary');
+      }
+
+      const data = response.data;
+
+      if (!data || !data.success) {
+        throw new Error(data?.error || 'Failed to generate summary');
       }
 
       // Ensure minimum loading time for smoother UX

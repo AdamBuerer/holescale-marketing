@@ -35,6 +35,9 @@ const personaConfig = {
 };
 
 export function Testimonials({ testimonials, className }: TestimonialsProps) {
+  // Calculate minimum height to prevent CLS (approximate based on content)
+  const minCardHeight = '280px';
+  
   return (
     <section className={cn('py-12 md:py-16 bg-muted/30', className)}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,6 +50,7 @@ export function Testimonials({ testimonials, className }: TestimonialsProps) {
             <div
               key={index}
               className="bg-card rounded-xl p-4 sm:p-6 border shadow-sm"
+              style={{ minHeight: minCardHeight }}
             >
               {/* Persona Badge */}
               {persona && PersonaIcon && (
@@ -87,6 +91,8 @@ export function Testimonials({ testimonials, className }: TestimonialsProps) {
                     src={testimonial.avatar}
                     alt={`${testimonial.author}, ${testimonial.title} at ${testimonial.company}`}
                     className="w-12 h-12 rounded-full"
+                    width={48}
+                    height={48}
                     loading="lazy"
                     decoding="async"
                   />

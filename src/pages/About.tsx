@@ -67,10 +67,16 @@ const About = () => {
               HoleScale was born from firsthand experience with the frustrations of B2B packaging procurement. Sourcing packaging materials meant endless emails, price opacity, and uncertainty about supplier reliability. There had to be a better way.
             </p>
             <p>
-              We're building the platform we wished existed: a modern marketplace that brings transparency to pricing, quality to supplier relationships, and efficiency to the entire procurement process. By leveraging AI and thoughtful design, we're making it possible for businesses of any size to access the packaging suppliers and tools they need to scale.
+              We're building the platform we wished existed: a modern marketplace that brings transparency to pricing, quality to supplier relationships, and efficiency to the entire procurement process. By leveraging AI and thoughtful design, we're making it possible for businesses of any size to access the <strong>packaging suppliers</strong> and tools they need to scale.
             </p>
             <p>
-              Based in Colorado and founded in 2024, HoleScale is on a mission to transform how businesses source the packaging materials that power their growth.
+              Our founding team has deep experience in technology, marketing, and the packaging industry. We've seen the pain points from both sides — as buyers struggling to find reliable <strong>corrugated box manufacturers</strong> and <strong>flexible packaging suppliers</strong>, and as suppliers trying to reach qualified customers in a fragmented market.
+            </p>
+            <p>
+              Based in Colorado and founded in 2024, HoleScale is on a mission to transform how businesses source the packaging materials that power their growth. We're not just building a marketplace — we're creating a new standard for B2B packaging procurement that prioritizes transparency, efficiency, and trust.
+            </p>
+            <p>
+              Today, we're connecting buyers with verified <strong>packaging suppliers</strong> across the United States, helping businesses reduce procurement costs by 15-20% while cutting quote turnaround times from weeks to days. Our platform serves CPG brands, e-commerce fulfillment centers, food and beverage companies, cosmetics manufacturers, and businesses across industries that depend on quality packaging to deliver their products to market.
             </p>
           </div>
         </div>
@@ -184,10 +190,18 @@ const About = () => {
       {/* Leadership */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Leadership</h2>
-          <p className="text-lg text-muted-foreground text-center leading-relaxed">
-            HoleScale is led by a team with deep experience in technology, marketing, and the packaging industry. We're backed by advisors with expertise in risk management, enterprise technology, security, and supply chain operations.
-          </p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Leadership & Team</h2>
+          <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+            <p>
+              HoleScale is led by a team with deep experience in technology, marketing, and the packaging industry. Our founders bring decades of combined experience building B2B marketplaces, enterprise software, and supply chain solutions.
+            </p>
+            <p>
+              We're backed by advisors with expertise in risk management, enterprise technology, security, and supply chain operations. Our advisory board includes former executives from major packaging manufacturers, logistics companies, and B2B marketplace platforms.
+            </p>
+            <p>
+              Together, we're building a platform that addresses the real pain points we've experienced in packaging procurement — from the buyer's need for transparent pricing and reliable suppliers, to the supplier's challenge of reaching qualified customers in a fragmented market.
+            </p>
+          </div>
         </div>
       </section>
 
