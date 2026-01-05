@@ -28,30 +28,49 @@ export default defineConfig(({ mode }) => ({
       },
       output: {
         manualChunks: (id) => {
-          // Split vendor chunks for better caching
+          // Split vendor chunks for better caching and reduced initial load
           if (id.includes('node_modules')) {
-            // Large libraries get their own chunks
+            // React core - needed immediately
+            if (id.includes('react-dom') || id.includes('react/')) {
+              return 'react-core';
+            }
+            // Router - needed for navigation
+            if (id.includes('react-router')) {
+              return 'router';
+            }
+            // Framer motion - only needed for animations
             if (id.includes('framer-motion')) {
               return 'framer-motion';
             }
+            // Radix UI - only load when components are used
             if (id.includes('@radix-ui')) {
               return 'radix-ui';
             }
+            // React Query - data fetching
             if (id.includes('@tanstack/react-query')) {
               return 'react-query';
             }
-            // Note: @supabase is NOT manually chunked to avoid circular dependency issues
-            // with the client initialization code
+            // Icons - lazy load
             if (id.includes('lucide-react')) {
               return 'lucide-icons';
             }
+            // Charts - only on pages with charts
             if (id.includes('recharts')) {
               return 'recharts';
             }
+            // PDF tools - only when needed
             if (id.includes('fabric') || id.includes('jspdf')) {
               return 'pdf-tools';
             }
-            // Other node_modules (excluding supabase which needs special handling)
+            // Form libraries
+            if (id.includes('react-hook-form') || id.includes('@hookform') || id.includes('zod')) {
+              return 'forms';
+            }
+            // Date utilities
+            if (id.includes('date-fns')) {
+              return 'date-utils';
+            }
+            // Note: @supabase is NOT manually chunked to avoid circular dependency issues
             if (!id.includes('@supabase')) {
               return 'vendor';
             }

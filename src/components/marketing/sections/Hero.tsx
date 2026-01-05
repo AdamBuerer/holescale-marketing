@@ -100,7 +100,9 @@ export function Hero({
             {hasFloatingImage && (
               <div className="md:hidden w-full flex justify-center pt-2 pb-0 order-first" style={{ minHeight: '40vh' }}>
                 <img
-                  src={floatingImage.src}
+                  src={floatingImage.src.replace('.png', '-800.png')}
+                  srcSet={`${floatingImage.src.replace('.png', '-800.png')} 800w, ${floatingImage.src} 1200w`}
+                  sizes="(max-width: 768px) 90vw, 340px"
                   alt={floatingImage.alt}
                   loading="eager"
                   fetchPriority="high"
@@ -219,6 +221,8 @@ export function Hero({
               <div className="hidden md:flex items-center justify-end pointer-events-none" style={{ minHeight: '600px' }}>
                 <img
                   src={floatingImage.src}
+                  srcSet={`${floatingImage.src.replace('.png', '-800.png')} 800w, ${floatingImage.src} 1200w`}
+                  sizes="(max-width: 1024px) 50vw, 600px"
                   alt={floatingImage.alt}
                   loading="eager"
                   fetchPriority="high"
