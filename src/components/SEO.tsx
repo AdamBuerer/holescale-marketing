@@ -23,7 +23,7 @@ const SEO = ({
   noindex = false,
   siteName = 'HoleScale'
 }: SEOProps) => {
-  const siteUrl = 'https://www.holescale.com';
+  const siteUrl = 'https://holescale.com';
   const fullTitle = title.includes('|') ? title : `${title} | HoleScale`;
   // Get pathname safely (client-side only)
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '';

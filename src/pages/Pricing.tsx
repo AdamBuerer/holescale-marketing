@@ -48,7 +48,10 @@ interface PricingTier {
 
 // Fetch subscription tiers from database
 async function fetchSubscriptionTiers(): Promise<PricingTier[]> {
-  if (!supabase) throw new Error('Supabase not initialized');
+  if (!supabase) {
+    console.warn('Supabase not initialized - using empty tier list');
+    return [];
+  }
 
   const { data, error } = await supabase
     .from('subscription_tiers')

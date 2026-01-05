@@ -3,69 +3,95 @@
   <!-- Core Marketing Pages -->
   <url>
     <loc>https://holescale.com/</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://holescale.com/how-it-works</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://holescale.com/features</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://holescale.com/pricing</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://holescale.com/for-buyers</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://holescale.com/for-suppliers</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://holescale.com/waitlist</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://holescale.com/get-quotes</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://holescale.com/investors</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Tools -->
+  <url>
+    <loc>https://holescale.com/tools/unit-cost-calculator</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://holescale.com/tools/tax-calculator</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Resources & Support -->
   <url>
     <loc>https://holescale.com/resources</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://holescale.com/faq</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://holescale.com/about</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/contact</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -73,7 +99,7 @@
   <!-- Blog -->
   <url>
     <loc>https://holescale.com/blog</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -81,7 +107,7 @@
   <!-- Glossary Index -->
   <url>
     <loc>https://holescale.com/glossary</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -89,31 +115,31 @@
   <!-- Glossary Terms - Corrugated -->
   <url>
     <loc>https://holescale.com/glossary/ect-edge-crush-test</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/glossary/mullen-burst-test</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/glossary/flute</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/glossary/rsc-box</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/glossary/kraft</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -121,7 +147,7 @@
   <!-- Glossary Terms - Rigid -->
   <url>
     <loc>https://holescale.com/glossary/neck-finish-28-410</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -129,7 +155,7 @@
   <!-- Glossary Terms - Flexible -->
   <url>
     <loc>https://holescale.com/glossary/gauge-thickness</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -137,25 +163,25 @@
   <!-- Glossary Terms - General -->
   <url>
     <loc>https://holescale.com/glossary/moq-minimum-order-quantity</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/glossary/food-safe-packaging</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/glossary/fsc-certified</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/glossary/recycled-content</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -163,19 +189,19 @@
   <!-- Glossary Terms - Logistics -->
   <url>
     <loc>https://holescale.com/glossary/otif-on-time-in-full</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/glossary/ltl-freight</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://holescale.com/glossary/ftl-freight</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -183,13 +209,13 @@
   <!-- Legal -->
   <url>
     <loc>https://holescale.com/terms</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://holescale.com/privacy</loc>
-    <lastmod>2024-12-15</lastmod>
+    <lastmod>2026-01-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
