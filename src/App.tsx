@@ -55,12 +55,15 @@ const PageLoader = () => (
   </div>
 )
 
-// Create a client
+// Create a client with optimized caching
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (garbage collection time, previously cacheTime)
       retry: 1,
+      refetchOnWindowFocus: false, // Don't refetch on window focus for better performance
+      refetchOnMount: false, // Use cached data if available
     },
   },
 })

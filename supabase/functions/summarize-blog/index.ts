@@ -39,7 +39,20 @@ serve(async (req) => {
   }
 
   try {
-    // Create Supabase client
+    // Log request for debugging
+    const authHeader = req.headers.get('Authorization');
+    const apikey = req.headers.get('apikey');
+    console.log('Request received:', {
+      method: req.method,
+      hasAuth: !!authHeader,
+      hasApikey: !!apikey,
+      url: req.url,
+    });
+
+    // Create Supabase client with service role for database operations
+    // This allows the function to read/write to blog_summary_logs table
+    // We use service role to bypass RLS for caching operations
+    // This function allows anonymous/public access - no user authentication required
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
@@ -64,8 +77,14 @@ serve(async (req) => {
       .order('created_at', { ascending: false })
       .limit(1);
 
+    // Log cache errors but don't fail - we can still generate a new summary
+    if (cacheError) {
+      console.warn('Cache lookup error (non-fatal):', cacheError.message);
+    }
+
     // Check if we have a valid cached summary
     if (cachedSummaries && cachedSummaries.length > 0 && cachedSummaries[0]?.summary_data) {
+      console.log(`Returning cached summary for post ${postId}`);
       return new Response(
         JSON.stringify({
           success: true,
@@ -92,14 +111,15 @@ serve(async (req) => {
     const truncatedContent = textContent.substring(0, 8000);
 
     // Generate summary using OpenAI
-    const prompt = `You are an expert content summarizer. Analyze the following blog post and create a comprehensive summary.
+    // Note: When using response_format: { type: 'json_object' }, the prompt MUST explicitly mention "JSON object"
+    const prompt = `Analyze the following blog post and create a comprehensive summary as a JSON object.
 
 Title: ${title}
 
 Content:
 ${truncatedContent}
 
-Please provide a JSON response with the following structure:
+You must respond with a JSON object using this exact structure:
 {
   "tldr": "A concise 2-3 sentence summary of the main points",
   "keyPoints": [
@@ -115,10 +135,10 @@ Please provide a JSON response with the following structure:
     "Actionable item 2",
     "Actionable item 3"
   ],
-  "estimatedTimeSaved": "X min" (based on reading time of ${readingTime} minutes)
+  "estimatedTimeSaved": "X min"
 }
 
-Generate 3-5 key points. Make sure the response is valid JSON only, no markdown formatting.`;
+Generate 3-5 key points. The reading time is ${readingTime} minutes, so estimate time saved accordingly. Return only valid JSON, no markdown or code blocks.`;
 
     const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -131,7 +151,7 @@ Generate 3-5 key points. Make sure the response is valid JSON only, no markdown 
         messages: [
           {
             role: 'system',
-            content: 'You are a helpful assistant that generates structured JSON summaries of blog posts. Always respond with valid JSON only.',
+            content: 'You are a helpful assistant that generates structured JSON object summaries of blog posts. You must always respond with a valid JSON object only, no markdown formatting, no code blocks, just pure JSON.',
           },
           {
             role: 'user',
@@ -172,6 +192,7 @@ Generate 3-5 key points. Make sure the response is valid JSON only, no markdown 
     const aiSummaryText = openaiData.choices[0]?.message?.content;
 
     if (!aiSummaryText) {
+      console.error('OpenAI response missing content:', JSON.stringify(openaiData, null, 2));
       return new Response(
         JSON.stringify({ success: false, error: 'No summary generated from AI' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -181,23 +202,64 @@ Generate 3-5 key points. Make sure the response is valid JSON only, no markdown 
     // Parse the JSON response
     let summary: SummaryResponse;
     try {
-      // Remove any markdown code blocks if present
-      const cleanedJson = aiSummaryText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      // Remove any markdown code blocks if present (though json_object mode shouldn't return them)
+      let cleanedJson = aiSummaryText.trim();
+      // Remove markdown code blocks if they exist
+      cleanedJson = cleanedJson.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim();
+      
+      // Try to parse
       summary = JSON.parse(cleanedJson);
     } catch (parseError) {
-      console.error('Failed to parse AI response:', aiSummaryText);
+      console.error('Failed to parse AI response:', {
+        error: parseError,
+        response: aiSummaryText.substring(0, 500), // First 500 chars for debugging
+        fullResponse: aiSummaryText,
+      });
       return new Response(
-        JSON.stringify({ success: false, error: 'Invalid response format from AI' }),
+        JSON.stringify({ 
+          success: false, 
+          error: 'Invalid response format from AI. Please try again.',
+          details: parseError instanceof Error ? parseError.message : 'Unknown parse error'
+        }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     // Validate summary structure
     if (!summary.tldr || !summary.keyPoints || !Array.isArray(summary.keyPoints)) {
+      console.error('Invalid summary structure:', JSON.stringify(summary, null, 2));
       return new Response(
-        JSON.stringify({ success: false, error: 'Invalid summary structure from AI' }),
+        JSON.stringify({ 
+          success: false, 
+          error: 'Invalid summary structure from AI',
+          received: {
+            hasTldr: !!summary.tldr,
+            hasKeyPoints: !!summary.keyPoints,
+            keyPointsIsArray: Array.isArray(summary.keyPoints),
+          }
+        }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
+    }
+    
+    // Ensure keyPoints has at least one item
+    if (summary.keyPoints.length === 0) {
+      console.warn('Summary has no key points, adding default');
+      summary.keyPoints = [{
+        emoji: '📝',
+        title: 'Summary',
+        description: summary.tldr.substring(0, 150),
+      }];
+    }
+    
+    // Ensure actionItems exists and is an array
+    if (!summary.actionItems || !Array.isArray(summary.actionItems)) {
+      summary.actionItems = [];
+    }
+    
+    // Ensure targetAudience exists
+    if (!summary.targetAudience) {
+      summary.targetAudience = 'General audience';
     }
 
     // Calculate estimated time saved
@@ -228,9 +290,23 @@ Generate 3-5 key points. Make sure the response is valid JSON only, no markdown 
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('Error generating summary:', error);
+    const errorDetails = {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    };
+    console.error('Error generating summary:', errorDetails);
+    
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : typeof error === 'string' 
+        ? error 
+        : 'Internal server error';
+    
     return new Response(
-      JSON.stringify({ success: false, error: error.message || 'Internal server error' }),
+      JSON.stringify({ 
+        success: false, 
+        error: errorMessage,
+      }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 500,

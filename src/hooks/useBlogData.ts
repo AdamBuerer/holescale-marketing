@@ -80,7 +80,12 @@ export function useBlogPost(slug: string) {
       const post = await getPostBySlug(slug);
       // Track view (fire and forget)
       if (post) {
-        incrementPostViews(post.id).catch(() => {});
+        incrementPostViews(post.id).catch((err) => {
+          // Silently fail - views tracking is non-critical
+          if (import.meta.env.DEV) {
+            console.warn('Failed to increment post views:', err);
+          }
+        });
       }
       return post;
     },

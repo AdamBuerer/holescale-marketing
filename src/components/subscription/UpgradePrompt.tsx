@@ -19,6 +19,7 @@ import { Badge } from '@/components/ui/badge';
 import { redirectToCheckout, getSubscriptionTiers } from '@/lib/stripe/client';
 import { useQuery } from '@tanstack/react-query';
 import { useFeatureGate } from '@/hooks/useFeatureGate';
+import { useAuth } from '@/hooks/useAuth';
 import type { FeatureKey } from '@/types/subscription';
 
 interface UpgradePromptProps {
@@ -82,9 +83,10 @@ export function UpgradeModal({
   userId,
 }: UpgradePromptProps) {
   const { tierLevel } = useFeatureGate(userId);
+  const { roles } = useAuth();
 
-  // Determine user type based on context (you may need to get this from auth)
-  const userType = 'buyer'; // TODO: Get from user context
+  // Determine user type from auth roles, default to 'buyer' if not authenticated
+  const userType = roles.includes('supplier') ? 'supplier' : 'buyer';
 
   const { data: tiers, isLoading } = useQuery({
     queryKey: ['subscription-tiers', userType],

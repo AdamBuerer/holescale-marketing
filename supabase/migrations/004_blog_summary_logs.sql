@@ -24,6 +24,7 @@ ALTER TABLE blog_summary_logs ENABLE ROW LEVEL SECURITY;
 
 -- Allow public read access to summary logs (for cached summaries)
 -- This allows the frontend to check for cached summaries
+DROP POLICY IF EXISTS "Public can read summary logs" ON blog_summary_logs;
 CREATE POLICY "Public can read summary logs"
   ON blog_summary_logs FOR SELECT
   USING (true);

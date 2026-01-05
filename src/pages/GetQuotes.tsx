@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { FadeIn } from '@/components/ui/FadeIn';
 import { useMarketingPageShell } from "@/hooks/useMarketingPageShell";
+import { useToast } from '@/hooks/use-toast';
 
 type Persona = 'all' | 'marketing' | 'procurement' | 'events';
 
@@ -138,6 +139,7 @@ const faqs = [
 
 export default function GetQuotes() {
   useMarketingPageShell({ className: "space-y-0" });
+  const { toast } = useToast();
   const [activePersona, setActivePersona] = useState<Persona>('all');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -158,11 +160,51 @@ export default function GetQuotes() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // TODO: Replace with actual API endpoint
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
 
-    setSubmitted(true);
-    setIsSubmitting(false);
+      if (!supabase) {
+        throw new Error('Quote request service is not configured. Please try again later.');
+      }
+
+      // Submit quote request - use contact form endpoint as it handles similar data
+      // In the future, this could be a dedicated 'submit-quote-request' edge function
+      const { data: result, error } = await supabase.functions.invoke('submit-contact-form', {
+        body: {
+          firstName: formData.name.split(' ')[0] || formData.name,
+          lastName: formData.name.split(' ').slice(1).join(' ') || '',
+          email: formData.email,
+          company: formData.company || null,
+          userType: 'buyer', // Quote requests are typically from buyers
+          subject: `Quote Request: ${formData.productType}`,
+          message: `Product Type: ${formData.productType}\nQuantity: ${formData.quantity}\nTimeline: ${formData.timeline}\nRole: ${formData.role}\n\nAdditional Details:\n${formData.message || 'None'}`,
+          joinWaitlist: false,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (!result?.success) {
+        throw new Error(result?.error || 'Failed to submit quote request');
+      }
+
+      setSubmitted(true);
+      toast({
+        title: "Quote request submitted!",
+        description: "We've received your request and will be in touch soon.",
+      });
+    } catch (error) {
+      console.error('Quote request submission error:', error);
+      toast({
+        title: "Submission failed",
+        description: "Failed to submit quote request. Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {

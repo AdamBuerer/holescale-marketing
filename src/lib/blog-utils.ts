@@ -165,10 +165,44 @@ export function generateExcerpt(content: string, maxLength: number = 160): strin
   return truncateText(text, maxLength);
 }
 
+/**
+ * Highlights search terms in text while escaping HTML to prevent XSS
+ * @param text - The text to search in
+ * @param term - The search term to highlight
+ * @returns HTML string with highlighted terms (safe for dangerouslySetInnerHTML)
+ */
 export function highlightSearchTerm(text: string, term: string): string {
-  if (!term) return text;
-  const regex = new RegExp(`(${term})`, 'gi');
-  return text.replace(regex, '<mark class="bg-yellow-200 rounded px-0.5">$1</mark>');
+  if (!term) return escapeHtml(text);
+  
+  // Escape HTML in both text and term to prevent XSS
+  const escapedText = escapeHtml(text);
+  const escapedTerm = escapeHtml(term);
+  
+  // Escape special regex characters in the search term
+  const escapedRegexTerm = escapedTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  
+  // Create regex from escaped term (case-insensitive)
+  const regex = new RegExp(`(${escapedRegexTerm})`, 'gi');
+  
+  return escapedText.replace(regex, '<mark class="bg-yellow-200 rounded px-0.5">$1</mark>');
+}
+
+/**
+ * Escapes HTML special characters to prevent XSS attacks
+ * Uses a map of HTML entities for reliable escaping
+ */
+function escapeHtml(text: string): string {
+  if (typeof text !== 'string') return '';
+  
+  const htmlEscapes: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  
+  return text.replace(/[&<>"']/g, (match) => htmlEscapes[match] || match);
 }
 
 // -----------------------------------------------------------------------------

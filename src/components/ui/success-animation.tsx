@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
-import confetti from "canvas-confetti";
 
 interface SuccessAnimationProps {
   show: boolean;
@@ -22,13 +21,18 @@ export function SuccessAnimation({
     if (show) {
       setVisible(true);
 
-      // Trigger confetti for major successes
+      // Trigger confetti for major successes (lazy loaded)
       if (variant === "confetti") {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ["#8b5cf6", "#ec4899", "#3b82f6", "#10b981"],
+        // Dynamically import confetti only when needed
+        import("canvas-confetti").then((confetti) => {
+          confetti.default({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ["#8b5cf6", "#ec4899", "#3b82f6", "#10b981"],
+          });
+        }).catch(() => {
+          // Silently fail if confetti can't load - not critical
         });
       }
 

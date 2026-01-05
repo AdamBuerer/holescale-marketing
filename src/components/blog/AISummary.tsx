@@ -52,6 +52,18 @@ export function AISummary({ content, title, readingTime, postId }: AISummaryProp
         throw new Error('Supabase credentials not configured');
       }
 
+      // Log in development to help debug
+      if (import.meta.env.DEV) {
+        console.log('Calling summarize-blog:', {
+          url: `${supabaseUrl}/functions/v1/summarize-blog`,
+          hasAnonKey: !!anonKey,
+          anonKeyLength: anonKey?.length,
+          anonKeyPrefix: anonKey?.substring(0, 20),
+          postId,
+          supabaseUrl,
+        });
+      }
+
       const response = await fetch(
         `${supabaseUrl}/functions/v1/summarize-blog`,
         {
@@ -73,11 +85,38 @@ export function AISummary({ content, title, readingTime, postId }: AISummaryProp
       if (!response.ok) {
         const errorText = await response.text();
         let errorMessage = 'Failed to generate summary';
+        
+        // Log detailed error in development
+        if (import.meta.env.DEV) {
+          console.error('Summarize-blog error:', {
+            status: response.status,
+            statusText: response.statusText,
+            errorText: errorText.substring(0, 500),
+          });
+        }
+        
         try {
           const errorData = JSON.parse(errorText);
           errorMessage = errorData.error || errorMessage;
+          // Add more context for common errors
+          if (errorMessage.includes('OpenAI API key not configured')) {
+            errorMessage = 'AI summarization is not configured. Please contact support.';
+          } else if (errorMessage.includes('OpenAI API error')) {
+            errorMessage = 'AI service temporarily unavailable. Please try again in a moment.';
+          } else if (response.status === 401) {
+            errorMessage = 'Authentication failed. Please refresh the page and try again.';
+          }
         } catch {
-          errorMessage = `Server error: ${response.status} ${response.statusText}`;
+          // If response is not JSON, provide status-based message
+          if (response.status === 401) {
+            errorMessage = 'Authentication failed. Please check your Supabase configuration.';
+          } else if (response.status === 404) {
+            errorMessage = 'Summarization service not found. The feature may not be deployed.';
+          } else if (response.status === 500) {
+            errorMessage = 'Server error occurred. Please try again.';
+          } else {
+            errorMessage = `Server error: ${response.status} ${response.statusText}`;
+          }
         }
         throw new Error(errorMessage);
       }
@@ -85,7 +124,13 @@ export function AISummary({ content, title, readingTime, postId }: AISummaryProp
       const data = await response.json();
 
       if (!data || !data.success) {
-        throw new Error(data?.error || 'Failed to generate summary');
+        const errorMsg = data?.error || 'Failed to generate summary';
+        throw new Error(errorMsg);
+      }
+      
+      // Validate summary structure
+      if (!data.summary || !data.summary.tldr) {
+        throw new Error('Invalid summary received from server');
       }
 
       // Ensure minimum loading time for smoother UX
@@ -98,7 +143,22 @@ export function AISummary({ content, title, readingTime, postId }: AISummaryProp
       setWasCached(data.cached || false);
       setIsExpanded(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong');
+      const errorMessage = err instanceof Error 
+        ? err.message 
+        : typeof err === 'string' 
+          ? err 
+          : 'Something went wrong';
+      
+      // Log error for debugging (only in development)
+      if (import.meta.env.DEV) {
+        console.error('AI Summary error:', {
+          error: err,
+          postId,
+          title: title.substring(0, 50),
+        });
+      }
+      
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
