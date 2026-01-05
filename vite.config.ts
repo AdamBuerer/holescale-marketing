@@ -40,9 +40,8 @@ export default defineConfig(({ mode }) => ({
             if (id.includes('@tanstack/react-query')) {
               return 'react-query';
             }
-            if (id.includes('@supabase')) {
-              return 'supabase';
-            }
+            // Note: @supabase is NOT manually chunked to avoid circular dependency issues
+            // with the client initialization code
             if (id.includes('lucide-react')) {
               return 'lucide-icons';
             }
@@ -52,8 +51,10 @@ export default defineConfig(({ mode }) => ({
             if (id.includes('fabric') || id.includes('jspdf')) {
               return 'pdf-tools';
             }
-            // Other node_modules
-            return 'vendor';
+            // Other node_modules (excluding supabase which needs special handling)
+            if (!id.includes('@supabase')) {
+              return 'vendor';
+            }
           }
         },
       },
