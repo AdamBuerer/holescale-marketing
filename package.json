@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:prerender": "tsc -b && vite build && react-snap",
+    "build:prerender": "tsc -b && vite build && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -119,6 +119,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@prerenderer/renderer-puppeteer": "^1.2.4",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
@@ -130,9 +131,12 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "postcss": "^8.5.6",
+    "puppeteer": "^24.34.0",
     "react-snap": "^1.23.0",
+    "serve-handler": "^6.1.6",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4",
+    "vite-plugin-prerender": "^1.0.8"
   }
 }
