@@ -132,7 +132,14 @@ async function main() {
   // Launch browser
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+    ],
+    // Use system Chrome in CI if available
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
   });
 
   console.log(`\n📄 Pre-rendering ${routes.length} routes...\n`);
