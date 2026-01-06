@@ -59,16 +59,22 @@ export function Hero({
       {/* Background Image */}
       {hasBackgroundImage && (
         <div className="absolute inset-0 z-0">
-          <img
-            src={backgroundImage.src}
-            alt=""
-            aria-hidden="true"
-            className="w-full h-full object-cover object-center"
-            width={1920}
-            height={1080}
-            loading="eager"
-            fetchPriority="high"
-          />
+          <picture>
+            <source
+              srcSet={backgroundImage.src.replace(/\.(jpg|jpeg|png)$/i, '.webp')}
+              type="image/webp"
+            />
+            <img
+              src={backgroundImage.src}
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover object-center"
+              width={1920}
+              height={1080}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </picture>
         </div>
       )}
 
@@ -99,17 +105,24 @@ export function Hero({
             {/* Mobile: Floating Image on Top (order-first on mobile) */}
             {hasFloatingImage && (
               <div className="md:hidden w-full flex justify-center pt-2 pb-0 order-first" style={{ minHeight: '40vh' }}>
-                <img
-                  src={floatingImage.src.replace('.png', '-800.png')}
-                  srcSet={`${floatingImage.src.replace('.png', '-800.png')} 800w, ${floatingImage.src} 1200w`}
-                  sizes="(max-width: 768px) 90vw, 340px"
-                  alt={floatingImage.alt}
-                  loading="eager"
-                  fetchPriority="high"
-                  width={600}
-                  height={400}
-                  className="w-[90%] max-w-[340px] max-h-[40vh] h-auto object-contain animate-float-mobile"
-                />
+                <picture>
+                  <source
+                    srcSet={`${floatingImage.src.replace('.png', '-800.webp')} 800w, ${floatingImage.src.replace('.png', '.webp')} 1200w`}
+                    sizes="(max-width: 768px) 90vw, 340px"
+                    type="image/webp"
+                  />
+                  <img
+                    src={floatingImage.src.replace('.png', '-800.png')}
+                    srcSet={`${floatingImage.src.replace('.png', '-800.png')} 800w, ${floatingImage.src} 1200w`}
+                    sizes="(max-width: 768px) 90vw, 340px"
+                    alt={floatingImage.alt}
+                    loading="eager"
+                    fetchPriority="high"
+                    width={600}
+                    height={400}
+                    className="w-[90%] max-w-[340px] max-h-[40vh] h-auto object-contain animate-float-mobile"
+                  />
+                </picture>
               </div>
             )}
 
@@ -219,17 +232,24 @@ export function Hero({
             {/* Desktop/Tablet: Floating Image on Right - aligned with container edge */}
             {hasFloatingImage && (
               <div className="hidden md:flex items-center justify-end pointer-events-none" style={{ minHeight: '600px' }}>
-                <img
-                  src={floatingImage.src}
-                  srcSet={`${floatingImage.src.replace('.png', '-800.png')} 800w, ${floatingImage.src} 1200w`}
-                  sizes="(max-width: 1024px) 50vw, 600px"
-                  alt={floatingImage.alt}
-                  loading="eager"
-                  fetchPriority="high"
-                  width={800}
-                  height={600}
-                  className="w-full max-w-none h-auto max-h-[85vh] object-contain object-right animate-float motion-reduce:animate-none"
-                />
+                <picture>
+                  <source
+                    srcSet={`${floatingImage.src.replace('.png', '-800.webp')} 800w, ${floatingImage.src.replace('.png', '.webp')} 1200w`}
+                    sizes="(max-width: 1024px) 50vw, 600px"
+                    type="image/webp"
+                  />
+                  <img
+                    src={floatingImage.src}
+                    srcSet={`${floatingImage.src.replace('.png', '-800.png')} 800w, ${floatingImage.src} 1200w`}
+                    sizes="(max-width: 1024px) 50vw, 600px"
+                    alt={floatingImage.alt}
+                    loading="eager"
+                    fetchPriority="high"
+                    width={800}
+                    height={600}
+                    className="w-full max-w-none h-auto max-h-[85vh] object-contain object-right animate-float motion-reduce:animate-none"
+                  />
+                </picture>
               </div>
             )}
           </div>
