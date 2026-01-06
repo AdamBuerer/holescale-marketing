@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -25,9 +25,11 @@ import { DifferentiationSection } from '@/components/marketing/sections/Differen
 import { IntegrationHighlights } from '@/components/marketing/sections/IntegrationHighlights';
 import { FooterCTA } from '@/components/marketing/sections/FooterCTA';
 import { WaitlistForm } from '@/components/waitlist/WaitlistForm';
-import { WaitlistDialog } from '@/components/waitlist/WaitlistDialog';
 import { TrustBadges } from '@/components/marketing/TrustBadges';
 import { generateOrganizationSchema, generateWebSiteSchema, generateSoftwareApplicationSchema } from '@/lib/schema';
+
+// Lazy load the dialog since it's only shown on user interaction
+const WaitlistDialog = lazy(() => import('@/components/waitlist/WaitlistDialog').then(m => ({ default: m.WaitlistDialog })));
 
 const Home = () => {
   const [waitlistDialogOpen, setWaitlistDialogOpen] = useState(false);
@@ -119,12 +121,16 @@ const Home = () => {
         }}
       />
 
-      {/* Waitlist Dialog */}
-      <WaitlistDialog
-        open={waitlistDialogOpen}
-        onOpenChange={setWaitlistDialogOpen}
-        defaultRole="both"
-      />
+      {/* Waitlist Dialog - Lazy loaded */}
+      {waitlistDialogOpen && (
+        <Suspense fallback={null}>
+          <WaitlistDialog
+            open={waitlistDialogOpen}
+            onOpenChange={setWaitlistDialogOpen}
+            defaultRole="both"
+          />
+        </Suspense>
+      )}
 
       {/* Introduction */}
       <section className="py-8 sm:py-10 md:py-12 bg-background">
