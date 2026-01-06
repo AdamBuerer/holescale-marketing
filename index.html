@@ -257,46 +257,51 @@
       }
     </style>
 
-    <!-- Analytics - Defer loading until after page is interactive -->
+    <!-- Analytics - Load after user engagement to minimize initial impact -->
     <script>
-      // Load analytics after page is interactive to prevent blocking
       (function() {
-        function loadAnalytics() {
-          // Google Analytics
-          if (!window.gtag) {
-            var script = document.createElement('script');
-            script.async = true;
-            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XSYCKL5VZW';
-            script.onerror = function() { console.warn('[HoleScale] GA script failed to load'); };
-            document.head.appendChild(script);
-            
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            window.gtag = gtag;
-            gtag('js', new Date());
-            gtag('config', 'G-XSYCKL5VZW');
-          }
-          
-          // Microsoft Clarity
+        var analyticsLoaded = false;
+
+        function loadGA() {
+          if (window.gtag) return;
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XSYCKL5VZW';
+          document.head.appendChild(script);
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', 'G-XSYCKL5VZW', { send_page_view: true });
+        }
+
+        function loadClarity() {
+          if (window.clarity) return;
           try {
             (function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
               t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
               y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
             })(window, document, "clarity", "script", "uqmpv5ndre");
-          } catch(e) {
-            console.warn('[HoleScale] Clarity initialization error:', e);
-          }
+          } catch(e) {}
         }
-        
-        // Load after page is interactive (TTI)
-        if (document.readyState === 'complete') {
-          setTimeout(loadAnalytics, 1000);
-        } else {
-          window.addEventListener('load', function() {
-            setTimeout(loadAnalytics, 2000);
-          });
+
+        function loadAllAnalytics() {
+          if (analyticsLoaded) return;
+          analyticsLoaded = true;
+          // Load GA immediately on engagement
+          loadGA();
+          // Delay Clarity even more to reduce cookie impact on initial audit
+          setTimeout(loadClarity, 3000);
         }
+
+        // Load on user engagement (scroll, click, touch)
+        ['scroll', 'click', 'touchstart', 'keydown'].forEach(function(evt) {
+          document.addEventListener(evt, loadAllAnalytics, { once: true, passive: true });
+        });
+
+        // Fallback: load after 5 seconds if no engagement
+        setTimeout(loadAllAnalytics, 5000);
       })();
     </script>
 
