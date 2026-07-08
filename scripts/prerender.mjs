@@ -63,6 +63,20 @@ async function prerenderRoute(browser, route) {
   try {
     console.log(`  Rendering: ${route}`);
 
+    // Only load local assets. Aborting external requests (fonts, Supabase, analytics)
+    // lets the network settle immediately (fast, deterministic prerender) and avoids
+    // hangs/timeouts; those resources load normally in the user's browser at runtime.
+    await page.setRequestInterception(true);
+    page.on('request', (req) => {
+      try {
+        const host = new URL(req.url()).hostname;
+        if (host === '127.0.0.1' || host === 'localhost') req.continue();
+        else req.abort();
+      } catch {
+        req.abort();
+      }
+    });
+
     // Set viewport
     await page.setViewport({ width: 1280, height: 800 });
 
@@ -91,11 +105,10 @@ async function prerenderRoute(browser, route) {
       '<div id="root" data-server-rendered="true">'
     );
 
-    // Remove the loading skeleton since content is pre-rendered
-    html = html.replace(
-      /<div id="hs-loading"[^>]*>[\s\S]*?<\/div>\s*<!-- Error state/,
-      '<!-- Pre-rendered: skeleton removed -->\n    <!-- Error state'
-    );
+    // NOTE: We intentionally KEEP the #hs-loading skeleton in the output. The inline boot
+    // scripts in index.html reference it, and it is hidden immediately by the inline IIFE
+    // when #root already has prerendered content. Stripping it caused null-reference crashes
+    // in those scripts, which tripped the "Unable to Load" error screen.
 
     // Determine output path
     const outputPath = route === '/'

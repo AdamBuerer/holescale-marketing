@@ -27,10 +27,11 @@ function Root() {
 
 const rootElement = document.getElementById('root')!
 
-// Check if the root has pre-rendered content (from react-snap)
-// If it does, hydrate instead of render to preserve SEO benefits
-if (rootElement.hasChildNodes()) {
-  ReactDOM.hydrateRoot(rootElement, <Root />)
-} else {
-  ReactDOM.createRoot(rootElement).render(<Root />)
-}
+// The marketing site is prerendered by capturing the fully-rendered DOM with a headless
+// browser (scripts/prerender.mjs). That snapshot is NOT hydration-safe — lazy routes,
+// Suspense, and client-only state cause React hydration mismatches (errors #418/#423),
+// which the global error handler surfaces as an "Unable to Load" screen. So we always
+// client-render: search crawlers and AI engines still receive the prerendered HTML in the
+// initial response (SEO/AEO benefit), while users get a clean render with no hydration errors.
+rootElement.innerHTML = ''
+ReactDOM.createRoot(rootElement).render(<Root />)

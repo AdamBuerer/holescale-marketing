@@ -382,40 +382,38 @@
 
     <!-- Global error handler - runs BEFORE any modules load -->
     <script>
-      window.onerror = function(msg, url, line, col, error) {
-        console.error('[Holescale] Global error:', msg, url, line);
-        document.getElementById('hs-loading').classList.add('hs-hidden');
-        document.getElementById('hs-error').classList.remove('hs-hidden');
-        document.getElementById('hs-error-msg').textContent = 'Error: ' + (msg || 'Unknown error');
+      function hsHide(id) { var el = document.getElementById(id); if (el) el.classList.add('hs-hidden'); }
+      function hsShowError(message) {
+        hsHide('hs-loading');
+        var err = document.getElementById('hs-error');
+        if (err) err.classList.remove('hs-hidden');
+        var m = document.getElementById('hs-error-msg');
+        if (m) m.textContent = 'Error: ' + (message || 'Unknown error');
+      }
+      // Only surface the blocking error screen if the app never mounted.
+      window.__hsMounted = false;
+      window.onerror = function(msg) {
+        console.error('[Holescale] Global error:', msg);
+        if (!window.__hsMounted) hsShowError(msg);
         return true;
       };
       window.onunhandledrejection = function(event) {
-        console.error('[Holescale] Unhandled rejection:', event.reason);
-        document.getElementById('hs-loading').classList.add('hs-hidden');
-        document.getElementById('hs-error').classList.remove('hs-hidden');
-        document.getElementById('hs-error-msg').textContent = 'Error: ' + (event.reason?.message || event.reason || 'Unknown error');
+        console.error('[Holescale] Unhandled rejection:', event && event.reason);
+        if (!window.__hsMounted) hsShowError(event && event.reason && event.reason.message ? event.reason.message : event && event.reason);
       };
       // Mark app as ready when React mounts - with smooth transition
       window.hsAppReady = function() {
+        window.__hsMounted = true;
         var loading = document.getElementById('hs-loading');
-
-        // Fade out loading screen
+        if (!loading) return;
         loading.classList.add('hs-fade-out');
-
-        // After fade animation, hide loading
-        setTimeout(function() {
-          loading.classList.add('hs-hidden');
-        }, 200);
+        setTimeout(function() { loading.classList.add('hs-hidden'); }, 200);
       };
 
-      // Check for pre-rendered content (from react-snap)
-      // If content exists, hide loading immediately since HTML is already visible
+      // If content is already present (prerendered), hide the loading skeleton immediately.
       (function() {
         var root = document.getElementById('root');
-        var loading = document.getElementById('hs-loading');
-        if (root && root.hasChildNodes()) {
-          loading.classList.add('hs-hidden');
-        }
+        if (root && root.hasChildNodes()) hsHide('hs-loading');
       })();
     </script>
 
