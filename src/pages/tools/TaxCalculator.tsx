@@ -254,7 +254,7 @@ export default function TaxCalculator() {
       <SEO
         title="Business Gift Tax Calculator | Promotional Products Deduction Guide | HoleScale"
         description="Calculate which corporate gifts and promotional products qualify for tax deductions. Understand IRS rules, the $25 business gift limit, and optimize your swag budget."
-        canonical="https://www.holescale.com/tools/tax-calculator"
+        canonical="https://holescale.com/tools/tax-calculator"
         schema={[faqSchema]}
       />
 

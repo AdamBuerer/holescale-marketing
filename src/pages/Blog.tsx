@@ -40,8 +40,8 @@ export default function Blog() {
   const pagination = postsData?.pagination;
 
   const breadcrumbs = [
-    { name: 'Home', url: 'https://www.holescale.com' },
-    { name: 'Blog', url: 'https://www.holescale.com/blog' },
+    { name: 'Home', url: 'https://holescale.com' },
+    { name: 'Blog', url: 'https://holescale.com/blog' },
   ];
 
   const schemas = [
@@ -54,7 +54,7 @@ export default function Blog() {
       <SEO
         title="Blog | Packaging & Procurement Insights | HoleScale"
         description="Expert advice on packaging, B2B procurement, and supplier management. Tips, guides, and industry insights for buyers and suppliers."
-        canonical="https://www.holescale.com/blog"
+        canonical="https://holescale.com/blog"
         schema={schemas}
       />
 

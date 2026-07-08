@@ -9,9 +9,9 @@ import { generateArticleSchema } from '@/lib/schema';
 
 const ChoosePackagingSupplier = () => {
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://www.holescale.com/' },
-    { name: 'Guides', url: 'https://www.holescale.com/resources' },
-    { name: 'How to Choose the Right Packaging Supplier', url: 'https://www.holescale.com/guides/choose-packaging-supplier' },
+    { name: 'Home', url: 'https://holescale.com/' },
+    { name: 'Guides', url: 'https://holescale.com/resources' },
+    { name: 'How to Choose the Right Packaging Supplier', url: 'https://holescale.com/guides/choose-packaging-supplier' },
   ]);
 
   const articleSchema = generateArticleSchema({
@@ -20,7 +20,7 @@ const ChoosePackagingSupplier = () => {
     author: 'HoleScale Team',
     datePublished: '2024-12-01',
     dateModified: '2024-12-01',
-    image: 'https://www.holescale.com/og-image.png',
+    image: 'https://holescale.com/og-image.png',
   });
 
   return (
@@ -29,7 +29,7 @@ const ChoosePackagingSupplier = () => {
         title="How to Choose the Right Packaging Supplier for Your CPG Brand | HoleScale Guide"
         description="Learn how to choose the right packaging supplier for your CPG brand. This comprehensive guide covers evaluation criteria, questions to ask, certifications to verify, and red flags to avoid when selecting packaging suppliers."
         keywords="choose packaging supplier, CPG packaging supplier, packaging supplier selection, how to find packaging suppliers, packaging supplier evaluation, B2B packaging procurement"
-        canonical="https://www.holescale.com/guides/choose-packaging-supplier"
+        canonical="https://holescale.com/guides/choose-packaging-supplier"
         schema={[breadcrumbSchema, articleSchema]}
       />
 

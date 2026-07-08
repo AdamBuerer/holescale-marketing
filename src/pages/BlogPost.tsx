@@ -184,7 +184,7 @@ export default function BlogPost() {
 
   const metaTags = getBlogPostMetaTags(post);
   const schemas = generateBlogPostSchemas(post);
-  const postUrl = `https://www.holescale.com/blog/${post.slug}`;
+  const postUrl = `https://holescale.com/blog/${post.slug}`;
 
   // Determine CTA variant based on category
   const ctaVariant = post.category.slug === 'supplier-success' ? 'supplier' : 'buyer';

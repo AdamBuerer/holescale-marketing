@@ -177,8 +177,8 @@ const Resources = () => {
 
   const collectionPageSchema = generateCollectionPageSchema();
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.holescale.com/" },
-    { name: "Resources", url: "https://www.holescale.com/resources" },
+    { name: "Home", url: "https://holescale.com/" },
+    { name: "Resources", url: "https://holescale.com/resources" },
   ]);
 
   return (
@@ -186,7 +186,7 @@ const Resources = () => {
       <SEO 
         title="Resources | HoleScale Blog, Guides & Industry Insights"
         description="Expert guides, industry insights, and procurement best practices from HoleScale. Learn about packaging materials, promotional products, and B2B sourcing strategies."
-        canonical="https://www.holescale.com/resources"
+        canonical="https://holescale.com/resources"
         schema={[collectionPageSchema, breadcrumbSchema]}
       />
 

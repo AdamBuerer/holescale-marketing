@@ -11,8 +11,8 @@ import { generateBreadcrumbSchema } from '@/lib/schema';
 
 const Waitlist = () => {
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.holescale.com/" },
-    { name: "Get Started", url: "https://www.holescale.com/waitlist" },
+    { name: "Home", url: "https://holescale.com/" },
+    { name: "Get Started", url: "https://holescale.com/waitlist" },
   ]);
 
   return (
@@ -20,7 +20,7 @@ const Waitlist = () => {
       <SEO 
         title="Get Started with HoleScale | B2B Packaging Marketplace"
         description="Join HoleScale and start sourcing packaging from verified suppliers. Founding member benefits available for early adopters of the B2B packaging materials marketplace."
-        canonical="https://www.holescale.com/waitlist"
+        canonical="https://holescale.com/waitlist"
         schema={breadcrumbSchema}
       />
 

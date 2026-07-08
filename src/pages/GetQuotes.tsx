@@ -229,7 +229,7 @@ export default function GetQuotes() {
       <SEO
         title="Get Free Quotes | Custom Packaging & Promo Products | HoleScale"
         description="Get transparent pricing from vetted suppliers. Compare quotes for custom packaging, mailer boxes, promotional products, and more. No hidden fees."
-        canonical="https://www.holescale.com/get-quotes"
+        canonical="https://holescale.com/get-quotes"
         schema={[faqSchema]}
       />
 

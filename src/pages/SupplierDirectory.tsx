@@ -8,8 +8,8 @@ import { generateBreadcrumbSchema } from '@/lib/schema';
 
 const SupplierDirectory = () => {
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://www.holescale.com/' },
-    { name: 'Supplier Directory', url: 'https://www.holescale.com/suppliers' },
+    { name: 'Home', url: 'https://holescale.com/' },
+    { name: 'Supplier Directory', url: 'https://holescale.com/suppliers' },
   ]);
 
   const supplierCategories = [
@@ -93,7 +93,7 @@ const SupplierDirectory = () => {
         title="Packaging Supplier Directory | Find Verified B2B Packaging Suppliers"
         description="Browse our directory of verified packaging suppliers. Find corrugated box manufacturers, flexible packaging suppliers, food-grade container suppliers, and sustainable packaging solutions. Compare quotes from vetted suppliers."
         keywords="packaging suppliers, corrugated box manufacturers, flexible packaging suppliers, food packaging suppliers, sustainable packaging, B2B packaging marketplace, packaging supplier directory"
-        canonical="https://www.holescale.com/suppliers"
+        canonical="https://holescale.com/suppliers"
         schema={breadcrumbSchema}
       />
 

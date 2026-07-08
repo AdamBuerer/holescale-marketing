@@ -24,8 +24,8 @@ const About = () => {
   const organizationSchema = generateOrganizationSchema();
   const aboutPageSchema = generateAboutPageSchema();
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.holescale.com/" },
-    { name: "About", url: "https://www.holescale.com/about" },
+    { name: "Home", url: "https://holescale.com/" },
+    { name: "About", url: "https://holescale.com/about" },
   ]);
 
   return (
@@ -33,7 +33,7 @@ const About = () => {
       <SEO
         title="About HoleScale | Our Mission to Transform Packaging Procurement"
         description="Learn about HoleScale's mission to revolutionize packaging materials procurement. Meet our team and discover why we're building the future of B2B packaging marketplaces."
-        canonical="https://www.holescale.com/about"
+        canonical="https://holescale.com/about"
         schema={[aboutPageSchema, organizationSchema, breadcrumbSchema]}
       />
 

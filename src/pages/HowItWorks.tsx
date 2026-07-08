@@ -112,8 +112,8 @@ const HowItWorks = () => {
   );
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.holescale.com/" },
-    { name: "How It Works", url: "https://www.holescale.com/how-it-works" },
+    { name: "Home", url: "https://holescale.com/" },
+    { name: "How It Works", url: "https://holescale.com/how-it-works" },
   ]);
 
   return (
@@ -121,7 +121,7 @@ const HowItWorks = () => {
       <SEO 
         title="How It Works | HoleScale — B2B Packaging Marketplace"
         description="Learn how HoleScale connects buyers with verified packaging material suppliers. Get quotes in 24-48 hours. Free for buyers."
-        canonical="https://www.holescale.com/how-it-works"
+        canonical="https://holescale.com/how-it-works"
         schema={[howToSchema, breadcrumbSchema]}
       />
 

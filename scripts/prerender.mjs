@@ -6,7 +6,7 @@
 
 import puppeteer from 'puppeteer';
 import { createServer } from 'http';
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync, unlinkSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import handler from 'serve-handler';
@@ -44,11 +44,13 @@ async function startServer() {
     const server = createServer((req, res) => {
       handler(req, res, {
         public: distDir,
-        rewrites: [{ source: '**', destination: '/index.html' }],
+        // Route all HTML requests to a pristine, never-overwritten shell so each
+        // route boots from an empty #root and client-renders its own content.
+        rewrites: [{ source: '**', destination: '/__shell.html' }],
       });
     });
-    server.listen(PORT, () => {
-      console.log(`📦 Preview server running on http://localhost:${PORT}`);
+    server.listen(PORT, '127.0.0.1', () => {
+      console.log(`📦 Preview server running on http://127.0.0.1:${PORT}`);
       resolve(server);
     });
   });
@@ -56,7 +58,7 @@ async function startServer() {
 
 async function prerenderRoute(browser, route) {
   const page = await browser.newPage();
-  const url = `http://localhost:${PORT}${route}`;
+  const url = `http://127.0.0.1:${PORT}${route}`;
 
   try {
     console.log(`  Rendering: ${route}`);
@@ -126,6 +128,11 @@ async function main() {
     process.exit(1);
   }
 
+  // Preserve a pristine SPA shell (empty #root) so every route boots clean and
+  // client-renders its own content instead of inheriting an already-rendered page.
+  const shellPath = join(distDir, '__shell.html');
+  copyFileSync(join(distDir, 'index.html'), shellPath);
+
   // Start preview server
   const server = await startServer();
 
@@ -152,6 +159,7 @@ async function main() {
   // Cleanup
   await browser.close();
   server.close();
+  if (existsSync(shellPath)) unlinkSync(shellPath);
 
   console.log('\n✅ SSG Pre-rendering complete!\n');
 }

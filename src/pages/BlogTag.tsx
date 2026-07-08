@@ -62,9 +62,9 @@ export default function BlogTag() {
   }
 
   const breadcrumbs = [
-    { name: 'Home', url: 'https://www.holescale.com' },
-    { name: 'Blog', url: 'https://www.holescale.com/blog' },
-    { name: tag.name, url: `https://www.holescale.com/blog/tag/${tag.slug}` },
+    { name: 'Home', url: 'https://holescale.com' },
+    { name: 'Blog', url: 'https://holescale.com/blog' },
+    { name: tag.name, url: `https://holescale.com/blog/tag/${tag.slug}` },
   ];
   const schemas = [
     generateCollectionSchema('tag', tag, tag.postCount),
@@ -76,7 +76,7 @@ export default function BlogTag() {
       <SEO
         title={`${tag.name} Articles | HoleScale Blog`}
         description={`Browse ${tag.postCount} articles tagged with ${tag.name} on the HoleScale Blog.`}
-        canonical={`https://www.holescale.com/blog/tag/${tag.slug}`}
+        canonical={`https://holescale.com/blog/tag/${tag.slug}`}
         schema={schemas}
       />
 

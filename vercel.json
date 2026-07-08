@@ -2,6 +2,9 @@
   "git": {
     "deploymentEnabled": false
   },
+  "buildCommand": "npm run build:prerender",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -35,6 +38,7 @@
     }
   ],
   "redirects": [
+    { "source": "/:path*", "has": [{ "type": "host", "value": "www.holescale.com" }], "destination": "https://holescale.com/:path*", "permanent": true },
     { "source": "/login", "destination": "https://app.holescale.com/auth", "permanent": true },
     { "source": "/signup", "destination": "https://app.holescale.com/auth?mode=signup", "permanent": true },
     { "source": "/register", "destination": "https://app.holescale.com/auth?mode=signup", "permanent": true },
@@ -52,6 +56,6 @@
     { "source": "/design-studio/:path*", "destination": "https://app.holescale.com/design-studio/:path*", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

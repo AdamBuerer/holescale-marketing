@@ -228,8 +228,8 @@ const FAQ = () => {
   
   const faqSchema = generateFAQSchema(faqsForSchema);
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.holescale.com/" },
-    { name: "FAQ", url: "https://www.holescale.com/faq" },
+    { name: "Home", url: "https://holescale.com/" },
+    { name: "FAQ", url: "https://holescale.com/faq" },
   ]);
 
   const scrollToSection = (sectionId: string) => {
@@ -244,7 +244,7 @@ const FAQ = () => {
       <SEO 
         title="FAQ | HoleScale — Frequently Asked Questions"
         description="Get answers about HoleScale for buyers and suppliers. Learn about pricing, features, verification, and how to get started on our B2B marketplace."
-        canonical="https://www.holescale.com/faq"
+        canonical="https://holescale.com/faq"
         schema={[faqSchema, breadcrumbSchema]}
       />
 

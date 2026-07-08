@@ -153,7 +153,7 @@ export function WaitlistForm({
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText('https://www.holescale.com');
+      await navigator.clipboard.writeText('https://holescale.com');
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
       toast({
@@ -166,7 +166,7 @@ export function WaitlistForm({
   };
 
   if (submitted) {
-    const shareUrl = `https://www.holescale.com`;
+    const shareUrl = `https://holescale.com`;
     const shareText = `I'm using HoleScale - a B2B marketplace for packaging materials! Check it out:`;
 
     return (

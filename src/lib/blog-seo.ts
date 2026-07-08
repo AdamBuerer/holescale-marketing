@@ -5,9 +5,9 @@
 
 import type { BlogPost, BlogPostCard, Author, Category } from '@/types/blog';
 
-const SITE_URL = 'https://www.holescale.com';
+const SITE_URL = 'https://holescale.com';
 const SITE_NAME = 'HoleScale';
-const LOGO_URL = 'https://www.holescale.com/logo.png';
+const LOGO_URL = 'https://holescale.com/logo.png';
 
 // -----------------------------------------------------------------------------
 // Blog Post Schema (Article/BlogPosting)

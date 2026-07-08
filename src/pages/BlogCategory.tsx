@@ -63,9 +63,9 @@ export default function BlogCategory() {
 
   const metaTags = getCategoryMetaTags(category);
   const breadcrumbs = [
-    { name: 'Home', url: 'https://www.holescale.com' },
-    { name: 'Blog', url: 'https://www.holescale.com/blog' },
-    { name: category.name, url: `https://www.holescale.com/blog/category/${category.slug}` },
+    { name: 'Home', url: 'https://holescale.com' },
+    { name: 'Blog', url: 'https://holescale.com/blog' },
+    { name: category.name, url: `https://holescale.com/blog/category/${category.slug}` },
   ];
   const schemas = [
     generateCollectionSchema('category', category, category.postCount),

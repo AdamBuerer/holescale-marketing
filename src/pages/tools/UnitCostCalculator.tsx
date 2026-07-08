@@ -247,7 +247,7 @@ export default function UnitCostCalculator() {
       <SEO
         title="Custom Packaging Cost Calculator | Unit Price & MOQ Calculator | HoleScale"
         description="Calculate the true cost of custom packaging at different quantities. Understand setup fees, volume discounts, and per-unit pricing for packaging and promotional products."
-        canonical="https://www.holescale.com/tools/unit-cost-calculator"
+        canonical="https://holescale.com/tools/unit-cost-calculator"
         schema={[calculatorSchema]}
       />
 

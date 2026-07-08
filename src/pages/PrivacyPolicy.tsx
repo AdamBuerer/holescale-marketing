@@ -6,8 +6,8 @@ import { generateBreadcrumbSchema } from '@/lib/schema';
 
 export default function PrivacyPolicy() {
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.holescale.com/" },
-    { name: "Privacy Policy", url: "https://www.holescale.com/privacy" },
+    { name: "Home", url: "https://holescale.com/" },
+    { name: "Privacy Policy", url: "https://holescale.com/privacy" },
   ]);
 
   return (
@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
       <SEO 
         title="Privacy Policy | HoleScale"
         description="How HoleScale collects, uses, and protects your data. Our commitment to your privacy."
-        canonical="https://www.holescale.com/privacy"
+        canonical="https://holescale.com/privacy"
         schema={breadcrumbSchema}
       />
 

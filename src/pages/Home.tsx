@@ -58,7 +58,7 @@ const Home = () => {
       <SEO
         title="HoleScale | B2B Packaging Materials Marketplace"
         description="Connect with verified packaging suppliers. Get competitive quotes for corrugated boxes, mailers, labels, and custom packaging in 24-48 hours. Free for buyers."
-        canonical="https://www.holescale.com/"
+        canonical="https://holescale.com/"
         schema={[organizationSchema, websiteSchema, softwareAppSchema]}
       />
 

@@ -6,8 +6,8 @@ import { generateBreadcrumbSchema } from '@/lib/schema';
 
 export default function TermsOfService() {
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.holescale.com/" },
-    { name: "Terms of Service", url: "https://www.holescale.com/terms" },
+    { name: "Home", url: "https://holescale.com/" },
+    { name: "Terms of Service", url: "https://holescale.com/terms" },
   ]);
 
   return (
@@ -15,7 +15,7 @@ export default function TermsOfService() {
       <SEO 
         title="Terms of Service | HoleScale"
         description="HoleScale terms of service and user agreement for the B2B marketplace platform."
-        canonical="https://www.holescale.com/terms"
+        canonical="https://holescale.com/terms"
         schema={breadcrumbSchema}
       />
 

@@ -68,9 +68,9 @@ export default function BlogAuthor() {
 
   const metaTags = getAuthorMetaTags(author);
   const breadcrumbs = [
-    { name: 'Home', url: 'https://www.holescale.com' },
-    { name: 'Blog', url: 'https://www.holescale.com/blog' },
-    { name: author.name, url: `https://www.holescale.com/blog/author/${author.slug}` },
+    { name: 'Home', url: 'https://holescale.com' },
+    { name: 'Blog', url: 'https://holescale.com/blog' },
+    { name: author.name, url: `https://holescale.com/blog/author/${author.slug}` },
   ];
   const schemas = [
     generateAuthorSchema(author),
