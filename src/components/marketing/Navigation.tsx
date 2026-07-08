@@ -103,7 +103,7 @@ const Navigation = () => {
   const scheduleClose = useCallback(() => {
     closeTimeoutRef.current = setTimeout(() => {
       setActiveMenu(null);
-    }, 475);
+    }, 700);
   }, []);
 
   const cancelClose = useCallback(() => {
@@ -167,6 +167,22 @@ const Navigation = () => {
                 Solutions
                 <ChevronDown className={cn("w-4 h-4 transition-transform duration-200", activeMenu === 'solutions' && "rotate-180")} aria-hidden="true" />
               </button>
+
+              {/* Hover bridge - keeps menu open while cursor travels from trigger into the menu */}
+              {activeMenu === 'solutions' && (
+                <div
+                  aria-hidden="true"
+                  className="fixed z-[9998]"
+                  style={{
+                    top: `${dropdownPosition.top - 14}px`,
+                    left: `${dropdownPosition.left}px`,
+                    width: `${dropdownPosition.width}px`,
+                    height: '18px',
+                  }}
+                  onMouseEnter={cancelClose}
+                  onMouseLeave={scheduleClose}
+                />
+              )}
 
               {/* Solutions Mega Menu */}
               <div
@@ -322,6 +338,22 @@ const Navigation = () => {
                 <ChevronDown className={cn("w-4 h-4 transition-transform duration-200", activeMenu === 'product' && "rotate-180")} aria-hidden="true" />
               </button>
 
+              {/* Hover bridge - keeps menu open while cursor travels from trigger into the menu */}
+              {activeMenu === 'product' && (
+                <div
+                  aria-hidden="true"
+                  className="fixed z-[9998]"
+                  style={{
+                    top: `${dropdownPosition.top - 14}px`,
+                    left: `${dropdownPosition.left}px`,
+                    width: `${dropdownPosition.width}px`,
+                    height: '18px',
+                  }}
+                  onMouseEnter={cancelClose}
+                  onMouseLeave={scheduleClose}
+                />
+              )}
+
               {/* Product Mega Menu */}
               <div
                 id="product-menu"
@@ -458,6 +490,22 @@ const Navigation = () => {
                 Resources
                 <ChevronDown className={cn("w-4 h-4 transition-transform duration-200", activeMenu === 'resources' && "rotate-180")} aria-hidden="true" />
               </button>
+
+              {/* Hover bridge - keeps menu open while cursor travels from trigger into the menu */}
+              {activeMenu === 'resources' && (
+                <div
+                  aria-hidden="true"
+                  className="fixed z-[9998]"
+                  style={{
+                    top: `${dropdownPosition.top - 14}px`,
+                    left: `${dropdownPosition.left}px`,
+                    width: `${dropdownPosition.width}px`,
+                    height: '18px',
+                  }}
+                  onMouseEnter={cancelClose}
+                  onMouseLeave={scheduleClose}
+                />
+              )}
 
               {/* Resources Mega Menu */}
               <div
@@ -605,9 +653,9 @@ const Navigation = () => {
                     Log in
                   </Button>
                 </a>
-                <Link to="/waitlist" aria-label="Join the HoleScale waitlist">
+                <Link to="/get-quotes" aria-label="Request packaging quotes on HoleScale">
                   <Button size="sm" className="gap-2 text-sm whitespace-nowrap">
-                    Join Waitlist
+                    Request Quotes
                   </Button>
                 </Link>
               </>
@@ -760,8 +808,8 @@ const Navigation = () => {
                   <a href={appLinks.login} rel="nofollow" onClick={closeAllMenus} className="block">
                     <Button variant="ghost" className="w-full" size="sm">Log in</Button>
                   </a>
-                  <Link to="/waitlist" onClick={closeAllMenus} className="block">
-                    <Button className="w-full" size="sm">Join Waitlist</Button>
+                  <Link to="/get-quotes" onClick={closeAllMenus} className="block">
+                    <Button className="w-full" size="sm">Request Quotes</Button>
                   </Link>
                 </>
               )}

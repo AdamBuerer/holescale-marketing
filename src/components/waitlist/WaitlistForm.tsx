@@ -107,8 +107,8 @@ export function WaitlistForm({
 
         if (error.message?.includes('already exists') || error.message?.includes('duplicate')) {
           toast({
-            title: "Already on the waitlist",
-            description: "This email is already registered. We'll be in touch soon!",
+            title: "You're already registered",
+            description: "This email is already on file. We'll be in touch soon!",
             variant: "default",
           });
           return;
@@ -167,7 +167,7 @@ export function WaitlistForm({
 
   if (submitted) {
     const shareUrl = `https://www.holescale.com`;
-    const shareText = `I just joined the HoleScale waitlist - a B2B marketplace for packaging materials! Check it out:`;
+    const shareText = `I'm using HoleScale - a B2B marketplace for packaging materials! Check it out:`;
 
     return (
       <div className="space-y-6">
@@ -432,18 +432,18 @@ export function WaitlistForm({
           {isSubmitting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Joining...
+              Submitting...
             </>
           ) : (
             <>
-              Reserve My Spot
+              Get Started Free
               <Sparkles className="ml-2 h-4 w-4" />
             </>
           )}
         </Button>
 
         <p className="text-xs text-center text-muted-foreground">
-          By joining, you agree to receive updates. No spam, ever.
+          By submitting, you agree to receive updates. No spam, ever.
         </p>
       </form>
     </Form>

@@ -12,14 +12,14 @@ import { generateBreadcrumbSchema } from '@/lib/schema';
 const Waitlist = () => {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "https://www.holescale.com/" },
-    { name: "Join Waitlist", url: "https://www.holescale.com/waitlist" },
+    { name: "Get Started", url: "https://www.holescale.com/waitlist" },
   ]);
 
   return (
     <>
       <SEO 
-        title="Join the HoleScale Waitlist | Early Access to B2B Marketplace"
-        description="Be first in line when HoleScale launches. Get exclusive founding member benefits for the B2B packaging materials marketplace."
+        title="Get Started with HoleScale | B2B Packaging Marketplace"
+        description="Join HoleScale and start sourcing packaging from verified suppliers. Founding member benefits available for early adopters of the B2B packaging materials marketplace."
         canonical="https://www.holescale.com/waitlist"
         schema={breadcrumbSchema}
       />
@@ -37,22 +37,22 @@ const Waitlist = () => {
               </div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
-                Be First in Line
+                Start Sourcing Smarter
               </h1>
 
               <p className="text-lg md:text-xl mb-6 text-primary-foreground/90">
-                Join businesses waiting for the smarter way to source packaging materials
+                Join businesses sourcing packaging materials the smarter way
               </p>
 
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="w-5 h-5" />
-                <span>Launching Q1 2025 · Free to Join</span>
+                <span>Free to Join · Quotes in 24–48 hours</span>
               </div>
             </div>
 
             {/* Waitlist Form - White card on navy */}
             <div className="bg-card text-foreground rounded-xl p-6 md:p-8 border shadow-xl">
-              <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Join the Waitlist</h2>
+              <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Get Started Free</h2>
               <WaitlistForm compact />
               <p className="text-xs text-muted-foreground mt-4 text-center">
                 We respect your privacy. No spam, ever.

@@ -1,14 +1,95 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Mail, Download, TrendingUp, Users, DollarSign, Building2 } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Mail, Download, TrendingUp, Users, DollarSign, Building2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import Navigation from '@/components/marketing/Navigation';
 import Footer from '@/components/marketing/Footer';
 import { useMarketingPageShell } from "@/hooks/useMarketingPageShell";
+import { useToast } from '@/hooks/use-toast';
+
+const investorFormSchema = z.object({
+  name: z.string().min(2, 'Please enter your name'),
+  email: z.string().email('Enter a valid email address'),
+  firm: z.string().optional(),
+  message: z.string().min(10, 'Please add a short message (at least 10 characters)'),
+});
+
+type InvestorFormData = z.infer<typeof investorFormSchema>;
+
+const scrollToInvestorContact = () => {
+  const el = document.getElementById('investor-contact');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
 
 const Investors = () => {
   useMarketingPageShell({ className: "space-y-16" });
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<InvestorFormData>({
+    resolver: zodResolver(investorFormSchema),
+    defaultValues: { name: '', email: '', firm: '', message: '' },
+  });
+
+  const onSubmit = async (data: InvestorFormData) => {
+    setIsSubmitting(true);
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+
+      if (!supabase) {
+        throw new Error('Contact service is not configured. Please email adam@holescale.com directly.');
+      }
+
+      const [firstName, ...rest] = data.name.trim().split(' ');
+      const lastName = rest.join(' ') || firstName;
+
+      const { data: result, error } = await supabase.functions.invoke('submit-contact-form', {
+        body: {
+          firstName,
+          lastName,
+          email: data.email,
+          company: data.firm || null,
+          userType: 'other',
+          subject: 'Investor Inquiry',
+          message: data.message,
+          joinWaitlist: false,
+        },
+      });
+
+      if (error) throw error;
+      if (!result?.success) throw new Error(result?.error || 'Failed to submit');
+
+      toast({
+        title: "Thanks — message received",
+        description: "Adam will follow up with you personally about investing in HoleScale.",
+      });
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: error instanceof Error ? error.message : "Please email adam@holescale.com directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -55,13 +136,13 @@ const Investors = () => {
               Join us in building the marketplace infrastructure for wholesale manufacturing.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" onClick={() => window.location.href = 'mailto:adam@holescale.com'}>
+              <Button size="lg" onClick={scrollToInvestorContact}>
                 <Mail className="mr-2 h-5 w-5" />
                 Contact Investor Relations
               </Button>
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="outline" onClick={() => window.location.href = 'mailto:adam@holescale.com?subject=Investor%20Inquiry%20-%20Pitch%20Deck%20Request'}>
                 <Download className="mr-2 h-5 w-5" />
-                Download Pitch Deck
+                Request Pitch Deck
               </Button>
             </div>
           </div>
@@ -376,6 +457,109 @@ const Investors = () => {
           </div>
         </section>
 
+        {/* Investor Contact Form */}
+        <section id="investor-contact" className="container mx-auto px-4 py-16 scroll-mt-24">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">Get in Touch</h2>
+              <p className="text-lg text-muted-foreground">
+                Interested in investing in HoleScale? Send a note and Adam will follow up with you personally —
+                including the full pitch deck and financials.
+              </p>
+            </div>
+
+            <Card>
+              <CardContent className="pt-6">
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Jane Investor" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input type="email" placeholder="jane@fund.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name="firm"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Firm / Fund (Optional)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Acme Ventures" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="message"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Message</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Tell us a bit about your interest, typical check size, and what you'd like to see."
+                              className="min-h-[140px]"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="mr-2 h-5 w-5" />
+                          Contact Adam
+                        </>
+                      )}
+                    </Button>
+
+                    <p className="text-sm text-center text-muted-foreground">
+                      Prefer email? Reach us directly at{' '}
+                      <a href="mailto:adam@holescale.com" className="text-primary hover:underline">
+                        adam@holescale.com
+                      </a>
+                    </p>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className="container mx-auto px-4 py-16">
           <div className="bg-gradient-to-r from-primary to-primary/80 rounded-2xl p-12 text-center text-primary-foreground">
@@ -383,20 +567,20 @@ const Investors = () => {
               Join Us in Building the Future
             </h2>
             <p className="text-xl mb-8 opacity-90 max-w-3xl mx-auto">
-              We're raising $500K in pre-seed funding to scale operations, expand our supplier network, 
+              We're raising $500K in pre-seed funding to scale operations, expand our supplier network,
               and capture market share in the $850B packaging industry.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button size="lg" variant="secondary" onClick={() => window.location.href = 'mailto:adam@holescale.com'}>
+              <Button size="lg" variant="secondary" onClick={scrollToInvestorContact}>
                 <Mail className="mr-2 h-5 w-5" />
                 Schedule a Meeting
               </Button>
-              <Button size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white/10">
+              <Button size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white/10" onClick={() => window.location.href = 'mailto:adam@holescale.com?subject=Investor%20Inquiry%20-%20Investor%20Deck%20Request'}>
                 <Download className="mr-2 h-5 w-5" />
-                Download Investor Deck
+                Request Investor Deck
               </Button>
             </div>
-            
+
             <div className="pt-8 border-t border-white/20">
               <p className="text-sm opacity-75 mb-2">For investor inquiries:</p>
               <a href="mailto:adam@holescale.com" className="text-lg font-semibold hover:underline">

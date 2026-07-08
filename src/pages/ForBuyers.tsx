@@ -79,8 +79,8 @@ const ForBuyers = () => {
                   <div className="text-xs sm:text-sm text-muted-foreground font-medium leading-tight">For Buyers</div>
                 </div>
                 <div className="bg-card/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-border/50">
-                  <div className="text-2xl md:text-3xl font-bold text-primary mb-1">Q1 2025</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground font-medium leading-tight">Launch Date</div>
+                  <div className="text-2xl md:text-3xl font-bold text-primary mb-1">Verified</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground font-medium leading-tight">Suppliers Only</div>
                 </div>
               </div>
             </div>
@@ -414,7 +414,7 @@ const ForBuyers = () => {
               Ready to Source Smarter?
             </h2>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl opacity-95 mb-6 sm:mb-8 md:mb-10 leading-relaxed">
-              Launching Q1 2025 · Free to Join · No Credit Card Required
+              Free to Join · No Credit Card Required · Quotes in 24–48 Hours
             </p>
             <Button
               size="lg"
@@ -422,7 +422,7 @@ const ForBuyers = () => {
               onClick={openWaitlistDialog}
               className="gap-2 text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 h-12 sm:h-14 shadow-xl hover:shadow-2xl md:hover:scale-105 active:scale-95 transition-all duration-300 min-h-[44px] w-full sm:w-auto"
             >
-              Join the Waitlist — It's Free
+              Get Started — It's Free
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
           </FadeIn>

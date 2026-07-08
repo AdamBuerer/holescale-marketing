@@ -31,8 +31,8 @@ const defaultBadges: TrustBadge[] = [
   },
   {
     icon: <Lock className="w-4 h-4" />,
-    label: 'SOC 2 Compliant',
-    description: 'Enterprise security',
+    label: 'Secure Checkout',
+    description: 'Encrypted & protected',
   },
 ];
 

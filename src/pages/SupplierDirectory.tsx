@@ -171,7 +171,7 @@ const SupplierDirectory = () => {
 
                   <div className="pt-4 border-t">
                     <Button asChild variant="outline" className="w-full">
-                      <Link to="/waitlist">Find Suppliers</Link>
+                      <Link to="/get-quotes">Find Suppliers</Link>
                     </Button>
                   </div>
                 </div>
@@ -257,7 +257,7 @@ const SupplierDirectory = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" variant="secondary">
-              <Link to="/waitlist">Join the Waitlist</Link>
+              <Link to="/get-quotes">Request Quotes</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="bg-transparent border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
               <Link to="/how-it-works">Learn How It Works</Link>

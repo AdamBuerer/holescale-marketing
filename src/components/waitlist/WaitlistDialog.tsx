@@ -62,11 +62,11 @@ export function WaitlistDialog({
       <DialogContent className="w-[95vw] sm:w-[92vw] md:w-[88vw] lg:w-[85vw] xl:w-[82vw] 2xl:w-[78vw] lg:max-w-[1200px] xl:max-w-[1400px] 2xl:max-w-[1600px] p-0 gap-0 overflow-hidden max-h-[95vh] sm:max-h-[92vh] md:max-h-[90vh] overflow-y-auto">
         <VisuallyHidden>
           <DialogTitle>
-            {selectedRole === 'buyer' ? 'Join Waitlist - For Buyers' : 'Join Waitlist - For Suppliers'}
+            {selectedRole === 'buyer' ? 'Get Started - For Buyers' : 'Get Started - For Suppliers'}
           </DialogTitle>
           <DialogDescription>
-            {selectedRole === 'buyer' 
-              ? 'Reserve your spot to source packaging smarter. Join procurement professionals on the waitlist for early access.'
+            {selectedRole === 'buyer'
+              ? 'Source packaging smarter. Get matched with verified suppliers and competitive quotes in 24–48 hours.'
               : 'Connect with qualified buyers actively looking for packaging suppliers. Grow your business with HoleScale.'}
           </DialogDescription>
         </VisuallyHidden>
@@ -98,7 +98,7 @@ export function WaitlistDialog({
                 </h2>
                 <p className="text-white/80 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-relaxed max-w-full lg:max-w-md">
                   {isBuyer
-                    ? 'Join procurement professionals on the waitlist for early access.'
+                    ? 'Join procurement professionals sourcing packaging smarter with HoleScale.'
                     : 'Connect with qualified buyers actively looking for packaging suppliers.'}
                 </p>
               </div>
@@ -120,8 +120,8 @@ export function WaitlistDialog({
             <div className="relative z-10 mt-4 sm:mt-5 md:mt-6 lg:mt-8 pt-3 sm:pt-4 md:pt-5 lg:pt-6 border-t border-white/20">
               <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 md:gap-5 lg:gap-6">
                 <div>
-                  <div className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold text-white">Q1 2025</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-white/70">Launch Date</div>
+                  <div className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-bold text-white">24–48h</div>
+                  <div className="text-[10px] sm:text-xs md:text-sm text-white/70">Avg. quote time</div>
                 </div>
               </div>
             </div>
@@ -177,10 +177,10 @@ export function WaitlistDialog({
             {/* Desktop Header */}
             <div className="hidden md:block mb-4 lg:mb-6 xl:mb-8">
               <h2 className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-foreground mb-1.5 md:mb-2 lg:mb-3">
-                Reserve Your Spot
+                Get Started Free
               </h2>
               <p className="text-xs md:text-sm lg:text-base xl:text-lg text-muted-foreground">
-                Join early and get exclusive benefits when we launch.
+                Get matched with verified suppliers and competitive quotes in 24–48 hours.
               </p>
             </div>
 

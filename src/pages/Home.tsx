@@ -87,12 +87,14 @@ const Home = () => {
         customCTA={
           <>
             <Button
+              asChild
               size="lg"
-              onClick={openWaitlistDialog}
               className="text-sm md:text-base px-8 md:px-10 py-3 md:py-6 h-auto w-full sm:w-auto"
             >
-              Join the Waitlist
-              <ArrowRight className="w-4 h-4 flex-shrink-0" />
+              <Link to="/get-quotes" className="inline-flex items-center justify-center gap-2">
+                Request Quotes
+                <ArrowRight className="w-4 h-4 flex-shrink-0" />
+              </Link>
             </Button>
             <Button
               asChild
@@ -108,8 +110,9 @@ const Home = () => {
           </>
         }
         trustIndicators={[
-          "Launching Q1 2025",
-          "Free to Join"
+          "Free for buyers",
+          "Quotes in 24–48 hours",
+          "Verified suppliers"
         ]}
         backgroundImage={{
           src: "/images/kraft-bg.jpg",
@@ -451,7 +454,7 @@ const Home = () => {
 
           <div className="text-center mt-8 sm:mt-12">
             <Button asChild size="lg" className="min-h-[44px] text-sm sm:text-base px-6 sm:px-8">
-              <Link to="/waitlist">Get Early Access</Link>
+              <Link to="/get-quotes">Request Quotes</Link>
             </Button>
           </div>
         </div>
@@ -568,12 +571,12 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Waitlist Signup Section (Primary Conversion) */}
+      {/* Signup Section (Primary Conversion) */}
       <section className="py-16 md:py-24 bg-primary text-primary-foreground">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Be First in Line When We Launch</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Start Sourcing Smarter Today</h2>
           <p className="text-xl mb-8 text-primary-foreground/90">
-            Be first in line when we launch. Early members get exclusive benefits.
+            Get matched with verified suppliers and competitive quotes in 24–48 hours. Free for buyers.
           </p>
 
           <div className="bg-card rounded-xl p-8 border max-w-2xl mx-auto text-foreground text-left">

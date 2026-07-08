@@ -175,8 +175,8 @@ const FAQ = () => {
 
   const gettingStartedFAQs = [
     {
-      question: "How do I join the waitlist?",
-      answer: "Click the 'Join Waitlist' button on our homepage and fill out the short form. You'll receive updates about our launch and early access opportunities.",
+      question: "How do I get started?",
+      answer: "Click the 'Request Quotes' button on our homepage and fill out the short form. You'll be matched with verified suppliers and start receiving competitive quotes.",
     },
     {
       question: "What are the founding member benefits?",

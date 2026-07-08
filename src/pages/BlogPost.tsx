@@ -646,7 +646,7 @@ export default function BlogPost() {
       <section className="py-12 md:py-16 bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
-            <WhatIsHoleScale variant="default" ctaText="Join the Waitlist" ctaLink="/waitlist" />
+            <WhatIsHoleScale variant="default" ctaText="Request Quotes" ctaLink="/get-quotes" />
           </FadeIn>
         </div>
       </section>

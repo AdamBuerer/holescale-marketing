@@ -77,8 +77,8 @@ const ForSuppliers = () => {
                   <div className="text-xs sm:text-sm text-muted-foreground font-medium leading-tight">Wins Here</div>
                 </div>
                 <div className="bg-card/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-border/50">
-                  <div className="text-2xl md:text-3xl font-bold text-accent mb-1">Q1 2025</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground font-medium leading-tight">Launch Date</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent mb-1">Qualified</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground font-medium leading-tight">Buyer Leads</div>
                 </div>
               </div>
             </div>
@@ -519,7 +519,7 @@ const ForSuppliers = () => {
               Ready to Grow Your Business?
             </h2>
             <p className="text-xl md:text-2xl opacity-95 mb-10 leading-relaxed">
-              Launching Q1 2025 · Free to Start
+              Free to Start · Qualified Buyer Leads · No Upfront Cost
             </p>
             <Button
               size="lg"

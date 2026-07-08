@@ -99,8 +99,8 @@ export function BlogCTA({ variant = 'general', postSlug, className = '' }: BlogC
           </a>
         </Button>
         <Button asChild variant="outline">
-          <Link to="/waitlist">
-            Join Waitlist
+          <Link to="/get-quotes">
+            Request Quotes
           </Link>
         </Button>
       </div>

@@ -18,7 +18,7 @@ export function FooterCTA({ onBuyerCTA, onSupplierCTA, className }: FooterCTAPro
           Ready to transform how you source — or sell — packaging materials?
         </h2>
         <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
-          Join businesses already on the waitlist. Be first in line when we launch.
+          Join the businesses already sourcing smarter with HoleScale.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2">
@@ -40,7 +40,7 @@ export function FooterCTA({ onBuyerCTA, onSupplierCTA, className }: FooterCTAPro
         </div>
 
         <p className="text-sm text-muted-foreground mt-6">
-          Launching Q1 2025 · Free to Join · No Credit Card Required
+          Free to Join · No Credit Card Required · Quotes in 24–48 Hours
         </p>
       </div>
     </section>

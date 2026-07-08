@@ -239,7 +239,7 @@ const About = () => {
       <CTA
         headline="Join Us on This Journey"
         subheadline="Be part of the future of B2B procurement"
-        primaryCTA={{ text: "Join Waitlist", href: "/waitlist" }}
+        primaryCTA={{ text: "Request Quotes", href: "/get-quotes" }}
       />
 
       <Footer />
